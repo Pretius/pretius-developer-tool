@@ -9,7 +9,8 @@
     "email" : "mmulvaney@pretius.com"
   },
   "license" : "MIT",
-  "commercial" : "Yes",
+  "commercial" : "No",
+  "commercially_supported": "Yes",
   "author" : {
     "name" : "Matt Mulvaney",
     "email" : "mmulvaney@pretius.com",
