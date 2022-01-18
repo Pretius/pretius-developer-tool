@@ -1,6 +1,6 @@
 # Pretius Developer Tool
 
-Pretius Developer Tool (PDT) is an Oracle APEX plugin developed by [Matt Mulvaney](URL "https://www.twitter.com/Matt_Mulvaney") at [Pretius](URL "https://www.pretius.com"). Unlike other APEX plugins, it was made not with users in mind but for the benefit of developers. It provides you with a few useful features:
+Pretius Developer Tool (PDT) is an Oracle APEX plugin developed by <a href="https://www.twitter.com/Matt_Mulvaney" target="_blank">Matt Mulvaney</a> at <a href="https://www.pretius.com" target="_blank">Pretius</a>. Unlike other APEX plugins, it was made not with users in mind but for the benefit of developers. It provides you with a few useful features:
 * Revealer: Displays client and session info that is not immediately available to you as a developer
 * Reload Frame: Provides you with a convenient single click for reloading a modal dialog page
 * Visual Build Options: Glows page components in blue/red, giving you a visual clue on whether a certain component will be included/excluded on export
