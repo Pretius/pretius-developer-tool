@@ -29,6 +29,7 @@
       "plugin" : {
         "internalName" : "COM.PRETIUS.APEX.DEVTOOL",
         "type" : "dynamic action",
+        "demo" : "https://github.com/Pretius/pretius-developer-tool",
         "previewImage" : "https://raw.githubusercontent.com/Pretius/pretius-developer-tool/master/img/preview.gif"
       }
     }
