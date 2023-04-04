@@ -1,0 +1,9 @@
+.pretiusDeveloperToolGlow {
+    padding-left: 5px !important;
+    filter: drop-shadow(0 0 6px orange);
+}
+
+.pretiusDeveloperToolRegionPadding {
+    margin-top: 0.08em;
+    margin-left: 0.04em;
+}

@@ -79,15 +79,15 @@ var pdt = (function () {
             if ($('#apexDevToolbarOptions').length > 0 && $('#apexDevToolbarPretiusDeveloperToolOptions').length == 0) {
 
                 var revealerIconHtml = '<span class="a-Icon fa fa-filter fam-x fam-is-danger" aria-hidden="true"></span>'
-                
-                if ( pdt.opt.configurationTest == "true" ) {
-                    revealerIconHtml = revealerIconHtml.replace( 'fam-x fam-is-danger', '' );
+
+                if (pdt.opt.configurationTest == "true") {
+                    revealerIconHtml = revealerIconHtml.replace('fam-x fam-is-danger', '');
                 }
 
                 $('#apexDevToolbarOptions').parent().after(
                     apex.lang.formatNoEscape(
                         '<li><button id="apexDevToolbarPretiusDeveloperToolOptions" type="button" class="a-Button a-Button--devToolbar" title="View Page Information [ctrl+alt+%0]" aria-label="Vars" data-link=""> ' +
-                        '%1<span class="a-DevToolbar-buttonLabel"></span> ' +
+                        '%1 ' +
                         '</button></li>',
                         'Pretius Developer Tool Options',
                         revealerIconHtml
@@ -129,6 +129,14 @@ var pdt = (function () {
                             "buildoptionhightlight": {
                                 "enable": apex.item("R0_BUILD_OPTION_ENABLE").getValue(),
                                 "duration": apex.item("R0_BUILD_OPTION_DURATION").getValue()
+                            },
+                            "devbar": {
+                                "glowdebugenable": apex.item("R0_GLOW_DEBUG_ICON").getValue(),
+                                "openbuilderenable": apex.item("R0_OPEN_BUILDER_ENABLE").getValue(),
+                                "openbuildercache": apex.item("R0_OPEN_BUILDER_CACHE").getValue(),
+                                "openbuilderapplimit": apex.item("R0_OPEN_BUILDER_APP_LIMIT").getValue(),
+                                "openbuilderkb": apex.item("R0_OPEN_BUILDER_KB_SHORTCUT").getValue(),
+                                "homereplacelink": apex.item("R0_HOME_REPLACE_LINK").getValue()
                             }
                         }
                     };
@@ -136,16 +144,25 @@ var pdt = (function () {
                     localStorage.setItem("pretiusDeveloperTool", JSON.stringify(JsonSettings));
                     pdt.JSONsettings = JsonSettings;
                     apex.theme.closeRegion($('#pretiusRevealerInline'));
-                    apex.message.showPageSuccess("Settings saved. Refresh your browser.");      
+                    apex.message.showPageSuccess("Settings saved. Refresh your browser.");
                 }
 
                 $("#pretiusRevealerInline").on("click", ".optOutLink", function () {
-                    apex.message.confirm( "By Opting-Out of Pretius Developer Tool, you will no long have access to the plug-in features or this settings page.\n\nYou can regain access by typing the following in to the Browser Console \n\npdt.optIn();\n\nYou can find this command again on our GitHub Plugin Page\n\nAre you sure you wish to continue?", function( okPressed ) {
-                        if( okPressed ) {
+                    apex.message.confirm("By Opting-Out of Pretius Developer Tool, you will no long have access to the plug-in features or this settings page.\n\nYou can regain access by typing the following in to the Browser Console \n\npdt.optIn();\n\nYou can find this command again on our GitHub Plugin Page\n\nAre you sure you wish to continue?", function (okPressed) {
+                        if (okPressed) {
                             apex.item("R0_OPT_OUT").setValue("Y");
                             pdtOptionsSave();
                         }
                     });
+                });
+
+                $("#pretiusRevealerInline").on("click", ".pdt-enable-all", function () {
+                    apex.item('R0_REVEALER_ENABLE').setValue('Y');
+                    apex.item('R0_RELOAD_ENABLE').setValue('Y');
+                    apex.item('R0_BUILD_OPTION_ENABLE').setValue('Y');
+                    apex.item('R0_OPEN_BUILDER_ENABLE').setValue('Y');
+                    apex.item('R0_GLOW_DEBUG_ICON').setValue('Y');
+                    apex.item('R0_HOME_REPLACE_LINK').setValue('Y');
                 });
 
                 $("#pretiusRevealerInline").on("click", "#R0_SAVE", function () {
@@ -158,7 +175,7 @@ var pdt = (function () {
 
                 $("#pretiusRevealerInline").on("change", "#R0_REVEALER_ENABLE", function () {
 
-                    if ( nvl( apex.item('R0_REVEALER_ENABLE').getValue(), 'N' ) == 'N') {
+                    if (nvl(apex.item('R0_REVEALER_ENABLE').getValue(), 'N') == 'N') {
                         apex.item('R0_REVEALER_CRIPPLE_TABLOCK_CONTAINER').disable();
                         apex.item('R0_REVEALER_KB_SHORTCUT_CONTAINER').disable();
                     } else {
@@ -169,7 +186,7 @@ var pdt = (function () {
 
                 $("#pretiusRevealerInline").on("change", "#R0_RELOAD_ENABLE", function () {
 
-                    if ( nvl( apex.item('R0_RELOAD_ENABLE').getValue(), 'N' ) == 'N') {
+                    if (nvl(apex.item('R0_RELOAD_ENABLE').getValue(), 'N') == 'N') {
                         apex.item('R0_RELOAD_DEVELOPERS_ONLY_CONTAINER').disable();
                         apex.item('R0_RELOAD_BYPASS_UNCHANGED_CONTAINER').disable();
                         apex.item('R0_RELOAD_KB_SHORTCUT_CONTAINER').disable();
@@ -182,10 +199,23 @@ var pdt = (function () {
 
                 $("#pretiusRevealerInline").on("change", "#R0_BUILD_OPTION_ENABLE", function () {
 
-                    if ( nvl( apex.item('R0_BUILD_OPTION_ENABLE').getValue(), 'N' ) == 'N') {
-                         apex.item('R0_BUILD_OPTION_DURATION_CONTAINER').disable();
+                    if (nvl(apex.item('R0_BUILD_OPTION_ENABLE').getValue(), 'N') == 'N') {
+                        apex.item('R0_BUILD_OPTION_DURATION_CONTAINER').disable();
                     } else {
                         apex.item('R0_BUILD_OPTION_DURATION_CONTAINER').enable();
+                    }
+                });
+
+                $("#pretiusRevealerInline").on("change", "#R0_OPEN_BUILDER_ENABLE", function () {
+
+                    if (nvl(apex.item('R0_OPEN_BUILDER_ENABLE').getValue(), 'N') == 'N') {
+                        apex.item('R0_OPEN_BUILDER_KB_SHORTCUT_CONTAINER').disable();
+                        apex.item('R0_OPEN_BUILDER_CACHE_CONTAINER').disable();
+                        apex.item('R0_OPEN_BUILDER_APP_LIMIT_CONTAINER').disable();
+                    } else {
+                        apex.item('R0_OPEN_BUILDER_KB_SHORTCUT_CONTAINER').enable();
+                        apex.item('R0_OPEN_BUILDER_CACHE_CONTAINER').enable();
+                        apex.item('R0_OPEN_BUILDER_APP_LIMIT_CONTAINER').enable();
                     }
                 });
 
@@ -193,10 +223,76 @@ var pdt = (function () {
         }
     }
 
+    function optionsJS() {
+
+        apex.widget.yesNo("R0_REVEALER_ENABLE", "SWITCH_CB");
+        apex.widget.yesNo("R0_REVEALER_CRIPPLE_TABLOCK", "SWITCH_CB");
+        apex.widget.yesNo("R0_RELOAD_ENABLE", "SWITCH_CB");
+        apex.widget.yesNo("R0_RELOAD_DEVELOPERS_ONLY", "SWITCH_CB");
+        apex.widget.yesNo("R0_RELOAD_BYPASS_UNCHANGED", "SWITCH_CB");
+        apex.widget.yesNo("R0_BUILD_OPTION_ENABLE", "SWITCH_CB");
+        apex.widget.yesNo("R0_OPEN_BUILDER_ENABLE", "SWITCH_CB");
+        apex.widget.yesNo("R0_GLOW_DEBUG_ICON", "SWITCH_CB");
+        apex.widget.yesNo("R0_OPEN_BUILDER_CACHE", "SWITCH_CB");
+        apex.widget.yesNo("R0_OPEN_BUILDER_APP_LIMIT", "SWITCH_CB");
+        apex.widget.yesNo("R0_HOME_REPLACE_LINK", "SWITCH_CB");
+
+        $('.pretiusRevealerInlineToTheTop .t-ButtonRegion-col--right .t-ButtonRegion-buttons').empty();
+        $('.pretiusRevealerInlineToTheTop .t-ButtonRegion-col--left .t-ButtonRegion-buttons').empty();
+        $('#pretiusRevealerInline #R0_SAVE').appendTo($('.t-ButtonRegion-col--right .t-ButtonRegion-buttons'));
+        $('#pretiusRevealerInline #R0_CANCEL').appendTo($('.t-ButtonRegion-col--left .t-ButtonRegion-buttons'));
+        $('.pretiusRevealerInlineToTheTop #pretiusRevealerButtonRegion').show();
+
+        var JSONsettings = pdt.JSONsettings;
+
+        if (!$.isEmptyObject(JSONsettings)) {
+            apex.item("R0_REVEALER_ENABLE").setValue(pdt.getSetting('revealer.enable'));
+            apex.item("R0_REVEALER_CRIPPLE_TABLOCK").setValue(pdt.nvl(pdt.getSetting('revealer.tablockdeactivate'), 'Y'));
+            apex.item("R0_REVEALER_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('revealer.kb'), 'Q'));
+
+            apex.item("R0_RELOAD_ENABLE").setValue(pdt.getSetting('reloadframe.enable'));
+            apex.item("R0_RELOAD_DEVELOPERS_ONLY").setValue(pdt.getSetting('reloadframe.bypasswarnonunsaved'));
+            apex.item("R0_RELOAD_BYPASS_UNCHANGED").setValue(pdt.nvl(pdt.getSetting('reloadframe.bypasswarnonunsaved'), 'Y'));
+            apex.item("R0_RELOAD_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('reloadframe.kb'), 'R'));
+
+            apex.item("R0_BUILD_OPTION_ENABLE").setValue(pdt.getSetting('buildoptionhightlight.enable'));
+            apex.item("R0_BUILD_OPTION_DURATION").setValue(pdt.nvl(pdt.getSetting('buildoptionhightlight.duration'), '6'));
+
+            apex.item("R0_OPEN_BUILDER_ENABLE").setValue(pdt.getSetting('devbar.openbuilderenable'));
+            apex.item("R0_OPEN_BUILDER_CACHE").setValue(pdt.getSetting('devbar.openbuildercache'));
+            apex.item("R0_OPEN_BUILDER_APP_LIMIT").setValue(pdt.getSetting('devbar.openbuilderapplimit'));
+            apex.item("R0_OPEN_BUILDER_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('devbar.openbuilderkb'), 'W'));
+            apex.item("R0_GLOW_DEBUG_ICON").setValue(pdt.getSetting('devbar.glowdebugenable'));
+            apex.item("R0_HOME_REPLACE_LINK").setValue(pdt.getSetting('devbar.homereplacelink'));
+
+        }
+
+        $("#pretiusRevealerInline #R0_REVEALER_ENABLE").trigger("change");
+        $("#pretiusRevealerInline #R0_RELOAD_ENABLE").trigger("change");
+        $("#pretiusRevealerInline #R0_BUILD_OPTION_ENABLE").trigger("change");
+        $("#pretiusRevealerInline #R0_OPEN_BUILDER_ENABLE").trigger("change");
+        $("#pretiusRevealerInline #R0_GLOW_DEBUG_ICON").trigger("change");
+        $("#pretiusRevealerInline #R0_HOME_REPLACE_LINK").trigger("change");
+
+        if (pdt.opt.configurationTest == "false") {
+            $('#pretiusDeveloperToolWarning').show();
+        }
+
+        if (navigator.userAgent.indexOf("Mac") !== -1) {
+            // running on a Mac
+            var vMacKbText = 'Keyboard Shortcut control+option+...';
+            $('#R0_REVEALER_KB_SHORTCUT_LABEL').text(vMacKbText);
+            $('#R0_RELOAD_KB_SHORTCUT_LABEL').text(vMacKbText);
+            $('#R0_ROPEN_BUILDER_KB_SHORTCUT_LABEL').text(vMacKbText);
+        }
+    }
+
     function apexDevToolbarPretiusDeveloperToolOptions(pMode) {
 
         apex.theme.openRegion($('#pretiusRevealerInline'));
-        $("#pretiusRevealerInline .t-DialogRegion-body").load(pdt.opt.filePrefix + "pretiusDeveloperTool.html");
+        $("#pretiusRevealerInline .t-DialogRegion-body").load(pdt.opt.filePrefix + "pretiusDeveloperTool.html", function () {
+            optionsJS();
+        });
 
         $('#pretiusRevealerInline #pretiusContent').empty();
         $('.pretiusRevealerInlineToTheTop .ui-dialog-title').text(' Pretius Developer Tool: Options');
@@ -265,7 +361,7 @@ var pdt = (function () {
         $("#pretiusRevealerInline").each(function () {
             var inst$ = $(this),
                 isPopup = inst$.hasClass("js-regionPopup"),
-                size = ["js-dialog-size600x400", viewportWidth, viewportHeight],
+                size =  ["js-dialog-size600x400", viewportWidth, viewportHeight ],
                 relPos = /js-popup-pos-(\w+)/.exec(this.className),
                 parent = inst$.attr("data-parent-element"),
                 options = {
@@ -349,7 +445,9 @@ var pdt = (function () {
                 });
         });
 
-        $("#pretiusRevealerInline").parent().find(".ui-dialog-title").addClass('fa fa-hipster');
+        var revealerIconHtml = '<img src="' + pdt.opt.filePrefix + '/revealer/fontApexHipster.svg' + '" class="tablockHipsterIcon margin-right-sm"/>';
+        $("#pretiusRevealerInline").parent().find(".ui-dialog-title").addClass('fa').before(revealerIconHtml);
+
     }
 
     var render = function render(options) {
@@ -358,15 +456,15 @@ var pdt = (function () {
         pdt.opt = options.opt;
         pdt.JSONsettings = JSON.parse(localStorage.getItem("pretiusDeveloperTool"));
 
-        apex.debug.log(options.opt.debugPrefix + 'render', options);
+        apex.debug.info(options.opt.debugPrefix + 'render', options);
 
 
-        if ( pdt.getSetting('optout.status') != 'Y') {
+        if (pdt.getSetting('optout.status') != 'Y') {
 
             addPretiusOptions();
 
             if (!$.isEmptyObject(pdt.JSONsettings)) {
-    
+
                 // Revealer
                 if (getSetting('revealer.enable') == 'Y') {
                     pdt.pretiusContentRevealer.addHipster();
@@ -382,8 +480,25 @@ var pdt = (function () {
                     pdt.contentBuildOptionHighlight.activate();
                 }
 
+                // OpenBuilder
+                if (getSetting('devbar.openbuilderenable') == 'Y') {
+                    pdt.pretiusContentDevBar.activateOpenBuilder();
+                }
+
+                // GlowDebug
+                if (getSetting('devbar.glowdebugenable') == 'Y') {
+                    pdt.pretiusContentDevBar.activateGlowDebug();
+                }
+
+                // HomeReplace
+                if (getSetting('devbar.homereplacelink') == 'Y') {
+                    pdt.pretiusContentDevBar.activateHomeReplace()
+                }
+
             }
         }
+
+        pdt.fixToolbarWidth();
 
     };
 
@@ -391,19 +506,19 @@ var pdt = (function () {
 
         pdt.pageDebugLevel = apex.item('pdebug').getValue();
         apex.item('pdebug').setValue('LEVEL2');
-        
+
     }
 
     var unCloakDebugLevel = function unCloakDebugLevel() {
-        if (pdt.pageDebugLevel != undefined ) {
-            apex.item('pdebug').setValue( pdt.pageDebugLevel );
+        if (pdt.pageDebugLevel != undefined) {
+            apex.item('pdebug').setValue(pdt.pageDebugLevel);
         }
     }
 
-    var ajaxErrorHandler = function ajaxErrorHandler (pData, pErr, pErrorMessage) {
-        
+    var ajaxErrorHandler = function ajaxErrorHandler(pData, pErr, pErrorMessage) {
+
         pdt.unCloakDebugLevel();
-        
+
         apex.message.clearErrors();
         apex.message.showErrors([{
             type: "error",
@@ -411,12 +526,12 @@ var pdt = (function () {
             message: pErrorMessage + '<br>Please check browser console.',
             unsafe: false
         }]);
-        
-        apex.debug.log(pData, pErr, pErrorMessage);
+
+        apex.debug.info(pData, pErr, pErrorMessage);
     }
 
     var optIn = function optIn() {
-        var j = JSON.parse( localStorage.getItem("pretiusDeveloperTool") );
+        var j = JSON.parse(localStorage.getItem("pretiusDeveloperTool"));
         if (j != null) {
             j.settings.optout.status = 'N';
             localStorage.setItem("pretiusDeveloperTool", JSON.stringify(j));

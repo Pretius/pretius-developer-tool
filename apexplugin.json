@@ -1,16 +1,15 @@
 {
   "name" : "Pretius Developer Tool",
-  "version" : "21.2.5",
+  "version" : "22.2.3",
   "description" : "Provides APEX Developers with several useful features including Revealer, Reload Frame and Visual Build Options",
-  "keywords" : ["developer", "tool", "toolbar", "debug", "revealer", "build options", "reload", "reload frame"],
+  "keywords" : ["developer", "tool", "toolbar", "debug", "revealer", "build options", "reload", "reload frame", "page desinger", "tablock"],
   "homepage" : "https://github.com/Pretius/pretius-developer-tool",
   "bugs" : {
     "url" : "https://github.com/Pretius/pretius-developer-tool/issues",
     "email" : "mmulvaney@pretius.com"
   },
   "license" : "MIT",
-  "commercial" : "No",
-  "commercially_supported": "Yes",
+  "commercial" : "Yes",
   "author" : {
     "name" : "Matt Mulvaney",
     "email" : "mmulvaney@pretius.com",
@@ -25,11 +24,10 @@
  "oracle" : {
     "versions" : ["11.2.0.1", "12.1.0.1"],
     "apex" : {
-      "versions" : ["20.2.0","21.1.0","21.2.0"],
+      "versions" : ["21.2.0","22.1.0","22.2.0"],
       "plugin" : {
         "internalName" : "COM.PRETIUS.APEX.DEVTOOL",
         "type" : "dynamic action",
-        "demo" : "https://github.com/Pretius/pretius-developer-tool",
         "previewImage" : "https://raw.githubusercontent.com/Pretius/pretius-developer-tool/master/img/preview.gif"
       }
     }

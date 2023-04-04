@@ -1,44 +1,3 @@
-<script type="application/javascript">
-
-    apex.widget.yesNo("R0_REVEALER_ENABLE", "SWITCH_CB");
-    apex.widget.yesNo("R0_REVEALER_CRIPPLE_TABLOCK", "SWITCH_CB");
-    apex.widget.yesNo("R0_RELOAD_ENABLE", "SWITCH_CB");
-    apex.widget.yesNo("R0_RELOAD_DEVELOPERS_ONLY", "SWITCH_CB");
-    apex.widget.yesNo("R0_RELOAD_BYPASS_UNCHANGED", "SWITCH_CB");
-    apex.widget.yesNo("R0_BUILD_OPTION_ENABLE", "SWITCH_CB");
-
-    $('.pretiusRevealerInlineToTheTop .t-ButtonRegion-col--right .t-ButtonRegion-buttons').empty();
-    $('.pretiusRevealerInlineToTheTop .t-ButtonRegion-col--left .t-ButtonRegion-buttons').empty();
-    $('#pretiusRevealerInline #R0_SAVE').appendTo($('.t-ButtonRegion-col--right .t-ButtonRegion-buttons'));
-    $('#pretiusRevealerInline #R0_CANCEL').appendTo($('.t-ButtonRegion-col--left .t-ButtonRegion-buttons'));
-    $('.pretiusRevealerInlineToTheTop #pretiusRevealerButtonRegion').show();
-
-    var JSONsettings = pdt.JSONsettings;
-
-    if (!$.isEmptyObject(JSONsettings)) {
-        apex.item("R0_REVEALER_ENABLE").setValue(pdt.getSetting('revealer.enable'));
-        apex.item("R0_REVEALER_CRIPPLE_TABLOCK").setValue(pdt.nvl(pdt.getSetting('revealer.tablockdeactivate'), 'Y'));
-        apex.item("R0_REVEALER_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('revealer.kb'), 'Q'));
-
-        apex.item("R0_RELOAD_ENABLE").setValue(pdt.getSetting('reloadframe.enable'));
-        apex.item("R0_RELOAD_DEVELOPERS_ONLY").setValue(pdt.getSetting('reloadframe.bypasswarnonunsaved'));
-        apex.item("R0_RELOAD_BYPASS_UNCHANGED").setValue(pdt.nvl(pdt.getSetting('reloadframe.bypasswarnonunsaved'), 'Y'));
-        apex.item("R0_RELOAD_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('reloadframe.kb'), 'R'));
-
-        apex.item("R0_BUILD_OPTION_ENABLE").setValue( pdt.getSetting('buildoptionhightlight.enable'));
-        apex.item("R0_BUILD_OPTION_DURATION").setValue( pdt.nvl(pdt.getSetting('buildoptionhightlight.duration'), '6'));
-        
-    }
-
-    $("#pretiusRevealerInline #R0_REVEALER_ENABLE").trigger("change");
-    $("#pretiusRevealerInline #R0_RELOAD_ENABLE").trigger("change");
-    $("#pretiusRevealerInline #R0_BUILD_OPTION_ENABLE").trigger("change");
-
-    if (pdt.opt.configurationTest == "false") {
-        $('#pretiusDeveloperToolWarning').show();
-    }
-
-</script>
 <div class="row">
     <div class="col col-12 apex-col-auto">
         <div class="t-Alert t-Alert--colorBG t-Alert--horizontal t-Alert--defaultIcons t-Alert--warning t-Alert--accessibleHeading"
@@ -58,7 +17,9 @@
                         To attain the highest security, it is highly recommended that:
                         <ul>
                             <li>You have one and only one Pretius Developer Tool Dynamic True Action on Page Zero</li>
-                            <li>The Dynamic Action is associated with a <a href="https://www.youtube.com/watch?v=XOLCrHSRRrM&t=84s" target="_blank">Build Option that is set to Exclude on Export</a>
+                            <li>The Dynamic Action is associated with a <a
+                                    href="https://www.youtube.com/watch?v=XOLCrHSRRrM&t=84s" target="_blank">Build
+                                    Option that is set to Exclude on Export</a>
                             </li>
                         </ul>
                         Whilst the Plugin will still continue to function, this message will nag you until you take the
@@ -70,7 +31,24 @@
         </div>
     </div>
 </div>
-<p class="margin-bottom-sm optOutText" style="font-size: smaller;">Don't want to use Pretius Developer Tool? <a href="javascript:void(0)" class="optOutLink">Opt-Out</a> here</p>
+
+<div class="row">
+    <div class="col col-6 apex-col-auto">
+        <div>
+            <p class="margin-bottom-sm optOutText margin-left-sm" style="font-size: smaller;">Don't want to use Pretius Developer Tool?
+                <a href="javascript:void(0)" class="optOutLink">Opt-Out</a> here
+            </p>
+        </div>
+    </div>
+    <div class="col col-6 apex-col-auto">
+        <div>
+            <p class="margin-bottom-sm optOutText u-pullRight margin-right-sm" style="font-size: smaller;">Click to
+                <a href="javascript:void(0)" class="pdt-enable-all">Enable All</a> settings
+            </p>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col col-12 apex-col-auto">
         <div id="pretiusDeveloperToolOptions">
@@ -83,7 +61,8 @@
                                 <div class="t-Region-headerItems t-Region-headerItems--title">
                                     <span class="t-Region-headerIcon"><span class="t-Icon "
                                             aria-hidden="true"></span></span>
-                                    <h2 class="t-Region-title" id="pretiusDeveloperToolOptionsRevealer_heading">Revealer
+                                    <h2 class="t-Region-title" id="pretiusDeveloperToolOptionsRevealer_heading">
+                                        Revealer
                                     </h2>
                                 </div>
                                 <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
@@ -111,10 +90,9 @@
                                                                     name="R0_REVEALER_ENABLE" value="Y"
                                                                     data-on-label="On" data-off-value="N"
                                                                     data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div><span
-                                                            id="R0_REVEALER_ENABLE_error_placeholder"
-                                                            class="a-Form-error"
-                                                            data-template-id="4320804979404692_ET"></span>
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_REVEALER_ENABLE_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,7 +104,9 @@
                                                     <div class="t-Form-labelContainer col col-8">
                                                         <label for="R0_REVEALER_CRIPPLE_TABLOCK"
                                                             id="R0_REVEALER_CRIPPLE_TABLOCK_LABEL"
-                                                            class="t-Form-label">Deactivate <a href="https://bit.ly/APEXTabLock" target="_blank">Tablock</a> Revealer</label>
+                                                            class="t-Form-label">Deactivate <a
+                                                                href="https://bit.ly/APEXTabLock"
+                                                                target="_blank">Tablock</a> Revealer</label>
                                                     </div>
                                                     <div class="t-Form-inputContainer col col-4">
                                                         <div class="t-Form-itemWrapper"><span class="a-Switch"><input
@@ -135,10 +115,9 @@
                                                                     data-on-label="On" data-off-value="N"
                                                                     data-off-label="Off" checked="checked"
                                                                     data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div><span
-                                                            id="R0_REVEALER_CRIPPLE_TABLOCK_error_placeholder"
-                                                            class="a-Form-error"
-                                                            data-template-id="4320804979404692_ET"></span>
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_REVEALER_CRIPPLE_TABLOCK_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,7 +129,8 @@
                                                     <div class="t-Form-labelContainer col col-8">
                                                         <label for="R0_REVEALER_KB_SHORTCUT"
                                                             id="R0_REVEALER_KB_SHORTCUT_LABEL"
-                                                            class="t-Form-label">Keyboard Shortcut Ctrl+Alt+...</label>
+                                                            class="t-Form-label">Keyboard Shortcut
+                                                            Ctrl+Alt+...</label>
                                                     </div>
                                                     <div class="t-Form-inputContainer col col-4">
                                                         <div class="t-Form-itemWrapper"><input type="text"
@@ -159,8 +139,7 @@
                                                                 class="text_field apex-item-text" value="Q" size="1"
                                                                 maxlength="1" data-np-checked="1"></div><span
                                                             id="R0_REVEALER_KB_SHORTCUT_error_placeholder"
-                                                            class="a-Form-error"
-                                                            data-template-id="4320804979404692_ET"></span>
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -211,9 +190,9 @@
                                                                     name="R0_RELOAD_ENABLE" value="Y" data-on-label="On"
                                                                     data-off-value="N" data-off-label="Off"
                                                                     data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div><span
-                                                            id="R0_RELOAD_ENABLE_error_placeholder" class="a-Form-error"
-                                                            data-template-id="4320804979404692_ET"></span>
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_RELOAD_ENABLE_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -234,10 +213,9 @@
                                                                     data-on-label="On" data-off-value="N"
                                                                     data-off-label="Off" checked="checked"
                                                                     data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div><span
-                                                            id="R0_RELOAD_DEVELOPERS_ONLY_error_placeholder"
-                                                            class="a-Form-error"
-                                                            data-template-id="4320804979404692_ET"></span>
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_RELOAD_DEVELOPERS_ONLY_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -259,10 +237,9 @@
                                                                     data-on-label="On" data-off-value="N"
                                                                     data-off-label="Off" checked="checked"
                                                                     data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div><span
-                                                            id="R0_RELOAD_BYPASS_UNCHANGED_error_placeholder"
-                                                            class="a-Form-error"
-                                                            data-template-id="4320804979404692_ET"></span>
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_RELOAD_BYPASS_UNCHANGED_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,7 +251,8 @@
                                                     <div class="t-Form-labelContainer col col-8">
                                                         <label for="R0_RELOAD_KB_SHORTCUT"
                                                             id="R0_RELOAD_KB_SHORTCUT_LABEL"
-                                                            class="t-Form-label">Keyboard Shortcut Ctrl+Alt+...</label>
+                                                            class="t-Form-label">Keyboard Shortcut
+                                                            Ctrl+Alt+...</label>
                                                     </div>
                                                     <div class="t-Form-inputContainer col col-4">
                                                         <div class="t-Form-itemWrapper"><input type="text"
@@ -282,8 +260,7 @@
                                                                 class="text_field apex-item-text" value="R" size="1"
                                                                 maxlength="1" data-np-checked="1"></div><span
                                                             id="R0_RELOAD_KB_SHORTCUT_error_placeholder"
-                                                            class="a-Form-error"
-                                                            data-template-id="4320804979404692_ET"></span>
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,11 +280,15 @@
 
                 <div class="row">
                     <div class="col col-6 ">
-                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding" id="pretiusDeveloperToolOptionsBuildOptionsHighlight">
+                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
+                            id="pretiusDeveloperToolOptionsBuildOptionsHighlight">
                             <div class="t-Region-header">
                                 <div class="t-Region-headerItems t-Region-headerItems--title">
-                                    <span class="t-Region-headerIcon"><span class="t-Icon " aria-hidden="true"></span></span>
-                                    <h2 class="t-Region-title" id="pretiusDeveloperToolOptionsBuildOptionsHighlight_heading">Build Option Highlight</h2>
+                                    <span class="t-Region-headerIcon"><span class="t-Icon "
+                                            aria-hidden="true"></span></span>
+                                    <h2 class="t-Region-title"
+                                        id="pretiusDeveloperToolOptionsBuildOptionsHighlight_heading">Build Option
+                                        Highlight</h2>
                                 </div>
                                 <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
                                         class="js-maximizeButtonContainer"></span></div>
@@ -324,16 +305,19 @@
                                                 <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
                                                     id="R0_BUILD_OPTION_ENABLE_CONTAINER">
                                                     <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_BUILD_OPTION_ENABLE" id="R0_BUILD_OPTION_ENABLE_LABEL"
+                                                        <label for="R0_BUILD_OPTION_ENABLE"
+                                                            id="R0_BUILD_OPTION_ENABLE_LABEL"
                                                             class="t-Form-label">Enable</label>
                                                     </div>
                                                     <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input type="checkbox"
-                                                                    id="R0_BUILD_OPTION_ENABLE" name="R0_BUILD_OPTION_ENABLE" value="Y"
-                                                                    data-on-label="On" data-off-value="N" data-off-label="Off"
-                                                                    data-np-checked="1"><span class="a-Switch-toggle"></span></span>
-                                                        </div><span id="R0_BUILD_OPTION_ENABLE_error_placeholder" class="a-Form-error"
-                                                            data-template-id=""></span>
+                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
+                                                                    type="checkbox" id="R0_BUILD_OPTION_ENABLE"
+                                                                    name="R0_BUILD_OPTION_ENABLE" value="Y"
+                                                                    data-on-label="On" data-off-value="N"
+                                                                    data-off-label="Off" data-np-checked="1"><span
+                                                                    class="a-Switch-toggle"></span></span>
+                                                        </div><span id="R0_BUILD_OPTION_ENABLE_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -343,25 +327,193 @@
                                                 <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--number-field "
                                                     id="R0_BUILD_OPTION_DURATION_CONTAINER">
                                                     <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_BUILD_OPTION_DURATION" id="R0_BUILD_OPTION_DURATION_LABEL"
+                                                        <label for="R0_BUILD_OPTION_DURATION"
+                                                            id="R0_BUILD_OPTION_DURATION_LABEL"
                                                             class="t-Form-label">Fade after x Seconds</label>
                                                     </div>
                                                     <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><input type="text" id="R0_BUILD_OPTION_DURATION"
+                                                        <div class="t-Form-itemWrapper"><input type="text"
+                                                                id="R0_BUILD_OPTION_DURATION"
                                                                 name="R0_BUILD_OPTION_DURATION"
                                                                 aria-describedby="R0_BUILD_OPTION_DURATION_inline_help"
-                                                                class="number_field apex-item-text" value="6" size="2" maxlength="2"
-                                                                style="text-align:right" data-np-checked="1"></div><span
-                                                            class="t-Form-inlineHelp"><span id="R0_BUILD_OPTION_DURATION_inline_help">0
+                                                                class="number_field apex-item-text" value="6" size="2"
+                                                                maxlength="2" style="text-align:right"
+                                                                data-np-checked="1"></div><span
+                                                            class="t-Form-inlineHelp"><span
+                                                                id="R0_BUILD_OPTION_DURATION_inline_help">0
                                                                 to never fade out</span></span><span
-                                                            id="R0_BUILD_OPTION_DURATION_error_placeholder" class="a-Form-error"
-                                                            data-template-id=""></span>
+                                                            id="R0_BUILD_OPTION_DURATION_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                
+
+                                </div>
+                                <div class="t-Region-buttons t-Region-buttons--bottom">
+                                    <div class="t-Region-buttons-left"></div>
+                                    <div class="t-Region-buttons-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+
+                    <div class="col col-6 apex-col-auto">
+                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
+                            id="pretiusDeveloperToolOptionsOpenBuilder">
+                            <div class="t-Region-header">
+                                <div class="t-Region-headerItems t-Region-headerItems--title">
+                                    <span class="t-Region-headerIcon"><span class="t-Icon "
+                                            aria-hidden="true"></span></span>
+                                    <h2 class="t-Region-title" id="pretiusDeveloperToolOptionsOpenBuilder_heading">
+                                        Developer Bar Enhancements</h2>
+                                </div>
+                                <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
+                                        class="js-maximizeButtonContainer"></span></div>
+                            </div>
+                            <div class="t-Region-bodyWrap">
+                                <div class="t-Region-buttons t-Region-buttons--top">
+                                    <div class="t-Region-buttons-left"></div>
+                                    <div class="t-Region-buttons-right"></div>
+                                </div>
+                                <div class="t-Region-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col col-12 apex-col-auto">
+                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                    id="R0_HOME_REPLACE_CONTAINER">
+                                                    <div class="t-Form-labelContainer col col-8">
+                                                        <label for="R0_HOME_REPLACE_LINK" id="R0_HOME_REPLACE_LINK_LABEL"
+                                                            class="t-Form-label"><span class="a-Icon icon-home" aria-hidden="true"></span>Home opens Shared Components</label>
+                                                    </div>
+                                                    <div class="t-Form-inputContainer col col-4">
+                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
+                                                                    type="checkbox" id="R0_HOME_REPLACE_LINK"
+                                                                    name="R0_HOME_REPLACE_LINK" value="Y"
+                                                                    data-on-label="On" data-off-value="N"
+                                                                    data-off-label="Off" data-np-checked="1"><span
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_HOME_REPLACE_LINK_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col col-12 apex-col-auto">
+                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                    id="R0_GLOW_DEBUG_ICON_CONTAINER">
+                                                    <div class="t-Form-labelContainer col col-8">
+                                                        <label for="R0_GLOW_DEBUG_ICON" id="R0_GLOW_DEBUG_ICON_LABEL"
+                                                            class="t-Form-label">Glow
+                                                            Debug Icon</label>
+                                                    </div>
+                                                    <div class="t-Form-inputContainer col col-4">
+                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
+                                                                    type="checkbox" id="R0_GLOW_DEBUG_ICON"
+                                                                    name="R0_GLOW_DEBUG_ICON" value="Y"
+                                                                    data-on-label="On" data-off-value="N"
+                                                                    data-off-label="Off" data-np-checked="1"><span
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_GLOW_DEBUG_ICON_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col col-12 apex-col-auto">
+                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                    id="R0_OPEN_BUILDER_ENABLE_CONTAINER">
+                                                    <div class="t-Form-labelContainer col col-8">
+                                                        <label for="R0_OPEN_BUILDER_ENABLE"
+                                                            id="R0_OPEN_BUILDER_ENABLE_LABEL" class="t-Form-label">Spotlight
+                                                            Page Designer Access</label>
+                                                    </div>
+                                                    <div class="t-Form-inputContainer col col-4">
+                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
+                                                                    type="checkbox" id="R0_OPEN_BUILDER_ENABLE"
+                                                                    name="R0_OPEN_BUILDER_ENABLE" value="Y"
+                                                                    data-on-label="On" data-off-value="N"
+                                                                    data-off-label="Off" data-np-checked="1"><span
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_OPEN_BUILDER_ENABLE_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12 apex-col-auto">
+                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                    id="R0_OPEN_BUILDER_CACHE_CONTAINER">
+                                                    <div class="t-Form-labelContainer col col-8">
+                                                        <label for="R0_OPEN_BUILDER_CACHE"
+                                                            id="R0_OPEN_BUILDER_CACHE_LABEL" class="t-Form-label">Use Cache (for large workspaces)</label>
+                                                    </div>
+                                                    <div class="t-Form-inputContainer col col-4">
+                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
+                                                                    type="checkbox" id="R0_OPEN_BUILDER_CACHE"
+                                                                    name="R0_OPEN_BUILDER_CACHE" value="Y"
+                                                                    data-on-label="On" data-off-value="N"
+                                                                    data-off-label="Off" data-np-checked="1"><span
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_OPEN_BUILDER_CACHE_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12 apex-col-auto">
+                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                    id="R0_OPEN_BUILDER_APP_LIMIT_CONTAINER">
+                                                    <div class="t-Form-labelContainer col col-8">
+                                                        <label for="R0_OPEN_BUILDER_APP_LIMIT"
+                                                            id="R0_OPEN_BUILDER_APP_LIMIT_LABEL" class="t-Form-label">Limit to Current App (for Performance)</label>
+                                                    </div>
+                                                    <div class="t-Form-inputContainer col col-4">
+                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
+                                                                    type="checkbox" id="R0_OPEN_BUILDER_APP_LIMIT"
+                                                                    name="R0_OPEN_BUILDER_APP_LIMIT" value="Y"
+                                                                    data-on-label="On" data-off-value="N"
+                                                                    data-off-label="Off" data-np-checked="1"><span
+                                                                    class="a-Switch-toggle"></span></span></div>
+                                                        <span id="R0_OPEN_BUILDER_APP_LIMIT_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12 apex-col-auto">
+                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
+                                                    id="R0_OPEN_BUILDER_KB_SHORTCUT_CONTAINER">
+                                                    <div class="t-Form-labelContainer col col-8">
+                                                        <label for="R0_OPEN_BUILDER_KB_SHORTCUT"
+                                                            id="R0_ROPEN_BUILDER_KB_SHORTCUT_LABEL"
+                                                            class="t-Form-label">Keyboard Shortcut
+                                                            Ctrl+Alt+...</label>
+                                                    </div>
+                                                    <div class="t-Form-inputContainer col col-4">
+                                                        <div class="t-Form-itemWrapper"><input type="text"
+                                                                id="R0_OPEN_BUILDER_KB_SHORTCUT"
+                                                                name="R0_OPEN_BUILDER_KB_SHORTCUT"
+                                                                class="text_field apex-item-text" value="W" size="1"
+                                                                maxlength="1" data-np-checked="1"></div><span
+                                                            id="R0_OPEN_BUILDER_KB_SHORTCUT_inline_help"></span><span
+                                                            id="R0_OPEN_BUILDER_KB_SHORTCUT_error_placeholder"
+                                                            class="a-Form-error" data-template-id=""></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="t-Region-buttons t-Region-buttons--bottom">
                                     <div class="t-Region-buttons-left"></div>
@@ -373,14 +525,17 @@
                 </div>
 
 
+
+
                 <div class="row">
                     <div class="col col-12 apex-col-auto">
                         <div id="pretiusDeveloperToolOptionsButtons">
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                 <tbody>
                                     <tr>
-                                        <td align="left"><button class="t-Button pdt-option-button" type="button" id="R0_CANCEL"><span
-                                                    class="t-Button-label">Cancel</span></button></td>
+                                        <td align="left"><button class="t-Button pdt-option-button" type="button"
+                                                id="R0_CANCEL"><span class="t-Button-label">Cancel</span></button>
+                                        </td>
                                         <td align="right"><button
                                                 class="t-Button pdt-option-button t-Button--icon t-Button--iconRight t-Button--hot u-pullRight"
                                                 type="button" id="R0_SAVE"><span class="t-Icon t-Icon--left fa fa-save"
@@ -398,5 +553,3 @@
         </div>
     </div>
 </div>
-
-

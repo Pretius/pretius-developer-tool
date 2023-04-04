@@ -1,8 +1,8 @@
-CREATE OR REPLACE PACKAGE BODY pkg_com_pretius_apex_devtool
+create or replace PACKAGE BODY pkg_com_pretius_apex_devtool
 IS
    /*
     * Plugin:   Pretius Developer Tool
-    * Version:  21.2.5
+    * Version:  22.2.3
     *
     * License:  MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K.
     * Homepage: 
@@ -23,6 +23,8 @@ IS
     l_plugs_row           APEX_APPL_PLUGINS%ROWTYPE;
     l_configuration_test  NUMBER DEFAULT 0;
     c_plugin_name         CONSTANT VARCHAR2(24) DEFAULT 'COM.PRETIUS.APEX.DEVTOOL';
+    l_application_group   apex_applications.application_group%TYPE DEFAULT NULL;
+    c_app_id              CONSTANT apex_applications.application_id%TYPE DEFAULT v('APP_ID');
   BEGIN
     -- Debug
     IF apex_application.g_debug 
@@ -30,42 +32,71 @@ IS
       apex_plugin_util.debug_dynamic_action(p_plugin         => p_plugin,
                                             p_dynamic_action => p_dynamic_action);
     END IF;
-
     SELECT *
       INTO l_plugs_row
       FROM apex_appl_plugins
-     WHERE application_id = v('APP_ID')
+     WHERE application_id = c_app_id
        AND name = c_plugin_name;
+
+      SELECT application_group
+        INTO l_application_group
+        FROM apex_applications
+       WHERE application_id = c_app_id;
 
     SELECT count(*)
      INTO l_configuration_test
      from APEX_APPLICATION_PAGE_DA_ACTS a,
           APEX_APPLICATION_PAGE_DA d,
           apex_application_build_options b
-    where a.application_id = v('APP_ID') 
+    where a.application_id = c_app_id 
       and a.page_id = 0
       and a.action_code = 'PLUGIN_' || c_plugin_name
       and d.dynamic_action_id = a.dynamic_action_id
       and d.build_option_id = b.build_option_id
       and b.status_on_export = 'Exclude';
 
+    IF NVL( l_configuration_test, 0 ) = 0
+    THEN
+      SELECT count(*)
+      INTO l_configuration_test
+      from APEX_APPLICATION_PAGE_DA_ACTS a,
+            apex_application_build_options b
+      where a.application_id = c_app_id 
+        and a.page_id = 0
+        and a.action_code = 'PLUGIN_' || c_plugin_name
+        and a.build_option_id = b.build_option_id
+        and b.status_on_export = 'Exclude';
+    END IF;
+
     v_result.javascript_function := 
     apex_string.format(
     q'[function render() {
         pdt.render({
             da: this,
-            opt: { filePrefix: "%s",
-                   ajaxIdentifier: "%s",
-                   version: "%s",
-                   debugPrefix: "%s",
-                   configurationTest: "%s" }
-        });
+            opt: {
+                filePrefix: "%s",
+                ajaxIdentifier: "%s",
+                version: "%s",
+                debugPrefix: "%s",
+                configurationTest: "%s",
+                dynamicActionId: "%s",
+                applicationGroupName: "%s",
+                env: {
+                    APP_ID: "%s",
+                    APP_PAGE_ID: "%s"
+                    }
+                }
+            });
         }]',
     p_plugin.file_prefix,
     apex_plugin.get_ajax_identifier,
     l_plugs_row.version_identifier,
     l_plugs_row.display_name || ': ',
-    apex_debug.tochar( l_configuration_test = 1 )
+    apex_debug.tochar( l_configuration_test = 1 ),
+    p_dynamic_action.id,
+    NVL( l_application_group, '- Unassigned -'  ),
+    c_app_id,
+    v('APP_PAGE_ID')
     );
  
     RETURN v_result;
@@ -75,7 +106,6 @@ IS
       htp.p( SQLERRM );
       return v_result;
   END render;
-
   PROCEDURE ajax_build_option_excluded
   IS
     c sys_refcursor;
@@ -145,7 +175,8 @@ IS
              ELSE 
                status
              END status
-        FROM ( SELECT * FROM items 
+        FROM ( 
+              SELECT * FROM items 
                UNION ALL
                SELECT * FROM regions 
                UNION ALL
@@ -153,14 +184,12 @@ IS
                UNION ALL
                SELECT * FROM ir_cols 
                UNION ALL
-               SELECT * FROM ig_cols);
-
+               SELECT * FROM ig_cols
+               );
     apex_json.open_object;
     apex_json.write( 'items', c);
-    apex_json.close_object; 
-
+    apex_json.close_object;  
   END ajax_build_option_excluded;
-
   PROCEDURE ajax_debug_detail
   IS
     c sys_refcursor;
@@ -174,12 +203,10 @@ IS
         from APEX_DEBUG_MESSAGES  
         where  page_view_id = apex_application.g_x02 
         order by  message_timestamp, id;
-
     apex_json.open_object;
     apex_json.write( 'items', c);
     apex_json.close_object; 
   END ajax_debug_detail;
-
   PROCEDURE ajax_debug_view
   IS
     c sys_refcursor;
@@ -230,19 +257,16 @@ IS
         SELECT *
           FROM prepared 
         WHERE rownum <= 10;
-
     apex_json.open_object;
     apex_json.write( 'items', c);
     apex_json.close_object; 
   END ajax_debug_view;
-
   PROCEDURE ajax_revealer
   IS
     c sys_refcursor;
     l_subs_clob           CLOB DEFAULT NULL;
     l_host_address        VARCHAR2(512) DEFAULT NULL;
     l_host_name           VARCHAR2(512) DEFAULT NULL;
-
     PROCEDURE p_write( p_name VARCHAR2, p_value VARCHAR2 )
     IS
     BEGIN
@@ -251,7 +275,6 @@ IS
         apex_json.write('Value', p_value );
         apex_json.close_object;
     END p_write;
-
     FUNCTION f_get_host_address
     RETURN VARCHAR2
     IS
@@ -262,7 +285,6 @@ IS
       THEN
          RETURN '[Unavailable]';
     END f_get_host_address;
-
     FUNCTION f_get_host_name
     RETURN VARCHAR2
     IS
@@ -273,13 +295,9 @@ IS
       THEN
          RETURN '[Unavailable]';
     END f_get_host_name;
-
-
   BEGIN
-
     l_host_address        := f_get_host_address;
     l_host_name           := f_get_host_name;
-
         apex_json.initialize_clob_output( p_preserve => true );
         apex_json.open_array; 
             p_write( 'APEX$ROW_NUM', v('APEX$ROW_NUM') );
@@ -339,7 +357,6 @@ IS
         apex_json.close_array;
         l_subs_clob := apex_json.get_clob_output;
         apex_json.free_output;
-
     open c 
     for 
     with scrape as (
@@ -537,26 +554,99 @@ IS
             ) res
         )
         ; 
-
-
-
         apex_json.open_object;
         apex_json.write( 'items', c);
         apex_json.close_object; 
   END ajax_revealer;
+ 
+  --
+  -- Execute Spotlight GET_DATA Request
+  PROCEDURE ajax_spotlight_get_data
+  IS
+      c               sys_refcursor;
+      l_row_from_c    CONSTANT PLS_INTEGER DEFAULT apex_application.g_x03;
+      l_row_to_c      CONSTANT PLS_INTEGER DEFAULT apex_application.g_x04;
+      l_page_group_c  CONSTANT apex_applications.application_group%TYPE DEFAULT apex_application.g_x02;
+      l_app_id_c      CONSTANT apex_applications.application_id%TYPE DEFAULT NV('APP_ID');
+      l_app_page_id_c CONSTANT apex_application_pages.page_id%TYPE DEFAULT NV('APP_PAGE_ID');
+      l_session_c     CONSTANT NUMBER DEFAULT v('SESSION');
+      l_debug_c       CONSTANT VARCHAR2(32) DEFAULT v('DEBUG');
+      l_app_limit_c   CONSTANT apex_application.g_x05%TYPE DEFAULT NVL( apex_application.g_x05, 'N' );
+  BEGIN
+     OPEN c FOR
+        select * from(select * from(select a.*,row_number() over (order by null) apx$rownum 
+        from(select * from (select i.* --, count(*) over () as APEX$TOTAL_ROW_COUNT
+        from (select *
+        from ((select /*+ qb_name(apex$inner) */d.* from (
+        SELECT 'Page ' || aap.page_id || ' : ' || NVL( apex_escape.html( aap.page_title ), 'Global Page' ) ||
+               '<span style="display:none"> / "' || aap.application_id || ' ' ||  aap.page_id || '"</span>' AS "n"
+              ,'<span class="margin-right-sm pdt-apx-Spotlight-inline-link fa ' || 
+                 ( SELECT NVL2( MAX(alp.lock_id), 'u-danger-text fa-lock', 'u-success-text fa-unlock' ) x  
+                    FROM apex_application_locked_pages alp
+                   WHERE alp.application_id = aap.application_id 
+                    AND alp.page_id = aap.page_id ) ||
+                '" aria-hidden="true"></span>' ||
+                '<span class="u-color-' || TO_CHAR( MOD( aap.application_id, 45) + 1 ) || ' margin-right-sm pdt-apx-Spotlight-desc-lozenge">App ' || aap.application_id || '</span>' ||
+                '<span class="u-hot margin-right-sm pdt-apx-Spotlight-desc-lozenge" title="alias: ' || apex_escape.html(lower(aap.page_alias)) || '">' || aap.page_mode || '</span>' ||
+                '<span class="u-warning margin-right-sm pdt-apx-Spotlight-desc-lozenge">' ||  apex_util.get_since( aap.last_updated_on ) || '</span>' ||
+                '<span class="u-warning margin-right-sm pdt-apx-Spotlight-desc-lozenge">' || nvl(lower(apex_escape.html(aap.last_updated_by)),'?') || '</span>' ||
+                '<span class="u-info margin-right-sm pdt-apx-Spotlight-desc-lozenge">' ||  aap.page_function || '</span>' ||
+                '<span class="u-success margin-right-sm pdt-apx-Spotlight-desc-lozenge">' ||  nvl(lower(apex_escape.html(aap.PAGE_GROUP)), 'Unassigned') || '</span>'
+                as "d"
+              , apex_string.format('javascript:pdt.pretiusToolbar.openBuilder( ''%0'', ''%1'', ~WINDOW~ );' 
+               , aap.application_id
+               , aap.page_id ) AS "u"
+              , CASE aap.page_id WHEN 0 THEN 'fa-number-0-o' ELSE CASE aap.page_mode WHEN 'Normal' THEN 'fa-file-o' ELSE 'fa-layout-modal-header' END END 
+              AS "i",
+              'FALSE'
+              AS "s",
+              '#479d9d' 
+              AS "ic" 
+              ,':WS:' ||
+               CASE WHEN l_app_id_c = aap.application_id THEN ':APP:' END ||
+               CASE WHEN l_page_group_c = NVL( app.application_group, '- Unassigned -' ) THEN ':AG:' END 
+               AS "c"
+              ,aap.application_id || '.' || aap.page_id "x",
+               CASE aap.page_id 
+               WHEN 0 
+               THEN NULL
+               ELSE
+                 apex_string.format('<a href="#" pdt-Spotlink-url="%0" class="pdt-apx-Spotlight-inline-link"><span aria-hidden="true" class="fa fa-play-circle-o"></span></a>',
+                 'f' || '?p=' || aap.application_id || ':' || aap.page_id || ':' || l_session_c || '::' || l_debug_c || ':::'
+                 ) 
+               END 
+               AS "shortcutlink",
+               'redirect'
+               AS "t"
+        FROM apex_application_pages aap,
+             apex_applications app
+       WHERE app.application_id = aap.application_id
+         AND ( ( l_app_limit_c = 'N' )
+                OR 
+               ( l_app_limit_c = 'Y' AND
+                 app.application_id = l_app_id_c )
+             )
+      ORDER BY CASE aap.page_id WHEN l_app_page_id_c THEN -1 ELSE aap.page_id + 1 END , 
+            CASE aap.application_id WHEN l_app_id_c THEN -1 ELSE aap.application_id END
+        ) d
+        )) i 
+        ) i
+        )i 
+        )a
+        )where apx$rownum <= l_row_to_c -- Range to
+        )where apx$rownum >= l_row_from_c -- Range from
+        ;
 
+    apex_json.write(c);
+  END ajax_spotlight_get_data;
 
   FUNCTION ajax( p_dynamic_action in apex_plugin.t_dynamic_action,
                  p_plugin         in apex_plugin.t_plugin) 
   RETURN apex_plugin.t_dynamic_action_ajax_result
   IS
-
     l_result              apex_plugin.t_dynamic_action_ajax_result;
     l_ajax_type           apex_application.g_x01%TYPE DEFAULT apex_application.g_x01;
-    l_debug               VARCHAR2(32) DEFAULT v('DEBUG');
-
   BEGIN
-
     IF l_ajax_type = 'REVEALER'
     THEN
         ajax_revealer;
@@ -569,10 +659,16 @@ IS
     ELSIF l_ajax_type = 'BUILD_OPTION_EXCLUDED'
     THEN 
         ajax_build_option_excluded;
+    ELSIF l_ajax_type = 'GET_DATA' 
+    THEN
+       ajax_spotlight_get_data;
+    ELSIF l_ajax_type = 'GET_URL' 
+    THEN
+       apex_json.open_object;
+       apex_json.write('url',
+                       apex_util.prepare_url(apex_application.g_x02));
+       apex_json.close_object;
     END IF;
-
     RETURN l_result;
   END ajax;
-  
 END pkg_com_pretius_apex_devtool;
-/
