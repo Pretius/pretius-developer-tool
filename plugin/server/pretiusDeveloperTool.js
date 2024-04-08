@@ -445,7 +445,7 @@ var pdt = (function () {
                 });
         });
 
-        var revealerIconHtml = '<img src="' + pdt.opt.filePrefix + '/revealer/fontApexHipster.svg' + '" class="tablockHipsterIcon margin-right-sm"/>';
+        var revealerIconHtml = '<img src="' + pdt.opt.filePrefix + 'revealer/fontApexHipster.svg' + '" class="tablockHipsterIcon margin-right-sm"/>';
         $("#pretiusRevealerInline").parent().find(".ui-dialog-title").addClass('fa').before(revealerIconHtml);
 
     }

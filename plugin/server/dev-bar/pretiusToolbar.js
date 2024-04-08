@@ -111,12 +111,14 @@ pdt.pretiusToolbar = (function () {
         }
     }
     function openBuilder(pAppID, pPageID, pWindow) {
-        var url = $('#apexDevToolbarPage')
-            .attr('data-link')
-            .split(':')
-            .slice(0, 7)
-            .join(':');
-        url += ':' + pAppID + ',' + pPageID + ',' + pAppID + ',' + pPageID;
+        var url = $('#apexDevToolbarPage').attr('data-link');
+
+        // Replace the f values with pAppID and pPageID
+        url = url.replace(/(fb_flow_id=)[^&]*/, '$1' + pAppID);
+        url = url.replace(/(fb_flow_page_id=)[^&]*/, '$1' + pPageID);
+        url = url.replace(/(f4000_p1_flow=)[^&]*/, '$1' + pAppID);
+        url = url.replace(/(f4000_p1_page=)[^&]*/, '$1' + pPageID);
+
         if (pWindow) {
             nav.openInNewWindow(url);
         } else {
@@ -127,13 +129,17 @@ pdt.pretiusToolbar = (function () {
     }
 
     function openSharedComponents(pWindow) {
-        var urlArray = $('#apexDevToolbarPage')
-            .attr('data-link')
-            .split(':')
-            .slice(0, 3);
+        // Get the URL from the data attribute of an element with the ID 'apexDevToolbarPage'
+        var url = $('#apexDevToolbarPage').attr('data-link');
 
-        urlArray[1] = '9'; // Shared Components Page ID
-        var url = urlArray.join(':') + ':::RP:FB_FLOW_ID:' + pdt.opt.env.APP_ID;
+        // Extract session ID from the URL using regular expression
+        const sessionId = url.match(/[?&]session=(\d+)/)?.[1];
+
+        // Replace everything after '/page-designer' with '/shared-components' in the URL
+        // and append the session ID to the modified URL
+        url = url.replace(/\/page-designer[\s\S]*/, '/shared-components') + `?session=${sessionId}` + 
+             '&FB_FLOW_ID=' + pdt.opt.env.APP_ID +
+             '&FB_FLOW_PAGE_ID=' + pdt.opt.env.APP_PAGE_ID;
 
         if (pWindow) {
             nav.openInNewWindow(url);

@@ -373,7 +373,7 @@ pdt.pretiusContentRevealer = (function () {
     function apexDevToolbarRevealer(pMode) {
 
         apex.theme.openRegion($('#pretiusRevealerInline'));
-        $("#pretiusRevealerInline .t-DialogRegion-body").load(pdt.opt.filePrefix + "/revealer/revealer.html");
+        $("#pretiusRevealerInline .t-DialogRegion-body").load(pdt.opt.filePrefix + "revealer/revealer.html");
 
         $('#pretiusRevealerInline #pretiusContent').empty();
         $('.pretiusRevealerInlineToTheTop .ui-dialog-title').text(' Pretius Developer Tool: Revealer');
@@ -389,7 +389,7 @@ pdt.pretiusContentRevealer = (function () {
             if ($('#apexDevToolbarQuickEdit').length > 0 && $('#apexDevToolbarRevealer').length == 0) {
 
                 // revealerIconHtml = '<span class="a-Icon fa fa-hipster" aria-hidden="true"></span>'
-                revealerIconHtml = '<img src="' + pdt.opt.filePrefix + '/revealer/fontApexHipster-o.svg' + '"' +
+                revealerIconHtml = '<img src="' + pdt.opt.filePrefix + 'revealer/fontApexHipster-o.svg' + '"' +
                 ' onload="pdt.fixToolbarWidth();" ' +
                 ' class="tablockHipsterIcon" />';
 

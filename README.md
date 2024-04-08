@@ -16,6 +16,12 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 <br/>
 
 # Release History
+23.2.1 : April 2024
+* Fixed Revealer empty fix for APEX 23.2
+* Fixed Shared Components link fix for APEX 23.2
+* Fixed Quick Page Designer Access, Not Found fix for APEX 23.2
+* Reworked Debug Glow due to poor contrast / accessibility
+
 22.2.3 : April 2023
 * Added Quick Page Designer Access
 * Added Debug Icon Glow
@@ -32,11 +38,11 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Plugin Installation Quick-Start
 
-Minimum Version of APEX Required: **21.2.0**
+Minimum Version of APEX Required: **23.2.0**
 
 Import the plugin into your application from this location:
 
-`plugin\dynamic_action_plugin_com_pretius_apex_devtool.22.2.3.sql`
+`plugin\dynamic_action_plugin_com_pretius_apex_devtool.23.2.1.sql`
 
 After installation, follow these steps:
 1. Create a Page Load Dynamic Action on Page **0** Called "Pretius Developer Tool"

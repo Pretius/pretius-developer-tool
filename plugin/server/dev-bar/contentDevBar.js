@@ -45,7 +45,9 @@ pdt.pretiusContentDevBar = (function () {
 
         var isDebug = (['', 'NO'].indexOf(pdebug) == -1);
         if (isDebug) {
-            $('#apexDevToolbar').find('.a-Icon.icon-debug').addClass('pdt-glowDebug');
+            $('#apexDevToolbar').find('.a-Icon.icon-debug').removeClass().addClass('fa fa-bug fam-check fam-is-success');
+        } else {
+            $('#apexDevToolbar').find('.a-Icon.icon-debug').removeClass().addClass('fa fa-bug fam-x fam-is-disabled');
         }
 
     }
