@@ -7,7 +7,7 @@ pdt.contentBuildOptionHighlight = (function () {
 
         var colourCode = 194;
 
-        if (pStatus == 'Exclude') {
+        if (pStatus == 'E') {
             colourCode = 0;
         }
 
@@ -32,6 +32,7 @@ pdt.contentBuildOptionHighlight = (function () {
                         $('#' + itemName + pSuffix).css('filter', 'drop-shadow( 1px 1px 6px hsl(' + colourCode + ',100%,' + ii + '%)');
                         if (ii >= 99) {
                             $('#' + itemName + pSuffix).removeClass('pretiusDeveloperToolRegionPadding');
+                            $('#' + itemName + pSuffix).css('filter', 'inherit');
                         }
                     }, dd);
                 })(i, d);
@@ -50,30 +51,15 @@ pdt.contentBuildOptionHighlight = (function () {
             fadeOutDuration = 6000; // Default
         };
 
-        pdt.cloakDebugLevel();
-
-        apex.server.plugin(pdt.opt.ajaxIdentifier, {
-            x01: 'BUILD_OPTION_EXCLUDED'
-        }, {
-            success: function (data) {
-                pdt.unCloakDebugLevel();
-                highlight(data.items);
-            }
-            ,
-            error: function (jqXHR, textStatus, errorThrown) {
-                // handle error
-                pdt.unCloakDebugLevel();
-                pdt.ajaxErrorHandler(jqXHR, textStatus, errorThrown);
-            }
-        });
+        highlight(pdt.opt.buildOption.items);
 
     }
 
     function highlight(pSelectors) {
         for (var i = 0; i < pSelectors.length; i++) {
-            var itemName = pSelectors[i].ITEM_NAME;
-            var itemStatus = pSelectors[i].STATUS;
-            var itemType = pSelectors[i].PAGE_ITEM_TYPE;
+            var itemName = pSelectors[i].ITN;
+            var itemStatus = pSelectors[i].STA;
+            var itemType = pSelectors[i].PIT;
             var suffix = '';
 
             if (itemType == 'ITEM') {

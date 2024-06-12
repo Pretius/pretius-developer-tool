@@ -128,12 +128,20 @@ pdt.pretiusToolbar = (function () {
         }
     }
 
-    function openSharedComponents(pWindow) {
-        // Get the URL from the data attribute of an element with the ID 'apexDevToolbarPage'
-        var url = $('#apexDevToolbarPage').attr('data-link');
+    function getBuilderSessionid() {
+        var url = window.$('#apexDevToolbarPage').attr('data-link');
 
         // Extract session ID from the URL using regular expression
         const sessionId = url.match(/[?&]session=(\d+)/)?.[1];
+
+        return sessionId;
+    }
+
+
+    function openSharedComponents(pWindow) {
+        // Get the URL from the data attribute of an element with the ID 'apexDevToolbarPage'
+        var url = $('#apexDevToolbarPage').attr('data-link');
+        const sessionId = getBuilderSessionid();
 
         // Replace everything after '/page-designer' with '/shared-components' in the URL
         // and append the session ID to the modified URL
@@ -150,6 +158,7 @@ pdt.pretiusToolbar = (function () {
     }
     return {
         openBuilder: openBuilder,
-        openSharedComponents: openSharedComponents
+        openSharedComponents: openSharedComponents,
+        getBuilderSessionid: getBuilderSessionid
     };
 })();

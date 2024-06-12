@@ -3,6 +3,11 @@
 /* pretius #EB1C23 */
 /* Pretius #1F90CB */
 
+
+#pretiusRevealerInline .tbrvd-bottom {
+  border-bottom: 1px dashed #1F90CB; /* Blue border on the top */
+}
+
 #pretiusRevealerInline table {
   border-collapse: collapse;
   width: 100%;
@@ -14,7 +19,9 @@
 }
 
 #pretiusRevealerInline .alternate-rows-tl {
-  background-color: #f2f2f2 !important
+  /* background-color: #f2f2f2 !important */
+  background-color: var(--ut-report-cell-alt-background-color);
+  color: var(--ut-component-text-default-color);
 }
 
 #pretiusRevealerInline th {
@@ -58,7 +65,8 @@
 }
 
 #pretiusRevealerInline .revealer-header {
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
+  background-color: var(--ut-component-background-color);
   display: inline-block;
   width: 100%;
   padding-left: 5px;
@@ -87,6 +95,9 @@
   right: 1px;
   background-color: black;
   color: #fff;
+  /* border-radius: 3px; */
+  /* border-style: solid; */
+  border-color: var(--ut-component-border-color);
   border-radius: 3px;
   padding: 1px 3px;
   font: 8px Verdana;
@@ -139,16 +150,24 @@
   display: inline-block;
   /* width: 60px; */
   min-width: 40px;
-  background-color: #e4e4e4;
-  color: rgba(0, 0, 0, 0.8);
+  /* background-color: #e4e4e4;
+  color: rgba(0, 0, 0, 0.8); */
+  background-color: var(--ut-component-background-color);
+  color: var(--ut-component-text-default-color);
   font-size: 14px;
   font-weight: normal;
   text-align: center;
   text-shadow: none;
   padding: 5px 14px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
+  border-width: var(--ut-component-border-width);
+  border-style: solid;
+  border-color: var(--ut-component-border-color);
+  border-radius: var(--ut-component-border-radius);
+  /* -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1); */
+  -webkit-box-shadow: var(--ut-component-box-shadow);
+  box-shadow: var(--ut-component-box-shadow);
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
@@ -165,6 +184,12 @@
   color: white;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+#pretiusRevealerInline .pdt-revealer-badge {
+   font-weight: inherit;
+   padding-inline: 0.2rem;
+   font-size: var(--jui-dialog-font-size);
 }
 
 #pretiusRevealerInline .switch-field label:first-of-type {
@@ -287,17 +312,25 @@
 
 .pretiusRevealerInlineToTheTop .pretiusRevealerFooter {
   border-style: solid;
-  border-color: lightgrey;
-  border-width: 1px;
-  background-color: #F2F2F2;
-  color: #1F90CB;
+  /* border-color: lightgrey; */
+  border-color: var(--ut-component-border-color);
+  /* border-radius: var(--ut-component-border-radius); */
+
+  /* border-width: 1px; */
+  border-width: var(--ut-component-border-width);
+  /* background-color: #F2F2F2;
+  color: #1F90CB; */
+  /* background-color: var(--ut-report-cell-alt-background-color); */
+  background-color: var(--ut-component-background-color);
+  color: var(--ut-component-text-default-color); 
   text-align: center;
   padding-left: 5px;
   max-height: 22px;
 }
 
 .pretiusRevealerInlineToTheTop a.pretiusRevealerLink {
-  color: #1F90CB !important;
+  /* color: #1F90CB !important; */
+  color: var(--ut-link-text-color);
   font-size: 12px
 }
 
@@ -312,7 +345,8 @@
 
 #pretiusRevealerInline .linkLike {
   cursor:pointer;
-  color:#1F90CB; 
+  /* color:#1F90CB;  */
+  color: var(--ut-link-text-color);
   /* text-decoration:underline; */
 }
 

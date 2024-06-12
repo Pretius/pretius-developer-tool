@@ -117,7 +117,9 @@ var pdt = (function () {
                             "revealer": {
                                 "enable": apex.item("R0_REVEALER_ENABLE").getValue(),
                                 "tablockdeactivate": apex.item("R0_REVEALER_CRIPPLE_TABLOCK").getValue(),
-                                "kb": apex.item("R0_REVEALER_KB_SHORTCUT").getValue()
+                                "kb": apex.item("R0_REVEALER_KB_SHORTCUT").getValue(),
+                                "dkb": apex.item("R0_REVEALER_DEBUG_KB_SHORTCUT").getValue(),
+                                "debugrows": apex.item("R0_REVEALER_DEBUG_ROWS").getValue()
                             },
                             "reloadframe": {
                                 "enable": apex.item("R0_RELOAD_ENABLE").getValue(),
@@ -178,9 +180,13 @@ var pdt = (function () {
                     if (nvl(apex.item('R0_REVEALER_ENABLE').getValue(), 'N') == 'N') {
                         apex.item('R0_REVEALER_CRIPPLE_TABLOCK_CONTAINER').disable();
                         apex.item('R0_REVEALER_KB_SHORTCUT_CONTAINER').disable();
+                        apex.item('R0_REVEALER_DEBUG_KB_SHORTCUT_CONTAINER').disable();
+                        apex.item('R0_REVEALER_DEBUG_ROWS_CONTAINER').disable();
                     } else {
                         apex.item('R0_REVEALER_CRIPPLE_TABLOCK_CONTAINER').enable();
                         apex.item('R0_REVEALER_KB_SHORTCUT_CONTAINER').enable();
+                        apex.item('R0_REVEALER_DEBUG_KB_SHORTCUT_CONTAINER').enable();
+                        apex.item('R0_REVEALER_DEBUG_ROWS_CONTAINER').enable();
                     }
                 });
 
@@ -249,7 +255,9 @@ var pdt = (function () {
             apex.item("R0_REVEALER_ENABLE").setValue(pdt.getSetting('revealer.enable'));
             apex.item("R0_REVEALER_CRIPPLE_TABLOCK").setValue(pdt.nvl(pdt.getSetting('revealer.tablockdeactivate'), 'Y'));
             apex.item("R0_REVEALER_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('revealer.kb'), 'Q'));
-
+            apex.item("R0_REVEALER_DEBUG_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('revealer.dkb'), 'D'));
+            apex.item("R0_REVEALER_DEBUG_ROWS").setValue(pdt.nvl(pdt.getSetting('revealer.debugrows'), '10'));
+            
             apex.item("R0_RELOAD_ENABLE").setValue(pdt.getSetting('reloadframe.enable'));
             apex.item("R0_RELOAD_DEVELOPERS_ONLY").setValue(pdt.getSetting('reloadframe.bypasswarnonunsaved'));
             apex.item("R0_RELOAD_BYPASS_UNCHANGED").setValue(pdt.nvl(pdt.getSetting('reloadframe.bypasswarnonunsaved'), 'Y'));
@@ -282,6 +290,7 @@ var pdt = (function () {
             // running on a Mac
             var vMacKbText = 'Keyboard Shortcut control+option+...';
             $('#R0_REVEALER_KB_SHORTCUT_LABEL').text(vMacKbText);
+            $('#R0_REVEALER_DEBUG_KB_SHORTCUT_LABEL').text(vMacKbText);
             $('#R0_RELOAD_KB_SHORTCUT_LABEL').text(vMacKbText);
             $('#R0_ROPEN_BUILDER_KB_SHORTCUT_LABEL').text(vMacKbText);
         }

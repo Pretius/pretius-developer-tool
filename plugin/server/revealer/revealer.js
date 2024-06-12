@@ -157,11 +157,15 @@ var pretiusRevealer = (function () {
 
         // deactivate debug when revealer getting data
         $('#pretiusRevealerInline #rSearchBox').val('');
-        pdt.cloakDebugLevel();
+        pdt.cloakDebugLevel(); 
+
+        var debugrows = pdt.nvl(pdt.getSetting('revealer.debugrows'), 10);
 
         apex.server.plugin(pdt.opt.ajaxIdentifier, {
             x01: 'DEBUG_VIEW',
-            x02: pageDelimeted()
+            x02: pageDelimeted(),
+            x03: JSON.stringify(extractPluginsFromScripts()),
+            x04: debugrows
         }, {
             success: function (data) {
                 pdt.unCloakDebugLevel();
@@ -178,13 +182,41 @@ var pretiusRevealer = (function () {
 
                     if (a) {
                         a.on("click", function (event) {
-                            getDebugViewDetail($(a).text());
+                            var pWindow = event.ctrlKey || event.metaKey;
+                            getDebugViewDetail($(a).text(), pWindow);
                         });
                     }
 
                 });
 
                 performFilter();
+
+                // Add tool tip to top-left cell, i.e View ID Header
+                $('#pretiusRevealerInline #pretiusDebugContent .tableTablockVars th:first')
+                    .attr('title', 'Ctrl+Click on View ID to open in a new tab');
+
+                addClassToColumns(["View ID"], "u-pullLeft");
+                addClassToColumns(["Seconds", "Entries"], "u-pullRight");
+                addClassToColumns(["Component"], "w20p");
+
+                addClassToColumns(["Path Info"], "u-danger-text", 
+                    function(cellValue) {
+                        // Filter condition: Check if cell value starts with '[PDT-BUG]'
+                        return cellValue.startsWith('[PDT-BUG]');
+                    },
+                        // Function to remove text
+                        function($cellElement, cellValue) {
+                            cellValue = cellValue.replace('[PDT-BUG]', '');
+                            return $cellElement.replaceWith(
+                            '<td class="tdTablockVars">'
+                            + '<span class="t-Badge u-danger pdt-revealer-badge" role="status" aria-label="Status ' 
+                            + cellValue + '"> <span class="t-Badge-value">' 
+                            + cellValue + '</span></span>'
+                            + '</td>');
+                        }
+                    );            
+
+                setdebugborders();
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -195,27 +227,43 @@ var pretiusRevealer = (function () {
 
     }
 
+    function getDebugViewDetail(pViewIdentifier, pWindow) {
 
-    function getDebugViewDetail(pViewIdentifier) {
+        if (pWindow) {
+            // APEX Viewer
+            var url = $('#apexDevToolbarPage').attr('data-link');
+            const sessionId = pdt.pretiusToolbar.getBuilderSessionid();
+    
+            // Replace everything after '/page-designer' in the URL
+            // and append the session ID to the modified URL
+            url = url.replace(/\/page-designer[\s\S]*/, '/debug-message-data2') + `?session=${sessionId}` + 
+                 '&p939_page_view_id=' + pViewIdentifier +
+                 '&clear=RP,939';
+    
+            apex.navigation.openInNewWindow(url);
 
-        $('#pretiusRevealerInline #rSearchBox').val('');
-        pdt.cloakDebugLevel();
+        } else {
+            // Revealer Debugger
+            $('#pretiusRevealerInline #rSearchBox').val('');
+            pdt.cloakDebugLevel();
 
-        apex.server.plugin(pdt.opt.ajaxIdentifier, {
-            x01: 'DEBUG_DETAIL',
-            x02: pViewIdentifier
-        }, {
-            success: function (data) {
-                pdt.unCloakDebugLevel();
-                $('#pretiusRevealerInline #pretiusDebugContent').empty();
-                $('#pretiusRevealerInline #pretiusDebugContent').append(pretiusRevealer.buildHtmlTable(data.items));
-                rowStrokes(); 
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                // handle error
-                pdt.ajaxErrorHandler(jqXHR, textStatus, errorThrown);
-            }
-        });
+            apex.server.plugin(pdt.opt.ajaxIdentifier, {
+                x01: 'DEBUG_DETAIL',
+                x02: pViewIdentifier
+            }, {
+                success: function (data) {
+                    pdt.unCloakDebugLevel();
+                    $('#pretiusRevealerInline #pretiusDebugContent').empty();
+                    $('#pretiusRevealerInline #pretiusDebugContent').append(pretiusRevealer.buildHtmlTable(data.items));
+                    rowStrokes(); 
+                    addClassToColumns(["Message"], "w95p");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // handle error
+                    pdt.ajaxErrorHandler(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
 
     }
 
@@ -315,6 +363,280 @@ var pretiusRevealer = (function () {
 
     }
 
+    function extractPluginsFromScripts() {
+        const scriptTags = document.querySelectorAll('script[type="text/javascript"]');
+        const data = [];
+        const page = apex.env.APP_PAGE_ID;
+    
+        // Jet Charts
+        const jetChartRegex = /apex\.widget\.jetChart\.init\s*\(\s*["']([^"']+)["'].*["']([^"']+)["']\s*\)/g;
+    
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+    
+            let match;
+            while ((match = jetChartRegex.exec(scriptContent)) !== null) {
+                const id = match[1];
+                const name = JSON.parse('"' + match[2] + '"');
+                data.push({ page , id, name });
+            }
+        });
+    
+        // Interactive Reports
+        const interactiveReportRegex = /apex\.jQuery\('#([^']+)'\)\.interactiveReport\s*\(\s*({(?:.|\n)*?})\s*\)/g;
+    
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+    
+            let match;
+            while ((match = interactiveReportRegex.exec(scriptContent)) !== null) {
+                const id = match[1].split('_')[0]; // Extracting ID part before underscore
+                const attributes = JSON.parse(match[2]);
+                const name = attributes.ajaxIdentifier; // Corrected attribute name
+                data.push({ page , id, name });
+            }
+        });
+    
+        // Classic Reports
+        const reportInitRegex = /apex\.widget\.report\.init\s*\(\s*['"]([^'"]+)['"](?:[^'"]*['"]([^'"]+)['"])?/g;
+    
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+    
+            let match;
+            while ((match = reportInitRegex.exec(scriptContent)) !== null) {
+                const id = match[1];
+                const name = match[2] ? JSON.parse('"' + match[2] + '"') : null; // Parse JSON string if available
+                data.push({ id, name });
+            }
+        });
+
+
+       // Facets
+        const facetsregex = /apex\.jQuery\('#([^']+)'\)\.facets\((.*?)\)/g;
+
+        scriptTags.forEach(scriptTag => {
+          const scriptContent = scriptTag.textContent || scriptTag.innerText;
+        
+          let match;
+          while ((match = facetsregex.exec(scriptContent)) !== null) {
+            //const id = match[1]; // Directly capture the ID without splitting
+            const attributes = JSON.parse(match[2]);
+            const id = attributes.regionStaticId;
+            const name = attributes.ajaxIdentifier; // No changes needed here
+        
+            data.push({ page, id, name });
+          }
+        });
+
+        // Serach Region
+        const searchRegex = /apex\.jQuery\('#([^']+)_search'\),.*?"regionStaticId":"([^"]+)",.*?"ajaxIdentifier":"([^"]+)"/g;
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+            
+            let match;
+            while ((match = searchRegex.exec(scriptContent)) !== null) {
+                const id = match[2];
+                const name = JSON.parse('{"value": "' + match[3] + '"}').value;
+                data.push({ page, id, name });
+            }
+        });    
+        
+        // Tree Region
+        const regex = /apex\.widget\.tree\.init\s*\(\s*'R([^']+)_tree',.*?"regionStaticId":"([^"]+)",.*?"ajaxIdentifier":"([^"]+)"/g;
+        
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+            
+            let match;
+            while ((match = regex.exec(scriptContent)) !== null) {
+                const id = match[2];
+                const name = JSON.parse('{"value": "' + match[3] + '"}').value;
+                data.push({ page, id, name });
+            }
+        });
+
+        // Calendar
+        const calendarRegex = /apex\.widget\.fullCalendar\s*\(\s*{"regionId":"([^"]+)",.*?"ajaxIdentifier":"([^"]+)"/g;
+        
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+            
+            let match;
+            while ((match = calendarRegex.exec(scriptContent)) !== null) {
+                const id = match[1];
+                const name = JSON.parse('{"value": "' + match[2] + '"}').value;
+                data.push({ page, id, name });
+            }
+        });
+
+        // Maps
+        const mapRegex = /apex\.jQuery\('#([^']+)_map_region'\)\.spatialMap\s*\(\s*{"regionStaticId":"([^"]+)",.*?"ajaxIdentifier":"([^"]+)"/g;
+        
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+        
+            let match;
+            while ((match = mapRegex.exec(scriptContent)) !== null) {
+                const id = match[2];
+                const name = JSON.parse('{"value": "' + match[3] + '"}').value;
+                data.push({ page, id, name });
+            }
+        });
+
+        // Region Display Selector
+        const rdsRegex = /apex\.widget\.regionDisplaySelector\s*\(\s*"([^"]+)",\s*{[^}]*"ajaxIdentifier":"([^"]+)"}/g;
+    
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+          
+            let match;
+            while ((match = rdsRegex.exec(scriptContent)) !== null) {
+    
+                var closestRegionElement = apex.region.findClosest($('#' + match[1] + '_RDS'));
+                if (closestRegionElement) {
+                    const id= closestRegionElement.element.attr("id"); 
+                    const name = JSON.parse('{"value": "' + match[2] + '"}').value;
+                    data.push({ page, id, name });
+                }    
+            }
+        });
+
+        // Support data-apex-ajax-identifier attribute
+        // Supports: Column Toggle Report
+        $('[data-apex-ajax-identifier]').each(function() {
+            var ajaxIdentifier = $(this).data("apex-ajax-identifier");
+            var closestRegionElement = apex.region.findClosest($(this)).element;
+            if (closestRegionElement) {
+                var closestRegion = closestRegionElement.attr("id");
+                data.push({ id: closestRegion, name: ajaxIdentifier });
+            }
+        });
+
+        // Support ajax-identifier identifier attribute
+        // Supports: Combobox
+        $('[ajax-identifier]').each(function() {
+            var ajaxIdentifier = $(this).attr("ajax-identifier");
+            var closestRegionElement = $(this);
+            if (closestRegionElement) {
+                var closestId = closestRegionElement.attr("id");
+                data.push({ id: closestId, name: ajaxIdentifier });
+            }
+        });
+
+        // Checkbox and Radio
+        const checkboxAndRadioRegex = /apex\.widget\.checkboxAndRadio\s*\(\s*['"]([^'"]+)['"],\s*[^,]+,\s*{[^}]*"ajaxIdentifier"\s*:\s*"([^"]+)"/g;
+
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+            
+            let match;
+            while ((match = checkboxAndRadioRegex.exec(scriptContent)) !== null) {
+                const id = match[1];
+                const ajaxIdentifier = JSON.parse('{"value": "' + match[2] + '"}').value;
+                data.push({ id: id, name: ajaxIdentifier });
+            }
+        });
+
+        // Add Pretius Developer tool
+        data.push({ id: pdt.opt.debugPrefix.split(":")[0].trim(), 
+                    name: pdt.opt.ajaxIdentifier });
+                
+        // Dynamic Actions
+        for (const event of apex.da.gEventList) {
+            const actions = event.actionList;
+            for (const action of actions) {
+                if (action.ajaxIdentifier) {
+                    const name = action.ajaxIdentifier;
+                    const parentName = event.name;
+                    const actionName = action.action === 'NATIVE_EXECUTE_PLSQL_CODE' ? 'PL/SQL' : action.action;
+                    const id = `${parentName ? `${parentName}>` : ""}${action.name || actionName}`; // Prepend "DA > " and handle missing names
+                    data.push({ id, name });
+                }
+            }
+        }
+          
+        // Catch-all try to scrape any ajaxIdentifiers that havent been scraped
+        // This is intended to catch Region Plugins, since there is no standard method of wrtiting the render function
+        // This simply assumes the first parameter is the ID
+        //
+        // Confirmed Supported : Select List Refresh
+        const catchAllregex = /\(\s*["']([^"']+)["']\s*,\s*({[^}]*"ajaxIdentifier":"([^"]+)"[^}]*})\s*\)/g;
+        
+        scriptTags.forEach(scriptTag => {
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+            
+            let match;
+            while ((match = catchAllregex.exec(scriptContent)) !== null) {
+                const id = match[1];
+                const name = JSON.parse('{"value": "' + match[3] + '"}').value;
+                
+                // Check if an entry with the same name already exists in the data array
+                const existingEntry = data.find(entry => entry.name === name);
+                
+                // Push a new entry only if no entry with the same name exists
+                if (!existingEntry) {
+                    data.push({ page, id, name });
+                }
+            }
+        });
+
+        return data;
+    }
+
+    // Adds a CSS class to all cells in specified columns of a table, optionally applying a filter and a pre-selector function.
+    function addClassToColumns(headerLabels, className, filterFunction, preSelector) {
+        // Find all header elements matching the given labels
+        var headerElements = $('#pretiusRevealerInline #pretiusDebugContent')
+            .find(".tableTablockVars th.t-Report-colHead")
+            .filter(function() {
+                return headerLabels.includes($(this).text().trim());
+            });
+    
+        // Iterate over each header element
+        headerElements.each(function() {
+            var columnIndex = $(this).index() + 1; // Get the column index (1-based)
+    
+            // Find all td elements in the corresponding column (excluding header row)
+            $(".tableTablockVars tr.dataRow td:nth-child(" + columnIndex + ")").each(function() {
+                var $cell = $(this);
+                var cellValue = $cell.text().trim();
+    
+                // Apply filter function if provided
+                var filterPassed = !filterFunction || filterFunction(cellValue);
+    
+                // Apply pre-selector if provided and filter passed
+                var newValue = cellValue;
+                if (preSelector && filterPassed) {
+                    newValue = preSelector($cell, cellValue);
+                }
+    
+                // Add class and update cell value if filter passed
+                if (filterPassed) {
+                    $cell.text(newValue); // Update cell value if necessary
+                    $cell.addClass(className); // Add class
+                }
+            });
+        });
+    }
+    
+    function setdebugborders() {
+        var rows = $('#pretiusRevealerInline .tableTablockVars tr.dataRow:visible'); // Select only visible data rows
+        var row, pathInfoCell, pathInfo;
+    
+        rows.each(function(index, row) {
+            row = $(this);
+            // Extract Path Info
+            pathInfoCell = row.children('td:nth-child(5)');
+            pathInfo = $.trim(pathInfoCell.text());
+    
+            // Add class based on Path Info
+            if (pathInfo.toLowerCase() === "show") {
+                row.addClass('tbrvd-bottom');
+            }
+        });
+    }
+    
     return {
         performFilter: performFilter,
         distinctGroups: distinctGroups,
@@ -322,7 +644,8 @@ var pretiusRevealer = (function () {
         customiseTable: customiseTable,
         distinctPages: distinctPages,
         getDebugViewContent: getDebugViewContent,
-        pageDelimeted: pageDelimeted
+        pageDelimeted: pageDelimeted,
+        extractPluginsFromScripts: extractPluginsFromScripts
     }
 
 })();

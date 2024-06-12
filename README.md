@@ -16,8 +16,19 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 <br/>
 
 # Release History
+
+23.2.2 : June 2024
+* Added Feature: Debug Component Linkage (See section below)
+* Added Debug Keyboard Shortcut i.e ctrl+alt/option+D
+* Added support for Dark Mode Theme Styles 
+* Improved Revealer > Debug. Aligned it closer to APEX debug.
+* Improved Debug Performance
+* Improved Build Option Highlight Performance
+* Fixed Page Load Dynamic Actions not logging to Debug when Build Option Highlight feature is active
+* Improved configuration check / removed assumption that Global Page is always page 0
+
 23.2.1 : April 2024
-* Fixed Revealer empty fix for APEX 23.2
+* Fixed Revealer empty fix for APEX 23.2 
 * Fixed Shared Components link fix for APEX 23.2
 * Fixed Quick Page Designer Access, Not Found fix for APEX 23.2
 * Reworked Debug Glow due to poor contrast / accessibility
@@ -40,12 +51,14 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 Minimum Version of APEX Required: **23.2.0**
 
+Note: Debug features are disabled on apex.oracle.com due to performance issues.
+
 Import the plugin into your application from this location:
 
-`plugin\dynamic_action_plugin_com_pretius_apex_devtool.23.2.1.sql`
+`plugin\dynamic_action_plugin_com_pretius_apex_devtool.23.2.2.sql`
 
 After installation, follow these steps:
-1. Create a Page Load Dynamic Action on Page **0** Called "Pretius Developer Tool"
+1. Create a Page Load Dynamic Action on Page **0** Called **Pretius Developer Tool**
 2. Assign the Dynamic Action a <a href="https://www.youtube.com/watch?v=XOLCrHSRRrM&t=84s" target="_blank">Build Option</a> that is set to Exclude on Export
 3. Select "Pretius Developer Tool" APEX Plugin as the true action
 
@@ -55,6 +68,7 @@ After installation, follow these steps:
 
 # Features
 * Revealer
+   * Debug Component Linkage (See Debug Component Linkage section below)
 * Modal Reload
 * Visual Build Options
 * Developer Bar Enhancements 
@@ -74,7 +88,6 @@ After installation, follow these steps:
 
    <code>pdt.optIn();</code>
 
-
 # Quick Page Designer Access tips
 * Enter a Page Number or Name to locate the page
 * To list all pages...
@@ -82,6 +95,31 @@ After installation, follow these steps:
    * Enter the text 'page' in the search box
 * Enter in the format APP_ID.PAGE_ID (e.g 100.9999) to immediately locate the page
 * To open Page Builder in a new tab, hold down the Ctrl key (Windows) or the Command key (Mac) and click on any page in the search results. Tip: you can also do this on the Shared Components Button
+
+# Debug Component Linkage
+To access use Revealer > Debug and review the Component column associated with Ajax Plugins.
+
+Note this only works for:
+  1. The supports list of components (see below) 
+  2. Ajax Plugins that have ran within in current session only
+
+* Supported: 
+   * Dynamic Actions: Execute Server-Side Code
+   * Charts
+   * Reports: IR, CR, Column Toggle Report, Reflow Report
+   * Searching: Facets, Search Region, Smart Filters
+   * Calendar
+   * Region Display Selector
+   * Items: Combobox, Select, Radio, Checkbox Group, QR Code, Shuttle, Text with Autocomplete
+* Partial Support:
+   * Dynamic Action Plugins
+      * Requires the plugin developer to set the [apex_plugin.t_dynamic_action_render_result.ajax_identifier attribute](https://docs.oracle.com/en/database/oracle/apex/23.2/aeapi/APEX_PLUGIN-Data-Types.html#GUID-515CCE82-E815-4B04-B193-6195A722FA91) e.g [Pretius Smart Checkbox Column](https://github.com/Pretius/pretius-smart-checkbox-column/blob/691b6f7dbd9d405aa37e2500bf4b7b2d8e894bda/src/pretius_smart_checkbox_column.sql?plain=138#L138)
+   * Region Plugins
+      * Uses a catch-all, on a best endeavours apporach
+* Not Supported (Due to inconsistencies in how these operate in the APEX debug when comparing to the list above): 
+   * Reports: IG, Cards
+   * Items: List Manager
+   * Regions: Dynamic Content Regions, Template Components 
 
 # Future developments
 * Roadmap

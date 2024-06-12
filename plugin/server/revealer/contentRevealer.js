@@ -354,7 +354,7 @@ pdt.pretiusContentRevealer = (function () {
      
         // Default Clicks
         $("#pretiusRevealerInline input[type=radio][name=pFlowStepId]:first").trigger("click");
-        $("#pretiusRevealerInline input[type=radio][name=pCategory]:first").next().next().trigger("click");
+        // $("#pretiusRevealerInline input[type=radio][name=pCategory]:first").next().next().trigger("click");
 
         // Loading off / filters on
         $('#pretiusRevealerInline .revealer-loading').addClass('switch-display-none');
@@ -366,6 +366,13 @@ pdt.pretiusContentRevealer = (function () {
         if ( window.location.host == 'apex.oracle.com' ){ 
             $('#pretiusRevealerInline label[for="DebugPage"]').addClass('apex_disabled');
             $('#pretiusRevealerInline #DebugPage').parent().attr('title','Disabled on apex.oracle.com due to ORA-00040');
+        }
+
+        if (window.parent.revealerTabID ) {
+            $('#pretiusRevealerInline #' + window.parent.revealerTabID ).click();
+            window.parent.revealerTabID = undefined;
+        } else {
+            $("#pretiusRevealerInline input[type=radio][name=pCategory]:first").next().next().trigger("click");
         }
 
     };
@@ -394,6 +401,7 @@ pdt.pretiusContentRevealer = (function () {
                 ' class="tablockHipsterIcon" />';
 
                 var kb = pdt.getSetting('revealer.kb').toLowerCase();
+                var dkb = pdt.getSetting('revealer.dkb').toLowerCase();
                 $('#apexDevToolbarQuickEdit').parent().before(
                     htmlDecode(apex.lang.formatNoEscape(
                         '<li><button id="apexDevToolbarRevealer" type="button" class="a-Button a-Button--devToolbar" title="View Page Information [ctrl+alt+%0]" aria-label="Vars" data-link=""> ' +
@@ -416,26 +424,33 @@ pdt.pretiusContentRevealer = (function () {
                 // Custom APEX 5.0 width fix
                 $('#apexDevToolbar').width($('.a-DevToolbar-list').width() + 'px');
 
-                if (pdt.getSetting('revealer.kb') != '') {
 
-                    if (kb != "") {
-                        // Bind keyboard shortcuts
-                        Mousetrap.bindGlobal('ctrl+alt+' + kb, function (e) {
+                function assignRevealerShortcuts(keyboard, defaultTab) {
+                    Mousetrap.bindGlobal('ctrl+alt+' + keyboard, function (e) {
+                        window.parent.revealerTabID = defaultTab;
+                        parent.$(':focus').blur();
+                        parent.pdt.pretiusContentRevealer.debugMode = false;
+                        parent.$("#apexDevToolbarRevealer").trigger('click');
+                    });
+                    Mousetrap.bindGlobal('ctrl+alt+shift+' + keyboard, function (e) {
+                        if (parent.$("#apexDevToolbarRevealer").length > 0) {
                             parent.$(':focus').blur();
-                            parent.pdt.pretiusContentRevealer.debugMode = false;
+                            apex.message.showPageSuccess("Opening Revealer in Debug Mode");
+                            parent.pdt.pretiusContentRevealer.debugMode = true;
                             parent.$("#apexDevToolbarRevealer").trigger('click');
-                        });
-                        Mousetrap.bindGlobal('ctrl+alt+shift+' + kb, function (e) {
-                            if (parent.$("#apexDevToolbarRevealer").length > 0) {
-                                parent.$(':focus').blur();
-                                apex.message.showPageSuccess("Opening Revealer in Debug Mode");
-                                parent.pdt.pretiusContentRevealer.debugMode = true;
-                                parent.$("#apexDevToolbarRevealer").trigger('click');
-                            }
-                        });
-                    }
+                        }
+                    });
                 }
-
+                
+                if (pdt.getSetting('revealer.kb') !== '') {
+                    assignRevealerShortcuts(kb, '');
+                }
+                
+                if (pdt.getSetting('revealer.dkb') !== '' && 
+                    window.location.host != 'apex.oracle.com' ) {
+                    assignRevealerShortcuts(dkb, 'DebugPage');
+                }
+                
 
                 // cripple Tablock Revealer
                 if (pdt.getSetting('revealer.tablockdeactivate') == 'Y') {
