@@ -32,7 +32,7 @@ pdt.pretiusContentRevealer = (function () {
         ".apex-item-group--switch, " +
         ".apex-item-group--auto-complete, " +
         ".apex-item-yes-no, " +
-        "textarea, " +
+        "textarea:not(.uc-froala--textarea), " +
         ".shuttle:not(table), " +
         ".shuttle_left, " +
         ".shuttle_right, " +
