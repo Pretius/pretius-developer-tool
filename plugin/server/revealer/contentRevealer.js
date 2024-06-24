@@ -17,7 +17,27 @@ pdt.pretiusContentRevealer = (function () {
         "SWITCH",
         "TEXTAREA",
         "CKEDITOR3",
-        "AUTO_COMPLETE"];
+        "AUTO_COMPLETE",
+        "RICH TEXT EDITOR",
+        "COMBOBOX",
+        "MARKDOWN_EDITOR",
+        "QR_CODE",
+        "STAR RATING",
+        "SINGLE_CHECKBOX",
+        "FILE UPLOAD",
+        "IMAGE UPLOAD",
+        "COLOR_PICKER",
+        "DATE PICKER",
+        "PASSWORD",
+        "SELECT ONE",
+        "SELECT MANY",
+        "IMG",
+        "DISPLAY_MAP",
+        "GEOCODER",
+        "PCT_GRAPH",
+        "TEXT FIELD WITH AUTOCOMPLETE",
+        "NUMBER"
+     ];
 
     // not .apex-item-group 
     var itemString = "input:not('[data-for],.js-tabTrap,.a-GV-rowSelect'), " +
@@ -33,6 +53,17 @@ pdt.pretiusContentRevealer = (function () {
         ".apex-item-group--auto-complete, " +
         ".apex-item-yes-no, " +
         "textarea:not(.uc-froala--textarea), " +
+        "a-rich-text-editor, " +
+        "a-combobox, " +
+        "a-qrcode, " +
+        "a-file-upload, " +
+        "a-color-picker, " +
+        "a-date-picker, " +
+        "a-select, " +
+        "a-autocomplete, " +
+        ".apex-item-image, " +
+        ".apex-item-pct-graph, " +
+        ".apex-item-starrating, " +
         ".shuttle:not(table), " +
         ".shuttle_left, " +
         ".shuttle_right, " +
@@ -168,6 +199,69 @@ pdt.pretiusContentRevealer = (function () {
                 a.Type += ' (assoc. with AUTO_COMPLETE)';
             }
 
+            if ($(pSelector).is('a-rich-text-editor')) {
+                a.Type = 'RICH TEXT EDITOR';
+            }
+
+            if ($(pSelector).is('a-combobox')) {
+                a.Type = 'COMBOBOX';
+            }
+
+            if ($(pSelector).is('a-autocomplete')) {
+                a.Type = 'TEXT FIELD WITH AUTOCOMPLETE';
+            }
+
+            if ($(pSelector).is('a-select')) {
+                if ($(pSelector).attr('multi-value') == 'true') {
+                    a.Type = 'SELECT MANY';
+                } else {
+                    a.Type = 'SELECT ONE';
+                }
+            }
+
+            if ($(pSelector).is('textarea') && $(pSelector).hasClass('markdown_editor')) {
+                a.Type = 'MARKDOWN_EDITOR';
+            }       
+            
+            if ($(pSelector).is('input') && $(pSelector).parent().hasClass('a-Switch')) {
+                a.Type = 'SWITCH';
+            }    
+            
+            if ($(pSelector).hasClass('a-StarRating')) {
+                a.Type = 'STAR RATING';
+            }    
+
+            if ($(pSelector).is('a-file-upload')) {
+                if ($(pSelector).attr('upload-type') == 'IMAGE' ) {
+                    a.Type = 'IMAGE UPLOAD';
+                } else {
+                    a.Type = 'FILE UPLOAD';
+                }
+            }
+
+            if ($(pSelector).is('a-date-picker')) {
+                a.Type = 'DATE PICKER';
+            }    
+          
+            if ($(pSelector).attr('type') == 'password') {
+                a.Type = 'PASSWORD';
+            }  
+
+           // Move associated items to Other
+            if ( 
+                ($(pSelector).is('input') && $(pSelector).parent().hasClass('a-StarRating')) || 
+                ($(pSelector).is('input') && $(pSelector).parent().is('a-color-picker')) || 
+                ($(pSelector).is('input') && $(pSelector).parent().is('a-date-picker')) || 
+                ($(pSelector).is('input') && $(pSelector).closest('.a-ColorPicker-dialog').length )||
+                ($(pSelector).is('input') && $(pSelector).closest('.checkbox_group').length )||
+                ($(pSelector).is('input') && $(pSelector).attr('type') == 'text'  && $(pSelector).closest('a-autocomplete').length )||
+                ($(pSelector).is('input') && $(pSelector).attr('type') == 'hidden' && $(pSelector).parent().hasClass('apex-item-single-checkbox')) ||
+                ($(pSelector).is('input') && $(pSelector).attr('type') == 'file' && $(pSelector).parent().is('a-file-upload'))  
+               )
+            {
+                a.Category = 'PO';
+            }    
+            
             if (a.Type == 'FALSE') {
                 //Second chance
 
@@ -228,25 +322,27 @@ pdt.pretiusContentRevealer = (function () {
 
             var typeInArryPos = $.inArray(a.Type, apexItemTypes);
 
-            if (pSelector.closest("[class^='a-IRR']")) {
-                a.Category = 'IR';
-            }
-            else if (pSelector.closest("[class^='a-IG']")) {
-                a.Category = 'IG';
-            }
-            else if (frameworkArray.indexOf(a.Name) >= 0) {
-                a.Category = 'FW';
-            }
-            else {
-                // Page items
-                if (a.Name && a.Name.startsWith("P" + truePageId) && typeInArryPos > -1) {
-                    a.Category = 'PI,PX';
+            if (!a.Category) {
+                if (pSelector.closest("[class^='a-IRR']")) {
+                    a.Category = 'IR';
                 }
-                else if (a.Name && a.Name.startsWith("P0") && typeInArryPos > -1) {
-                    a.Category = 'PI,P0';
+                else if (pSelector.closest("[class^='a-IG']")) {
+                    a.Category = 'IG';
+                }
+                else if (frameworkArray.indexOf(a.Name) >= 0) {
+                    a.Category = 'FW';
                 }
                 else {
-                    a.Category = 'PI,PO';
+                    // Page items
+                    if (a.Name && a.Name.startsWith("P" + truePageId) && typeInArryPos > -1) {
+                        a.Category = 'PI,PX';
+                    }
+                    else if (a.Name && a.Name.startsWith("P0") && typeInArryPos > -1) {
+                        a.Category = 'PI,P0';
+                    }
+                    else {
+                        a.Category = 'PO';
+                    }
                 }
             }
 

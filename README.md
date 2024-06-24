@@ -17,6 +17,12 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Release History
 
+24.1.1 : June 2024
+* Added support for APEX 24.1 Select One & Select Many
+* Fixed crash on UC RTE Item Issue [#1](https://github.com/Pretius/pretius-developer-tool/issues/1)
+* Improved Revealer item support for multiple Item Types
+* Improved Revealer moved all associated elements to "Others"
+
 23.2.2 : June 2024
 * Added Feature: Debug Component Linkage (See section below)
 * Added Debug Keyboard Shortcut i.e ctrl+alt/option+D
@@ -55,7 +61,7 @@ Note: Debug features are disabled on apex.oracle.com due to performance issues.
 
 Import the plugin into your application from this location:
 
-`plugin\dynamic_action_plugin_com_pretius_apex_devtool.23.2.2.sql`
+`plugin\dynamic_action_plugin_com_pretius_apex_devtool.24.1.1.sql`
 
 After installation, follow these steps:
 1. Create a Page Load Dynamic Action on Page **0** Called **Pretius Developer Tool**
