@@ -1,0 +1,80 @@
+body,
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0
+}
+
+.row-container {
+    display: table;
+    empty-cells: show;
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+}
+
+.first-row {
+    display: table-row;
+    height: 30%;
+    overflow: auto;
+    /* background-color: black; */
+}
+
+.first-row iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.second-row {
+    display: table-row;
+    height: 70%;
+    /* background-color: black; */
+    overflow: hidden
+}
+
+.second-row iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.full-row {
+    height: 100%;
+}
+
+.darkModeTakover {
+    background-color:#211e1c
+}
+
+.iframeProblems {
+    height: 40px;
+    font-size: x-large;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+
+.hideMe {
+    display: none;
+}
+
+.pdtDebugRevealerFooter {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Ensures the footer spans the full width of the viewport */
+    background-color: #f1f1f1; /* Set your desired background color */
+    padding: 10px; /* Optional: Add padding for some space inside the footer */
+    text-align: center; /* Optional: Center the content inside the footer */
+    z-index: 1000; /* Optional: Ensure the footer stays above other elements */
+    max-height: 12px;
+    font-size:small;
+}

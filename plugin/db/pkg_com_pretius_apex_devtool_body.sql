@@ -2,7 +2,7 @@ create or replace PACKAGE BODY pkg_com_pretius_apex_devtool
 IS  
    /*  
     * Plugin:   Pretius Developer Tool  
-    * Version:  24.1.1 
+    * Version:  24.1.2  
     *  
     * License:  MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K.  
     * Homepage:   
@@ -27,6 +27,7 @@ IS
     l_configuration_test  NUMBER DEFAULT 0;  
     c_plugin_name         CONSTANT VARCHAR2(24) DEFAULT 'COM.PRETIUS.APEX.DEVTOOL';  
     l_application_group   apex_applications.application_group%TYPE DEFAULT NULL;  
+    l_friendly_url        apex_applications.friendly_url%TYPE DEFAULT NULL;  
     c_app_id              CONSTANT apex_applications.application_id%TYPE DEFAULT apex_application.g_flow_id;  
   BEGIN  
     -- Debug  
@@ -41,8 +42,8 @@ IS
      WHERE application_id = c_app_id  
        AND name = c_plugin_name;  
   
-      SELECT application_group  
-        INTO l_application_group  
+      SELECT application_group, friendly_url  
+        INTO l_application_group, l_friendly_url
         FROM apex_applications  
        WHERE application_id = c_app_id;  
   
@@ -83,10 +84,12 @@ IS
         pdt.render({  
             da: this,  
             opt: {  
-                filePrefix: "%s",  
+                filePrefix: "%s",
+                debugPluginFiles: "%s",  
                 ajaxIdentifier: "%s",  
                 version: "%s",  
                 debugPrefix: "%s",  
+                friendlyUrl: "%s",
                 configurationTest: "%s",  
                 dynamicActionId: "%s",  
                 applicationGroupName: "%s",  
@@ -98,10 +101,12 @@ IS
                 } 
             });  
         }]',  
-    p_plugin.file_prefix,  
+    p_plugin.file_prefix,
+    NVL( v('APP_PRETIUS_DEVTOOL_PLUGIN_FILES'), p_plugin.file_prefix ),
     apex_plugin.get_ajax_identifier,  
     l_plugs_row.version_identifier,  
-    l_plugs_row.display_name || ': ',  
+    l_plugs_row.display_name || ': ', 
+    l_friendly_url, 
     apex_debug.tochar( l_configuration_test = 1 ),  
     p_dynamic_action.id,  
     NVL( l_application_group, '- Unassigned -'  ),  
@@ -571,6 +576,13 @@ IS
                 UNION ALL  
                 SELECT 'HOST_NAME' name, l_host_name val FROM dual   
                 )  
+        UNION ALL
+        SELECT '*', p name, 'APEX$SESSION', NULL, SYS_CONTEXT('APEX$SESSION', p) val, 'CX' 
+        FROM (SELECT 'APP_USER' p FROM DUAL UNION ALL 
+              SELECT 'APP_SESSION' FROM DUAL UNION ALL 
+              SELECT 'WORKSPACE_ID' FROM DUAL)
+        UNION ALL 
+        SELECT '*', parameter name, 'NLS', null, value, 'AP' FROM (SELECT * FROM v$nls_parameters ORDER BY 1 )
         UNION ALL  
         SELECT '*',  
             name,  

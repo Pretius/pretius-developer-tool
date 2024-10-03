@@ -7,6 +7,8 @@ Pretius Developer Tool (PDT) is an Oracle APEX plugin developed by [Matt Mulvane
 * Developer Bar Enhancements
    * Quick Page Designer Access: Use a keyboard shortcut to quickly navigate to any Application & Page in your workspace
    * Glows the Debug Icon red when Debug is on
+   * Auto View Debug for Page Load and Page Accept
+   * Master Detail Debug all on the same page
    * Shared Components icon appears on the Developer Bar (replacing the Home button)
 
 Pretius Developer Tool is built all modular so you can expect more features to come in the future.
@@ -16,6 +18,11 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 <br/>
 
 # Release History
+
+24.1.2 : September 2024
+* Added Feature: Auto View Debug
+* Added Feature: Master Detail Debug
+* Added APEX$SESSION & NLS to Revealer
 
 24.1.1 : June 2024
 * Added support for APEX 24.1 Select One & Select Many
@@ -61,7 +68,7 @@ Note: Debug features are disabled on apex.oracle.com due to performance issues.
 
 Import the plugin into your application from this location:
 
-`plugin\dynamic_action_plugin_com_pretius_apex_devtool.24.1.1.sql`
+`plugin\dynamic_action_plugin_com_pretius_apex_devtool.24.1.2.sql`
 
 After installation, follow these steps:
 1. Create a Page Load Dynamic Action on Page **0** Called **Pretius Developer Tool**
@@ -80,6 +87,8 @@ After installation, follow these steps:
 * Developer Bar Enhancements 
    * Quick Page Designer Access
    * Glow Debug Icon
+   * Auto View Debug
+   * Master Detail Debug
    * Shared Components Button
 
  Supports Firefox, Internet Explorer, Edge & Chrome
@@ -126,6 +135,20 @@ Note this only works for:
    * Reports: IG, Cards
    * Items: List Manager
    * Regions: Dynamic Content Regions, Template Components 
+
+
+# Auto View Debug
+With Debug Enabled, this automatically opens View Debug on the following events:
+* Page Load (Show)
+* On Error Message (Accept) <code>apex.message.setThemeHooks</code>
+* Custom Events - For example to View Debug after Report Refresh
+  * Add a Page Zero Dynamic Action - with PDT Build Option
+
+  <img src="img/after_report_refresh_auto_view_debug.png" width="700px">
+  
+  * Execute JavaScript Code
+  <pre>pdt.pretiusContentDevBar.openAutoViewDebug();</pre>
+
 
 # Future developments
 * Roadmap

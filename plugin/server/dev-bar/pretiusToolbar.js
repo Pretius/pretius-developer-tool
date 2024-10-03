@@ -129,12 +129,23 @@ pdt.pretiusToolbar = (function () {
     }
 
     function getBuilderSessionid() {
-        var url = window.$('#apexDevToolbarPage').attr('data-link');
 
-        // Extract session ID from the URL using regular expression
-        const sessionId = url.match(/[?&]session=(\d+)/)?.[1];
+        function getBuilderInstance() {
+            const fn = apex.util.getTopApex()._dtGetBuilderInstance;
+            return typeof fn === 'function' ? fn() : null;
+        }
 
-        return sessionId;
+        function getDevToolbarBuilderInstance() {
+            var url = window.$('#apexDevToolbarPage').attr('data-link');
+
+            // Extract session ID from the URL using regular expression
+            const sessionId = url.match(/[?&]session=(\d+)/)?.[1];
+    
+            return sessionId;
+        }
+
+        return pdt.nvl( getBuilderInstance(), getDevToolbarBuilderInstance() );
+
     }
 
 

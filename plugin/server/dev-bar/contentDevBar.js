@@ -31,27 +31,79 @@ pdt.pretiusContentDevBar = (function () {
         return pdtSpotOpt;
     }
 
-    function activateGlowDebug() {
-
+    function isDeveloper() {
         var vDevelopersOnly = 'Y';
-
-        // Dont activate for non-developers
-        if (!((vDevelopersOnly == 'Y' && $('#apexDevToolbar').length != 0) || vDevelopersOnly == 'N')) {
-            return;
-        }
-
-        // obtain Debug seting from pdebug page variable
+        // Don't activate for non-developers
+        return (vDevelopersOnly === 'Y' && $('#apexDevToolbar').length !== 0) || vDevelopersOnly === 'N';
+    }
+    
+    function isDebugMode() {
         var pdebug = apex.item('pdebug').getValue();
-
-        var isDebug = (['', 'NO'].indexOf(pdebug) == -1);
-        if (isDebug) {
+        return ['', 'NO'].indexOf(pdebug) === -1;
+    }
+    
+    function activateGlowDebug() {
+        if (!isDeveloper()) return;
+    
+        if (isDebugMode()) {
             $('#apexDevToolbar').find('.a-Icon.icon-debug').removeClass().addClass('fa fa-bug fam-check fam-is-success');
         } else {
             $('#apexDevToolbar').find('.a-Icon.icon-debug').removeClass().addClass('fa fa-bug fam-x fam-is-disabled');
         }
-
+    }
+    
+    function activateAutoViewDebug() {
+        if (!isDeveloper()) return;
+    
+        if (isDebugMode()) {
+            // Also Auto View Debug before Submit to view the accept
+            // Define a flag to track whether the handler has been added
+            if (typeof window.activateAutoViewDebugAdded === 'undefined') {
+                window.activateAutoViewDebugAdded = false;
+            }
+            if (!window.activateAutoViewDebugAdded) {
+                apex.message.setThemeHooks({
+                    beforeShow: function( pMsgType, pElement$ ){
+                        if ( pMsgType === apex.message.TYPE.ERROR ) {
+                            // pdt.pretiusContentDevBar.activateAutoViewDebug();
+                            openAutoViewDebug();
+                        }
+                    }
+                });                
+                // Set the flag to true so it's only added once
+                window.activateAutoViewDebugAdded = true;
+            }
+            openAutoViewDebug();
+        }
     }
 
+    function openAutoViewDebug() {
+
+        // Check PDT installed
+        if (typeof pdt !== 'object') return;
+
+        // Check Dev Bar active
+        if (!isDeveloper()) return;
+
+        // Check again if Auto View Debug is on
+        if (pdt.getSetting('devbar.autoviewdebugenable') !== 'Y')  return;
+    
+        if (isDebugMode()) {
+            // Get the array of items from the Debug Menu
+            var menuItems = parent.$("#apexDevToolbarDebugMenu").menu("instance").options.items;
+            
+            // Find the first item with the label 'View Debug'
+            var viewDebugItem = menuItems.find(function(item) {
+                return item.label === 'View Debug';
+            });
+            
+            // If action associated, run it
+            if (viewDebugItem) {
+                viewDebugItem.action();
+            }
+        }        
+    }
+    
     function activateOpenBuilder() {
 
         var vDevelopersOnly = 'Y';
@@ -126,11 +178,13 @@ pdt.pretiusContentDevBar = (function () {
         });
     }
 
-
     return {
         activateOpenBuilder: activateOpenBuilder,
         activateGlowDebug: activateGlowDebug,
-        activateHomeReplace: activateHomeReplace
+        activateHomeReplace: activateHomeReplace,
+        activateAutoViewDebug: activateAutoViewDebug,
+        openAutoViewDebug: openAutoViewDebug,
+        isDebugMode: isDebugMode
     }
 
 })();

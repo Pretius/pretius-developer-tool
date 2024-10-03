@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- 
+    Do not make changes using VS Code Live Server. 
+    Modifications must be done exclusively through the APEX File Editor due to Chrome's upcoming change to remove third-party cookies.
+
+    To serve this file from APEX while using Live Server for the rest of the project, 
+    set the substitution string APP_PRETIUS_DEVTOOL_PLUGIN_FILES to a value, 
+    for example: r/wksp_x/147/files/plugin/236191428466094549/v788/.
+    
+    You can obtain this value if you type the following from console whilst outside of Live Server
+    
+    pdt.opt.filePrefix
+-->
+<html>
+
+<head>
+    <title>🐱 Pretius Developer Tool - View Debug</title>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Function to get URL parameters
+            const getURLParameter = (name) => new URLSearchParams(window.location.search).get(name);
+
+            // Get URL Parameters
+            const pLocation = getURLParameter('pLocation');
+            document.pLocation = pLocation;
+            document.pViewDebugURL = getURLParameter('pViewDebugURL');
+            document.pDebugMode = getURLParameter('pDebugMode');
+
+            if (!pLocation) {
+                console.error('pLocation not provided in URL.');
+                return; // Exit if pLocation is not provided
+            }
+
+            // Determine the minified directory and file suffix based on debug mode
+            const isDebugMode = document.pDebugMode === 'true';
+            const vMinDir = isDebugMode ? '' : 'minified/';
+            const vMin = isDebugMode ? '' : '.min';
+
+            // Decoding the URL parameter (if necessary)
+            const decodedLocation = decodeURIComponent(pLocation);
+
+            // Function to dynamically load a script
+            const loadScript = (src) => {
+                const script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = src;
+                document.head.appendChild(script);
+            };
+
+            // Function to dynamically load a stylesheet
+            const loadStylesheet = (href) => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = href;
+                document.head.appendChild(link);
+            };
+
+            // Load the required script and stylesheet
+            var prefix = document.pLocation;
+            if (!prefix.startsWith('http')) {
+                prefix = '';
+            } else {
+                prefix = prefix + 'dev-bar/';
+            }
+                
+            const baseFilePath = prefix + `${vMinDir}debugTakeover${vMin}`;
+            loadScript(`${baseFilePath}.js`);
+            loadStylesheet(`${baseFilePath}.css`);
+
+});
+    </script>
+</head>
+
+<body>
+    <input type="hidden" id="topFrameUrl">
+    <div class="row-container">
+        <div class="first-row"></div>
+        <div id="row-div-seperator"></div>
+        <div class="second-row">
+        </div>
+    </div>
+
+</body>
+
+</html>

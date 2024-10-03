@@ -134,6 +134,8 @@ var pdt = (function () {
                             },
                             "devbar": {
                                 "glowdebugenable": apex.item("R0_GLOW_DEBUG_ICON").getValue(),
+                                "autoviewdebugenable": apex.item("R0_AUTO_VIEW_DEBUG").getValue(),
+                                "masterdetaildebugenable": apex.item("R0_MASTER_DETAIL_DEBUG").getValue(),
                                 "openbuilderenable": apex.item("R0_OPEN_BUILDER_ENABLE").getValue(),
                                 "openbuildercache": apex.item("R0_OPEN_BUILDER_CACHE").getValue(),
                                 "openbuilderapplimit": apex.item("R0_OPEN_BUILDER_APP_LIMIT").getValue(),
@@ -164,6 +166,8 @@ var pdt = (function () {
                     apex.item('R0_BUILD_OPTION_ENABLE').setValue('Y');
                     apex.item('R0_OPEN_BUILDER_ENABLE').setValue('Y');
                     apex.item('R0_GLOW_DEBUG_ICON').setValue('Y');
+                    apex.item('R0_AUTO_VIEW_DEBUG').setValue('Y');
+                    apex.item('R0_MASTER_DETAIL_DEBUG').setValue('Y');
                     apex.item('R0_HOME_REPLACE_LINK').setValue('Y');
                 });
 
@@ -239,6 +243,8 @@ var pdt = (function () {
         apex.widget.yesNo("R0_BUILD_OPTION_ENABLE", "SWITCH_CB");
         apex.widget.yesNo("R0_OPEN_BUILDER_ENABLE", "SWITCH_CB");
         apex.widget.yesNo("R0_GLOW_DEBUG_ICON", "SWITCH_CB");
+        apex.widget.yesNo("R0_AUTO_VIEW_DEBUG", "SWITCH_CB");   
+        apex.widget.yesNo("R0_MASTER_DETAIL_DEBUG", "SWITCH_CB");   
         apex.widget.yesNo("R0_OPEN_BUILDER_CACHE", "SWITCH_CB");
         apex.widget.yesNo("R0_OPEN_BUILDER_APP_LIMIT", "SWITCH_CB");
         apex.widget.yesNo("R0_HOME_REPLACE_LINK", "SWITCH_CB");
@@ -271,6 +277,8 @@ var pdt = (function () {
             apex.item("R0_OPEN_BUILDER_APP_LIMIT").setValue(pdt.getSetting('devbar.openbuilderapplimit'));
             apex.item("R0_OPEN_BUILDER_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('devbar.openbuilderkb'), 'W'));
             apex.item("R0_GLOW_DEBUG_ICON").setValue(pdt.getSetting('devbar.glowdebugenable'));
+            apex.item("R0_AUTO_VIEW_DEBUG").setValue(pdt.getSetting('devbar.autoviewdebugenable'));
+            apex.item("R0_MASTER_DETAIL_DEBUG").setValue(pdt.getSetting('devbar.masterdetaildebugenable'));
             apex.item("R0_HOME_REPLACE_LINK").setValue(pdt.getSetting('devbar.homereplacelink'));
 
         }
@@ -280,6 +288,8 @@ var pdt = (function () {
         $("#pretiusRevealerInline #R0_BUILD_OPTION_ENABLE").trigger("change");
         $("#pretiusRevealerInline #R0_OPEN_BUILDER_ENABLE").trigger("change");
         $("#pretiusRevealerInline #R0_GLOW_DEBUG_ICON").trigger("change");
+        $("#pretiusRevealerInline #R0_AUTO_VIEW_DEBUG").trigger("change");
+        $("#pretiusRevealerInline #R0_MASTER_DETAIL_DEBUG").trigger("change");
         $("#pretiusRevealerInline #R0_HOME_REPLACE_LINK").trigger("change");
 
         if (pdt.opt.configurationTest == "false") {
@@ -501,7 +511,17 @@ var pdt = (function () {
 
                 // HomeReplace
                 if (getSetting('devbar.homereplacelink') == 'Y') {
-                    pdt.pretiusContentDevBar.activateHomeReplace()
+                    pdt.pretiusContentDevBar.activateHomeReplace();
+                }
+
+                // Master Detail Debug
+                if (getSetting('devbar.masterdetaildebugenable') == 'Y') {
+                    pdt.debugControl.activateDebugControl();
+                }                
+
+                // Auto View Debug
+                if (getSetting('devbar.autoviewdebugenable') == 'Y') {
+                    pdt.pretiusContentDevBar.activateAutoViewDebug();
                 }
 
             }
