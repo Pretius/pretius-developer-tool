@@ -2,13 +2,7 @@ pdt.debugControl = (function () {
     "use strict";
 
     function getViewDebugLink() {
-        var lPath;
-  
-        if ( pdt.opt.friendlyUrl === 'Yes') {
-            lPath = apex.gPageContext$[0].baseURI;
-        } else {
-            lPath = new URL('.', window.location).href;
-        }
+        var lPath = pdt.getApexPath();
 
         var url = lPath +
         'r/apex/app-builder/debug-message-data?' +
@@ -61,10 +55,60 @@ pdt.debugControl = (function () {
                     height: 768
                 });
             };
-        
+    }
+
+    function activateOldSchoolDebug() {
+
+        var toggleDebugPdtIcon = 'icon-toggle-off';
+        var debugToggleOption = 'YES';
+        if ( pdt.pretiusContentDevBar.isDebugMode() ) {
+            debugToggleOption = 'NO';
+            toggleDebugPdtIcon = 'icon-toggle-on';
+        }
+
+        // Add View Debug
+        $('#apexDevToolbarSession').parent().after(
+            pdt.htmlDecode(apex.lang.formatNoEscape(
+                '<li><button id="apexDevViewDebugPdt" type="button" class="a-Button a-Button--devToolbar" title="View Debug" aria-label="Vars" data-link=""> ' +
+                '%0 <span class="a-DevToolbar-buttonLabel">View Debug</span> ' +
+                '</button></li>',
+                '<span class="fa fa-box-arrow-in-ne" aria-hidden="true"></span>'
+            ))
+        );
+
+        var h = document.getElementById("apexDevViewDebugPdt");
+        if (h) {
+            h.addEventListener("click", function (event) {
+                // parent.$("#apexDevToolbarDebugMenu").menu("instance").options.items[1].action();
+                parent.$("#apexDevToolbarDebugMenu")?.menu("instance")?.options?.items?.[1]?.action?.();
+            }, true);
+        }
+
+        // Add Debug
+        $('#apexDevViewDebugPdt').parent().after(
+            pdt.htmlDecode(apex.lang.formatNoEscape(
+                '<li><button id="apexDevDebugPdt" type="button" class="a-Button a-Button--devToolbar" title="Debug" aria-label="Vars" data-link=""> ' +
+                '%0 <span class="a-DevToolbar-buttonLabel">Debug</span><span class="a-DevToolbar-buttonToggle a-Icon %1" aria-hidden="true"></span>' +
+                '</button></li>',
+                '<span class="fa fa-bug" aria-hidden="true"></span>',
+                toggleDebugPdtIcon
+            ))
+        );
+
+        var h = document.getElementById("apexDevDebugPdt");
+        if (h) {
+            h.addEventListener("click", function (event) {
+                parent.$("#apexDevToolbarDebugMenu")?.menu("instance")?.options?.items?.[0]?.menu?.items?.[0]?.set?.(debugToggleOption);
+            }, true);
+        }
+
+       // Hide Devbar Debug
+       $('#apexDevToolbarDebug').closest('li').addClass('u-hidden');       
+
     }
 
     return {
+        activateOldSchoolDebug: activateOldSchoolDebug,
         activateDebugControl: activateDebugControl,
         getViewDebugLink: getViewDebugLink
     };

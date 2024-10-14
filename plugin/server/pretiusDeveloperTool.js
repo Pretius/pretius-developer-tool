@@ -134,6 +134,7 @@ var pdt = (function () {
                             },
                             "devbar": {
                                 "glowdebugenable": apex.item("R0_GLOW_DEBUG_ICON").getValue(),
+                                "oldschooldebugenable": apex.item("R0_OLD_SCHOOL_DEBUG").getValue(),
                                 "autoviewdebugenable": apex.item("R0_AUTO_VIEW_DEBUG").getValue(),
                                 "masterdetaildebugenable": apex.item("R0_MASTER_DETAIL_DEBUG").getValue(),
                                 "openbuilderenable": apex.item("R0_OPEN_BUILDER_ENABLE").getValue(),
@@ -166,6 +167,7 @@ var pdt = (function () {
                     apex.item('R0_BUILD_OPTION_ENABLE').setValue('Y');
                     apex.item('R0_OPEN_BUILDER_ENABLE').setValue('Y');
                     apex.item('R0_GLOW_DEBUG_ICON').setValue('Y');
+                    apex.item('R0_OLD_SCHOOL_DEBUG').setValue('Y');
                     apex.item('R0_AUTO_VIEW_DEBUG').setValue('Y');
                     apex.item('R0_MASTER_DETAIL_DEBUG').setValue('Y');
                     apex.item('R0_HOME_REPLACE_LINK').setValue('Y');
@@ -243,8 +245,9 @@ var pdt = (function () {
         apex.widget.yesNo("R0_BUILD_OPTION_ENABLE", "SWITCH_CB");
         apex.widget.yesNo("R0_OPEN_BUILDER_ENABLE", "SWITCH_CB");
         apex.widget.yesNo("R0_GLOW_DEBUG_ICON", "SWITCH_CB");
-        apex.widget.yesNo("R0_AUTO_VIEW_DEBUG", "SWITCH_CB");   
-        apex.widget.yesNo("R0_MASTER_DETAIL_DEBUG", "SWITCH_CB");   
+        apex.widget.yesNo("R0_OLD_SCHOOL_DEBUG", "SWITCH_CB");
+        apex.widget.yesNo("R0_AUTO_VIEW_DEBUG", "SWITCH_CB");
+        apex.widget.yesNo("R0_MASTER_DETAIL_DEBUG", "SWITCH_CB");
         apex.widget.yesNo("R0_OPEN_BUILDER_CACHE", "SWITCH_CB");
         apex.widget.yesNo("R0_OPEN_BUILDER_APP_LIMIT", "SWITCH_CB");
         apex.widget.yesNo("R0_HOME_REPLACE_LINK", "SWITCH_CB");
@@ -263,7 +266,7 @@ var pdt = (function () {
             apex.item("R0_REVEALER_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('revealer.kb'), 'Q'));
             apex.item("R0_REVEALER_DEBUG_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('revealer.dkb'), 'D'));
             apex.item("R0_REVEALER_DEBUG_ROWS").setValue(pdt.nvl(pdt.getSetting('revealer.debugrows'), '10'));
-            
+
             apex.item("R0_RELOAD_ENABLE").setValue(pdt.getSetting('reloadframe.enable'));
             apex.item("R0_RELOAD_DEVELOPERS_ONLY").setValue(pdt.getSetting('reloadframe.bypasswarnonunsaved'));
             apex.item("R0_RELOAD_BYPASS_UNCHANGED").setValue(pdt.nvl(pdt.getSetting('reloadframe.bypasswarnonunsaved'), 'Y'));
@@ -277,6 +280,7 @@ var pdt = (function () {
             apex.item("R0_OPEN_BUILDER_APP_LIMIT").setValue(pdt.getSetting('devbar.openbuilderapplimit'));
             apex.item("R0_OPEN_BUILDER_KB_SHORTCUT").setValue(pdt.nvl(pdt.getSetting('devbar.openbuilderkb'), 'W'));
             apex.item("R0_GLOW_DEBUG_ICON").setValue(pdt.getSetting('devbar.glowdebugenable'));
+            apex.item("R0_OLD_SCHOOL_DEBUG").setValue(pdt.getSetting('devbar.oldschooldebugenable'));
             apex.item("R0_AUTO_VIEW_DEBUG").setValue(pdt.getSetting('devbar.autoviewdebugenable'));
             apex.item("R0_MASTER_DETAIL_DEBUG").setValue(pdt.getSetting('devbar.masterdetaildebugenable'));
             apex.item("R0_HOME_REPLACE_LINK").setValue(pdt.getSetting('devbar.homereplacelink'));
@@ -288,6 +292,7 @@ var pdt = (function () {
         $("#pretiusRevealerInline #R0_BUILD_OPTION_ENABLE").trigger("change");
         $("#pretiusRevealerInline #R0_OPEN_BUILDER_ENABLE").trigger("change");
         $("#pretiusRevealerInline #R0_GLOW_DEBUG_ICON").trigger("change");
+        $("#pretiusRevealerInline #R0_OLD_SCHOOL_DEBUG").trigger("change");
         $("#pretiusRevealerInline #R0_AUTO_VIEW_DEBUG").trigger("change");
         $("#pretiusRevealerInline #R0_MASTER_DETAIL_DEBUG").trigger("change");
         $("#pretiusRevealerInline #R0_HOME_REPLACE_LINK").trigger("change");
@@ -380,7 +385,7 @@ var pdt = (function () {
         $("#pretiusRevealerInline").each(function () {
             var inst$ = $(this),
                 isPopup = inst$.hasClass("js-regionPopup"),
-                size =  ["js-dialog-size600x400", viewportWidth, viewportHeight ],
+                size = ["js-dialog-size600x400", viewportWidth, viewportHeight],
                 relPos = /js-popup-pos-(\w+)/.exec(this.className),
                 parent = inst$.attr("data-parent-element"),
                 options = {
@@ -504,6 +509,11 @@ var pdt = (function () {
                     pdt.pretiusContentDevBar.activateOpenBuilder();
                 }
 
+                // Old School Debug
+                if (getSetting('devbar.oldschooldebugenable') == 'Y') {
+                    pdt.debugControl.activateOldSchoolDebug();
+                }
+
                 // GlowDebug
                 if (getSetting('devbar.glowdebugenable') == 'Y') {
                     pdt.pretiusContentDevBar.activateGlowDebug();
@@ -517,7 +527,7 @@ var pdt = (function () {
                 // Master Detail Debug
                 if (getSetting('devbar.masterdetaildebugenable') == 'Y') {
                     pdt.debugControl.activateDebugControl();
-                }                
+                }
 
                 // Auto View Debug
                 if (getSetting('devbar.autoviewdebugenable') == 'Y') {
@@ -568,6 +578,27 @@ var pdt = (function () {
         }
     }
 
+    // https://stackoverflow.com/a/1912522
+    var htmlDecode = function htmlDecode(input) {
+        var e = document.createElement('textarea');
+        e.innerHTML = input;
+        // handle case of empty input
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
+    var getApexPath = function getApexPath(){
+        var lPath;
+
+        if (pdt.opt.friendlyUrl === 'Yes') {
+            lPath = apex.gPageContext$[0].baseURI;
+        } else {
+            lPath = new URL('.', window.location).href;
+        }
+
+        return lPath;
+    }
+
+
     return {
         render: render,
         da: da,
@@ -580,7 +611,9 @@ var pdt = (function () {
         cloakDebugLevel: cloakDebugLevel,
         unCloakDebugLevel: unCloakDebugLevel,
         ajaxErrorHandler: ajaxErrorHandler,
-        optIn: optIn
+        optIn: optIn,
+        htmlDecode: htmlDecode,
+        getApexPath: getApexPath
     }
 
 })();

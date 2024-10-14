@@ -35,7 +35,8 @@
 <div class="row">
     <div class="col col-6 apex-col-auto">
         <div>
-            <p class="margin-bottom-sm optOutText margin-left-sm" style="font-size: smaller;">Don't want to use Pretius Developer Tool?
+            <p class="margin-bottom-sm optOutText margin-left-sm" style="font-size: smaller;">Don't want to use Pretius
+                Developer Tool?
                 <a href="javascript:void(0)" class="optOutLink">Opt-Out</a> here
             </p>
         </div>
@@ -53,597 +54,807 @@
     <div class="col col-12 apex-col-auto">
         <div id="pretiusDeveloperToolOptions">
             <div class="container">
+
+                <!-- Start Left Pane -->
+
                 <div class="row">
-                    <div class="col col-6 apex-col-auto">
-                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
-                            id="pretiusDeveloperToolOptionsRevealer">
-                            <div class="t-Region-header">
-                                <div class="t-Region-headerItems t-Region-headerItems--title">
-                                    <span class="t-Region-headerIcon"><span class="t-Icon "
-                                            aria-hidden="true"></span></span>
-                                    <h2 class="t-Region-title" id="pretiusDeveloperToolOptionsRevealer_heading">
-                                        Revealer
-                                    </h2>
-                                </div>
-                                <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
-                                        class="js-maximizeButtonContainer"></span></div>
-                            </div>
-                            <div class="t-Region-bodyWrap">
-                                <div class="t-Region-buttons t-Region-buttons--top">
-                                    <div class="t-Region-buttons-left"></div>
-                                    <div class="t-Region-buttons-right"></div>
-                                </div>
-                                <div class="t-Region-body">
-                                    <div class="container">
-                                        <input type="hidden" id="R0_OPT_OUT" name="R0_OPT_OUT" value="N">
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_REVEALER_ENABLE_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_REVEALER_ENABLE" id="R0_REVEALER_ENABLE_LABEL"
-                                                            class="t-Form-label">Enable</label>
+                    <div class="col col-6 apex-col-auto col-start">
+                        <div>
+                            <div class="container">
+
+
+                                <div class="row">
+                                    <div class="col col-12 apex-col-auto">
+                                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
+                                            id="pretiusDeveloperToolOptionsRevealer">
+                                            <div class="t-Region-header">
+                                                <div class="t-Region-headerItems t-Region-headerItems--title">
+                                                    <span class="t-Region-headerIcon"><span class="t-Icon "
+                                                            aria-hidden="true"></span></span>
+                                                    <h2 class="t-Region-title"
+                                                        id="pretiusDeveloperToolOptionsRevealer_heading">
+                                                        Revealer
+                                                    </h2>
+                                                </div>
+                                                <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
+                                                        class="js-maximizeButtonContainer"></span></div>
+                                            </div>
+                                            <div class="t-Region-bodyWrap">
+                                                <div class="t-Region-buttons t-Region-buttons--top">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
+                                                </div>
+                                                <div class="t-Region-body">
+                                                    <div class="container">
+                                                        <input type="hidden" id="R0_OPT_OUT" name="R0_OPT_OUT"
+                                                            value="N">
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_REVEALER_ENABLE_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_REVEALER_ENABLE"
+                                                                            id="R0_REVEALER_ENABLE_LABEL"
+                                                                            class="t-Form-label">Enable</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_REVEALER_ENABLE"
+                                                                                    name="R0_REVEALER_ENABLE" value="Y"
+                                                                                    data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span id="R0_REVEALER_ENABLE_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_REVEALER_CRIPPLE_TABLOCK_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_REVEALER_CRIPPLE_TABLOCK"
+                                                                            id="R0_REVEALER_CRIPPLE_TABLOCK_LABEL"
+                                                                            class="t-Form-label">Deactivate <a
+                                                                                href="https://bit.ly/APEXTabLock"
+                                                                                target="_blank">Tablock</a>
+                                                                            Revealer</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_REVEALER_CRIPPLE_TABLOCK"
+                                                                                    name="R0_REVEALER_CRIPPLE_TABLOCK"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    checked="checked"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span
+                                                                            id="R0_REVEALER_CRIPPLE_TABLOCK_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
+                                                                    id="R0_REVEALER_KB_SHORTCUT_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_REVEALER_KB_SHORTCUT"
+                                                                            id="R0_REVEALER_KB_SHORTCUT_LABEL"
+                                                                            class="t-Form-label">Keyboard Shortcut
+                                                                            Ctrl+Alt+...</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><input
+                                                                                type="text" id="R0_REVEALER_KB_SHORTCUT"
+                                                                                name="R0_REVEALER_KB_SHORTCUT"
+                                                                                class="text_field apex-item-text"
+                                                                                value="Q" size="1" maxlength="1"
+                                                                                data-np-checked="1">
+                                                                        </div><span
+                                                                            id="R0_REVEALER_KB_SHORTCUT_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
+                                                                    id="R0_REVEALER_DEBUG_KB_SHORTCUT_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_REVEALER_DEBUG_KB_SHORTCUT"
+                                                                            id="R0_REVEALER_DEBUG_KB_SHORTCUT_LABEL"
+                                                                            class="t-Form-label">Debug Keyboard Shortcut
+                                                                            Ctrl+Alt+...</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><input
+                                                                                type="text"
+                                                                                id="R0_REVEALER_DEBUG_KB_SHORTCUT"
+                                                                                name="R0_REVEALER_DEBUG_KB_SHORTCUT"
+                                                                                class="text_field apex-item-text"
+                                                                                value="D" size="1" maxlength="1"
+                                                                                data-np-checked="1">
+                                                                        </div><span
+                                                                            id="R0_REVEALER_DEBUG_KB_SHORTCUT_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_REVEALER_ENABLE"
-                                                                    name="R0_REVEALER_ENABLE" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_REVEALER_ENABLE_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
+                                                    <div class="row">
+                                                        <div class="col col-12 apex-col-auto">
+                                                            <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--number-field "
+                                                                id="R0_REVEALER_DEBUG_ROWS_CONTAINER">
+                                                                <div class="t-Form-labelContainer col col-8">
+                                                                    <label for="R0_REVEALER_DEBUG_ROWS"
+                                                                        id="R0_REVEALER_DEBUG_ROWS_LABEL"
+                                                                        class="t-Form-label">Number of
+                                                                        Debug rows to show</label>
+                                                                </div>
+                                                                <div class="t-Form-inputContainer col col-4">
+                                                                    <div class="t-Form-itemWrapper"><input type="text"
+                                                                            id="R0_REVEALER_DEBUG_ROWS"
+                                                                            name="R0_REVEALER_DEBUG_ROWS"
+                                                                            aria-describedby="R0_REVEALER_DEBUG_ROWS_inline_help"
+                                                                            class="number_field apex-item-text"
+                                                                            value="10" size="2" maxlength="3"
+                                                                            style="text-align:right"
+                                                                            data-np-checked="1">
+                                                                    </div><span class="t-Form-inlineHelp"></span><span
+                                                                        id="R0_REVEALER_DEBUG_ROWS_error_placeholder"
+                                                                        class="a-Form-error" data-template-id=""></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_REVEALER_CRIPPLE_TABLOCK_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_REVEALER_CRIPPLE_TABLOCK"
-                                                            id="R0_REVEALER_CRIPPLE_TABLOCK_LABEL"
-                                                            class="t-Form-label">Deactivate <a
-                                                                href="https://bit.ly/APEXTabLock"
-                                                                target="_blank">Tablock</a> Revealer</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_REVEALER_CRIPPLE_TABLOCK"
-                                                                    name="R0_REVEALER_CRIPPLE_TABLOCK" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" checked="checked"
-                                                                    data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_REVEALER_CRIPPLE_TABLOCK_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
-                                                    id="R0_REVEALER_KB_SHORTCUT_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_REVEALER_KB_SHORTCUT"
-                                                            id="R0_REVEALER_KB_SHORTCUT_LABEL"
-                                                            class="t-Form-label">Keyboard Shortcut
-                                                            Ctrl+Alt+...</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><input type="text"
-                                                                id="R0_REVEALER_KB_SHORTCUT"
-                                                                name="R0_REVEALER_KB_SHORTCUT"
-                                                                class="text_field apex-item-text" value="Q" size="1"
-                                                                maxlength="1" data-np-checked="1"></div><span
-                                                            id="R0_REVEALER_KB_SHORTCUT_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
-                                                    id="R0_REVEALER_DEBUG_KB_SHORTCUT_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_REVEALER_DEBUG_KB_SHORTCUT"
-                                                            id="R0_REVEALER_DEBUG_KB_SHORTCUT_LABEL"
-                                                            class="t-Form-label">Debug Keyboard Shortcut
-                                                            Ctrl+Alt+...</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><input type="text"
-                                                                id="R0_REVEALER_DEBUG_KB_SHORTCUT"
-                                                                name="R0_REVEALER_DEBUG_KB_SHORTCUT"
-                                                                class="text_field apex-item-text" value="D" size="1"
-                                                                maxlength="1" data-np-checked="1"></div><span
-                                                            id="R0_REVEALER_DEBUG_KB_SHORTCUT_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
+                                                <div class="t-Region-buttons t-Region-buttons--bottom">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col col-12 apex-col-auto">
-                                            <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--number-field "
-                                                id="R0_REVEALER_DEBUG_ROWS_CONTAINER">
-                                                <div class="t-Form-labelContainer col col-8">
-                                                    <label for="R0_REVEALER_DEBUG_ROWS"
-                                                        id="R0_REVEALER_DEBUG_ROWS_LABEL"
-                                                        class="t-Form-label">Number of Debug rows to show</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-12 apex-col-auto">
+                                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
+                                            id="pretiusDeveloperToolOptionsReloadFrame">
+                                            <div class="t-Region-header">
+                                                <div class="t-Region-headerItems t-Region-headerItems--title">
+                                                    <span class="t-Region-headerIcon"><span class="t-Icon "
+                                                            aria-hidden="true"></span></span>
+                                                    <h2 class="t-Region-title"
+                                                        id="pretiusDeveloperToolOptionsReloadFrame_heading">
+                                                        Reload Frame</h2>
                                                 </div>
-                                                <div class="t-Form-inputContainer col col-4">
-                                                    <div class="t-Form-itemWrapper"><input type="text"
-                                                            id="R0_REVEALER_DEBUG_ROWS"
-                                                            name="R0_REVEALER_DEBUG_ROWS"
-                                                            aria-describedby="R0_REVEALER_DEBUG_ROWS_inline_help"
-                                                            class="number_field apex-item-text" value="10" size="2"
-                                                            maxlength="3" style="text-align:right"
-                                                            data-np-checked="1"></div><span
-                                                        class="t-Form-inlineHelp"></span><span
-                                                        id="R0_REVEALER_DEBUG_ROWS_error_placeholder"
-                                                        class="a-Form-error" data-template-id=""></span>
+                                                <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
+                                                        class="js-maximizeButtonContainer"></span></div>
+                                            </div>
+                                            <div class="t-Region-bodyWrap">
+                                                <div class="t-Region-buttons t-Region-buttons--top">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
+                                                </div>
+                                                <div class="t-Region-body">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_RELOAD_ENABLE_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_RELOAD_ENABLE"
+                                                                            id="R0_RELOAD_ENABLE_LABEL"
+                                                                            class="t-Form-label">Enable</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_RELOAD_ENABLE"
+                                                                                    name="R0_RELOAD_ENABLE" value="Y"
+                                                                                    data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span id="R0_RELOAD_ENABLE_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_RELOAD_DEVELOPERS_ONLY_CONTAINER"
+                                                                    style="display:none">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_RELOAD_DEVELOPERS_ONLY"
+                                                                            id="R0_RELOAD_DEVELOPERS_ONLY_LABEL"
+                                                                            class="t-Form-label">Developers Only</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_RELOAD_DEVELOPERS_ONLY"
+                                                                                    name="R0_RELOAD_DEVELOPERS_ONLY"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    checked="checked"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span
+                                                                            id="R0_RELOAD_DEVELOPERS_ONLY_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_RELOAD_BYPASS_UNCHANGED_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_RELOAD_BYPASS_UNCHANGED"
+                                                                            id="R0_RELOAD_BYPASS_UNCHANGED_LABEL"
+                                                                            class="t-Form-label">Bypass Warn on
+                                                                            Unchanged
+                                                                            Changes</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_RELOAD_BYPASS_UNCHANGED"
+                                                                                    name="R0_RELOAD_BYPASS_UNCHANGED"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    checked="checked"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span
+                                                                            id="R0_RELOAD_BYPASS_UNCHANGED_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
+                                                                    id="R0_RELOAD_KB_SHORTCUT_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_RELOAD_KB_SHORTCUT"
+                                                                            id="R0_RELOAD_KB_SHORTCUT_LABEL"
+                                                                            class="t-Form-label">Keyboard Shortcut
+                                                                            Ctrl+Alt+...</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><input
+                                                                                type="text" id="R0_RELOAD_KB_SHORTCUT"
+                                                                                name="R0_RELOAD_KB_SHORTCUT"
+                                                                                class="text_field apex-item-text"
+                                                                                value="R" size="1" maxlength="1"
+                                                                                data-np-checked="1">
+                                                                        </div><span
+                                                                            id="R0_RELOAD_KB_SHORTCUT_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="t-Region-buttons t-Region-buttons--bottom">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="t-Region-buttons t-Region-buttons--bottom">
-                                    <div class="t-Region-buttons-left"></div>
-                                    <div class="t-Region-buttons-right"></div>
+
+                                <div class="row">
+                                    <div class="col col-12 apex-col-auto">
+                                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
+                                            id="pretiusDeveloperToolOptionsBuildOptionsHighlight">
+                                            <div class="t-Region-header">
+                                                <div class="t-Region-headerItems t-Region-headerItems--title">
+                                                    <span class="t-Region-headerIcon"><span class="t-Icon "
+                                                            aria-hidden="true"></span></span>
+                                                    <h2 class="t-Region-title"
+                                                        id="pretiusDeveloperToolOptionsBuildOptionsHighlight_heading">
+                                                        Build
+                                                        Option
+                                                        Highlight</h2>
+                                                </div>
+                                                <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
+                                                        class="js-maximizeButtonContainer"></span></div>
+                                            </div>
+                                            <div class="t-Region-bodyWrap">
+                                                <div class="t-Region-buttons t-Region-buttons--top">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
+                                                </div>
+                                                <div class="t-Region-body">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_BUILD_OPTION_ENABLE_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_BUILD_OPTION_ENABLE"
+                                                                            id="R0_BUILD_OPTION_ENABLE_LABEL"
+                                                                            class="t-Form-label">Enable</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_BUILD_OPTION_ENABLE"
+                                                                                    name="R0_BUILD_OPTION_ENABLE"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div><span
+                                                                            id="R0_BUILD_OPTION_ENABLE_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--number-field "
+                                                                    id="R0_BUILD_OPTION_DURATION_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_BUILD_OPTION_DURATION"
+                                                                            id="R0_BUILD_OPTION_DURATION_LABEL"
+                                                                            class="t-Form-label">Fade after x
+                                                                            Seconds</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><input
+                                                                                type="text"
+                                                                                id="R0_BUILD_OPTION_DURATION"
+                                                                                name="R0_BUILD_OPTION_DURATION"
+                                                                                aria-describedby="R0_BUILD_OPTION_DURATION_inline_help"
+                                                                                class="number_field apex-item-text"
+                                                                                value="6" size="2" maxlength="2"
+                                                                                style="text-align:right"
+                                                                                data-np-checked="1"></div><span
+                                                                            class="t-Form-inlineHelp"><span
+                                                                                id="R0_BUILD_OPTION_DURATION_inline_help">0
+                                                                                to never fade out</span></span><span
+                                                                            id="R0_BUILD_OPTION_DURATION_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="t-Region-buttons t-Region-buttons--bottom">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+
+
                             </div>
                         </div>
                     </div>
-                    <!-- </div>
-                <div class="row"> -->
-                    <div class="col col-6 apex-col-auto">
-                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
-                            id="pretiusDeveloperToolOptionsReloadFrame">
-                            <div class="t-Region-header">
-                                <div class="t-Region-headerItems t-Region-headerItems--title">
-                                    <span class="t-Region-headerIcon"><span class="t-Icon "
-                                            aria-hidden="true"></span></span>
-                                    <h2 class="t-Region-title" id="pretiusDeveloperToolOptionsReloadFrame_heading">
-                                        Reload Frame</h2>
-                                </div>
-                                <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
-                                        class="js-maximizeButtonContainer"></span></div>
-                            </div>
-                            <div class="t-Region-bodyWrap">
-                                <div class="t-Region-buttons t-Region-buttons--top">
-                                    <div class="t-Region-buttons-left"></div>
-                                    <div class="t-Region-buttons-right"></div>
-                                </div>
-                                <div class="t-Region-body">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_RELOAD_ENABLE_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_RELOAD_ENABLE" id="R0_RELOAD_ENABLE_LABEL"
-                                                            class="t-Form-label">Enable</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_RELOAD_ENABLE"
-                                                                    name="R0_RELOAD_ENABLE" value="Y" data-on-label="On"
-                                                                    data-off-value="N" data-off-label="Off"
-                                                                    data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_RELOAD_ENABLE_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
+                    <div class="col col-6 apex-col-auto col-end">
+                        <div>
+                            <div class="container">
+                                <div class="row ">
+                                    <div class="col col-12 apex-col-auto">
+                                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
+                                            id="pretiusDeveloperToolOptionsOpenBuilder">
+                                            <div class="t-Region-header">
+                                                <div class="t-Region-headerItems t-Region-headerItems--title">
+                                                    <span class="t-Region-headerIcon"><span class="t-Icon "
+                                                            aria-hidden="true"></span></span>
+                                                    <h2 class="t-Region-title"
+                                                        id="pretiusDeveloperToolOptionsOpenBuilder_heading">
+                                                        Developer Bar Enhancements</h2>
+                                                </div>
+                                                <div class="t-Region-headerItems t-Region-headerItems--buttons">
+                                                    <span class="js-maximizeButtonContainer"></span>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_RELOAD_DEVELOPERS_ONLY_CONTAINER" style="display:none">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_RELOAD_DEVELOPERS_ONLY"
-                                                            id="R0_RELOAD_DEVELOPERS_ONLY_LABEL"
-                                                            class="t-Form-label">Developers Only</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_RELOAD_DEVELOPERS_ONLY"
-                                                                    name="R0_RELOAD_DEVELOPERS_ONLY" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" checked="checked"
-                                                                    data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_RELOAD_DEVELOPERS_ONLY_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
+                                            <div class="t-Region-bodyWrap">
+                                                <div class="t-Region-buttons t-Region-buttons--top">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_RELOAD_BYPASS_UNCHANGED_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_RELOAD_BYPASS_UNCHANGED"
-                                                            id="R0_RELOAD_BYPASS_UNCHANGED_LABEL"
-                                                            class="t-Form-label">Bypass Warn on Unchanged
-                                                            Changes</label>
+                                                <div class="t-Region-body">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_HOME_REPLACE_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_HOME_REPLACE_LINK"
+                                                                            id="R0_HOME_REPLACE_LINK_LABEL"
+                                                                            class="t-Form-label"><span
+                                                                                class="a-Icon icon-home"
+                                                                                aria-hidden="true"></span> Replace Home with Shortcut Menu</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_HOME_REPLACE_LINK"
+                                                                                    name="R0_HOME_REPLACE_LINK"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span
+                                                                            id="R0_HOME_REPLACE_LINK_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_OPEN_BUILDER_ENABLE_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_OPEN_BUILDER_ENABLE"
+                                                                            id="R0_OPEN_BUILDER_ENABLE_LABEL"
+                                                                            class="t-Form-label">Spotlight
+                                                                            Page Designer Access</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_OPEN_BUILDER_ENABLE"
+                                                                                    name="R0_OPEN_BUILDER_ENABLE"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span
+                                                                            id="R0_OPEN_BUILDER_ENABLE_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_OPEN_BUILDER_CACHE_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_OPEN_BUILDER_CACHE"
+                                                                            id="R0_OPEN_BUILDER_CACHE_LABEL"
+                                                                            class="t-Form-label">Use
+                                                                            Cache (for large workspaces)</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_OPEN_BUILDER_CACHE"
+                                                                                    name="R0_OPEN_BUILDER_CACHE"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span
+                                                                            id="R0_OPEN_BUILDER_CACHE_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_OPEN_BUILDER_APP_LIMIT_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_OPEN_BUILDER_APP_LIMIT"
+                                                                            id="R0_OPEN_BUILDER_APP_LIMIT_LABEL"
+                                                                            class="t-Form-label">Limit to Current
+                                                                            App (for
+                                                                            Performance)</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_OPEN_BUILDER_APP_LIMIT"
+                                                                                    name="R0_OPEN_BUILDER_APP_LIMIT"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span
+                                                                            id="R0_OPEN_BUILDER_APP_LIMIT_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
+                                                                    id="R0_OPEN_BUILDER_KB_SHORTCUT_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_OPEN_BUILDER_KB_SHORTCUT"
+                                                                            id="R0_ROPEN_BUILDER_KB_SHORTCUT_LABEL"
+                                                                            class="t-Form-label">Keyboard Shortcut
+                                                                            Ctrl+Alt+...</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><input
+                                                                                type="text"
+                                                                                id="R0_OPEN_BUILDER_KB_SHORTCUT"
+                                                                                name="R0_OPEN_BUILDER_KB_SHORTCUT"
+                                                                                class="text_field apex-item-text"
+                                                                                value="W" size="1" maxlength="1"
+                                                                                data-np-checked="1">
+                                                                        </div><span
+                                                                            id="R0_OPEN_BUILDER_KB_SHORTCUT_inline_help"></span><span
+                                                                            id="R0_OPEN_BUILDER_KB_SHORTCUT_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_RELOAD_BYPASS_UNCHANGED"
-                                                                    name="R0_RELOAD_BYPASS_UNCHANGED" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" checked="checked"
-                                                                    data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_RELOAD_BYPASS_UNCHANGED_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
+
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
-                                                    id="R0_RELOAD_KB_SHORTCUT_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_RELOAD_KB_SHORTCUT"
-                                                            id="R0_RELOAD_KB_SHORTCUT_LABEL"
-                                                            class="t-Form-label">Keyboard Shortcut
-                                                            Ctrl+Alt+...</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><input type="text"
-                                                                id="R0_RELOAD_KB_SHORTCUT" name="R0_RELOAD_KB_SHORTCUT"
-                                                                class="text_field apex-item-text" value="R" size="1"
-                                                                maxlength="1" data-np-checked="1"></div><span
-                                                            id="R0_RELOAD_KB_SHORTCUT_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
+                                                <div class="t-Region-buttons t-Region-buttons--bottom">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
+                                <div class="row">
+                                    <div class="col col-12 apex-col-auto">
+                                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
+                                            id="pretiusDeveloperToolOptionsDebugOptions">
+                                            <div class="t-Region-header">
+                                                <div class="t-Region-headerItems t-Region-headerItems--title">
+                                                    <span class="t-Region-headerIcon"><span class="t-Icon "
+                                                            aria-hidden="true"></span></span>
+                                                    <h2 class="t-Region-title"
+                                                        id="pretiusDeveloperToolOptionsDebugOptions_heading">Debug
+                                                        Options</h2>
+                                                </div>
+                                                <div class="t-Region-headerItems t-Region-headerItems--buttons">
+                                                    <span class="js-maximizeButtonContainer"></span>
+                                                </div>
+                                            </div>
+                                            <div class="t-Region-bodyWrap">
+                                                <div class="t-Region-buttons t-Region-buttons--top">
+                                                    <div class="t-Region-buttons-left"></div>
+                                                    <div class="t-Region-buttons-right"></div>
+                                                </div>
+                                                <div class="t-Region-body">
+                                                    <div class="container">
+
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_OLD_SCHOOL_DEBUG_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_OLD_SCHOOL_DEBUG"
+                                                                            id="R0_OLD_SCHOOL_DEBUG_LABEL"
+                                                                            class="t-Form-label">Old School
+                                                                            Debug</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_OLD_SCHOOL_DEBUG"
+                                                                                    name="R0_OLD_SCHOOL_DEBUG" value="Y"
+                                                                                    data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span id="R0_OLD_SCHOOL_DEBUG_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_GLOW_DEBUG_ICON_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_GLOW_DEBUG_ICON"
+                                                                            id="R0_GLOW_DEBUG_ICON_LABEL"
+                                                                            class="t-Form-label">Glow
+                                                                            Debug Icon</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_GLOW_DEBUG_ICON"
+                                                                                    name="R0_GLOW_DEBUG_ICON" value="Y"
+                                                                                    data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span id="R0_GLOW_DEBUG_ICON_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_AUTO_VIEW_DEBUG_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_AUTO_VIEW_DEBUG"
+                                                                            id="R0_AUTO_VIEW_DEBUG_LABEL"
+                                                                            class="t-Form-label">Auto View
+                                                                            Debug</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_AUTO_VIEW_DEBUG"
+                                                                                    name="R0_AUTO_VIEW_DEBUG" value="Y"
+                                                                                    data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span id="R0_AUTO_VIEW_DEBUG_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col col-12 apex-col-auto">
+                                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
+                                                                    id="R0_MASTER_DETAIL_DEBUG_CONTAINER">
+                                                                    <div class="t-Form-labelContainer col col-8">
+                                                                        <label for="R0_MASTER_DETAIL_DEBUG"
+                                                                            id="R0_MASTER_DETAIL_DEBUG_LABEL"
+                                                                            class="t-Form-label">Master Detail
+                                                                            Debug</label>
+                                                                    </div>
+                                                                    <div class="t-Form-inputContainer col col-4">
+                                                                        <div class="t-Form-itemWrapper"><span
+                                                                                class="a-Switch"><input type="checkbox"
+                                                                                    id="R0_MASTER_DETAIL_DEBUG"
+                                                                                    name="R0_MASTER_DETAIL_DEBUG"
+                                                                                    value="Y" data-on-label="On"
+                                                                                    data-off-value="N"
+                                                                                    data-off-label="Off"
+                                                                                    data-np-checked="1"><span
+                                                                                    class="a-Switch-toggle"></span></span>
+                                                                        </div>
+                                                                        <span class="t-Form-inlineHelp"><span
+                                                                                id="R0_MASTER_DETAIL_DEBUG_inline_help">
+                                                                                Requires <a
+                                                                                    href="https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe"
+                                                                                    target="_blank">Ignore X-Frame
+                                                                                    Headers</a>
+                                                                                Extension
+                                                                            </span></span><span
+                                                                            id="R0_MASTER_DETAIL_DEBUG_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                        <span
+                                                                            id="R0_MASTER_DETAIL_DEBUG_error_placeholder"
+                                                                            class="a-Form-error"
+                                                                            data-template-id=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="t-Region-buttons t-Region-buttons--bottom">
+                                                <div class="t-Region-buttons-left"></div>
+                                                <div class="t-Region-buttons-right"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="t-Region-buttons t-Region-buttons--bottom">
-                                    <div class="t-Region-buttons-left"></div>
-                                    <div class="t-Region-buttons-right"></div>
-                                </div>
+
+
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-                <div class="row">
-                    <div class="col col-6 ">
-                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
-                            id="pretiusDeveloperToolOptionsBuildOptionsHighlight">
-                            <div class="t-Region-header">
-                                <div class="t-Region-headerItems t-Region-headerItems--title">
-                                    <span class="t-Region-headerIcon"><span class="t-Icon "
-                                            aria-hidden="true"></span></span>
-                                    <h2 class="t-Region-title"
-                                        id="pretiusDeveloperToolOptionsBuildOptionsHighlight_heading">Build Option
-                                        Highlight</h2>
-                                </div>
-                                <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
-                                        class="js-maximizeButtonContainer"></span></div>
-                            </div>
-                            <div class="t-Region-bodyWrap">
-                                <div class="t-Region-buttons t-Region-buttons--top">
-                                    <div class="t-Region-buttons-left"></div>
-                                    <div class="t-Region-buttons-right"></div>
-                                </div>
-                                <div class="t-Region-body">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_BUILD_OPTION_ENABLE_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_BUILD_OPTION_ENABLE"
-                                                            id="R0_BUILD_OPTION_ENABLE_LABEL"
-                                                            class="t-Form-label">Enable</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_BUILD_OPTION_ENABLE"
-                                                                    name="R0_BUILD_OPTION_ENABLE" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span>
-                                                        </div><span id="R0_BUILD_OPTION_ENABLE_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--number-field "
-                                                    id="R0_BUILD_OPTION_DURATION_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_BUILD_OPTION_DURATION"
-                                                            id="R0_BUILD_OPTION_DURATION_LABEL"
-                                                            class="t-Form-label">Fade after x Seconds</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><input type="text"
-                                                                id="R0_BUILD_OPTION_DURATION"
-                                                                name="R0_BUILD_OPTION_DURATION"
-                                                                aria-describedby="R0_BUILD_OPTION_DURATION_inline_help"
-                                                                class="number_field apex-item-text" value="6" size="2"
-                                                                maxlength="2" style="text-align:right"
-                                                                data-np-checked="1"></div><span
-                                                            class="t-Form-inlineHelp"><span
-                                                                id="R0_BUILD_OPTION_DURATION_inline_help">0
-                                                                to never fade out</span></span><span
-                                                            id="R0_BUILD_OPTION_DURATION_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            <!-- Start Right Pane -->
 
-                                </div>
-                                <div class="t-Region-buttons t-Region-buttons--bottom">
-                                    <div class="t-Region-buttons-left"></div>
-                                    <div class="t-Region-buttons-right"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- </div> -->
-
-                    <div class="col col-6 apex-col-auto">
-                        <div class="t-Region t-Region--scrollBody t-Form--slimPadding"
-                            id="pretiusDeveloperToolOptionsOpenBuilder">
-                            <div class="t-Region-header">
-                                <div class="t-Region-headerItems t-Region-headerItems--title">
-                                    <span class="t-Region-headerIcon"><span class="t-Icon "
-                                            aria-hidden="true"></span></span>
-                                    <h2 class="t-Region-title" id="pretiusDeveloperToolOptionsOpenBuilder_heading">
-                                        Developer Bar Enhancements</h2>
-                                </div>
-                                <div class="t-Region-headerItems t-Region-headerItems--buttons"><span
-                                        class="js-maximizeButtonContainer"></span></div>
-                            </div>
-                            <div class="t-Region-bodyWrap">
-                                <div class="t-Region-buttons t-Region-buttons--top">
-                                    <div class="t-Region-buttons-left"></div>
-                                    <div class="t-Region-buttons-right"></div>
-                                </div>
-                                <div class="t-Region-body">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_HOME_REPLACE_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_HOME_REPLACE_LINK" id="R0_HOME_REPLACE_LINK_LABEL"
-                                                            class="t-Form-label"><span class="a-Icon icon-home" aria-hidden="true"></span>Home opens Shared Components</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_HOME_REPLACE_LINK"
-                                                                    name="R0_HOME_REPLACE_LINK" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_HOME_REPLACE_LINK_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_GLOW_DEBUG_ICON_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_GLOW_DEBUG_ICON" id="R0_GLOW_DEBUG_ICON_LABEL"
-                                                            class="t-Form-label">Glow
-                                                            Debug Icon</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_GLOW_DEBUG_ICON"
-                                                                    name="R0_GLOW_DEBUG_ICON" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_GLOW_DEBUG_ICON_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_AUTO_VIEW_DEBUG_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_AUTO_VIEW_DEBUG" id="R0_AUTO_VIEW_DEBUG_LABEL"
-                                                            class="t-Form-label">Auto View Debug</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_AUTO_VIEW_DEBUG"
-                                                                    name="R0_AUTO_VIEW_DEBUG" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_AUTO_VIEW_DEBUG_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_MASTER_DETAIL_DEBUG_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_MASTER_DETAIL_DEBUG" id="R0_MASTER_DETAIL_DEBUG_LABEL"
-                                                            class="t-Form-label">Master Detail Debug</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_MASTER_DETAIL_DEBUG"
-                                                                    name="R0_MASTER_DETAIL_DEBUG" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                                    <span
-                                                                    class="t-Form-inlineHelp"><span
-                                                                        id="R0_MASTER_DETAIL_DEBUG_inline_help">
-                                                                    Requires <a href="https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe" target="_blank">Ignore X-Frame Headers</a> Extension
-                                                                    </span></span><span
-                                                                    id="R0_MASTER_DETAIL_DEBUG_error_placeholder"
-                                                                    class="a-Form-error" data-template-id=""></span>                                                                    
-                                                        <span id="R0_MASTER_DETAIL_DEBUG_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_OPEN_BUILDER_ENABLE_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_OPEN_BUILDER_ENABLE"
-                                                            id="R0_OPEN_BUILDER_ENABLE_LABEL" class="t-Form-label">Spotlight
-                                                            Page Designer Access</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_OPEN_BUILDER_ENABLE"
-                                                                    name="R0_OPEN_BUILDER_ENABLE" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_OPEN_BUILDER_ENABLE_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_OPEN_BUILDER_CACHE_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_OPEN_BUILDER_CACHE"
-                                                            id="R0_OPEN_BUILDER_CACHE_LABEL" class="t-Form-label">Use Cache (for large workspaces)</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_OPEN_BUILDER_CACHE"
-                                                                    name="R0_OPEN_BUILDER_CACHE" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_OPEN_BUILDER_CACHE_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--yes-no "
-                                                    id="R0_OPEN_BUILDER_APP_LIMIT_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_OPEN_BUILDER_APP_LIMIT"
-                                                            id="R0_OPEN_BUILDER_APP_LIMIT_LABEL" class="t-Form-label">Limit to Current App (for Performance)</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><span class="a-Switch"><input
-                                                                    type="checkbox" id="R0_OPEN_BUILDER_APP_LIMIT"
-                                                                    name="R0_OPEN_BUILDER_APP_LIMIT" value="Y"
-                                                                    data-on-label="On" data-off-value="N"
-                                                                    data-off-label="Off" data-np-checked="1"><span
-                                                                    class="a-Switch-toggle"></span></span></div>
-                                                        <span id="R0_OPEN_BUILDER_APP_LIMIT_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-12 apex-col-auto">
-                                                <div class="t-Form-fieldContainer rel-col apex-item-wrapper apex-item-wrapper--text-field "
-                                                    id="R0_OPEN_BUILDER_KB_SHORTCUT_CONTAINER">
-                                                    <div class="t-Form-labelContainer col col-8">
-                                                        <label for="R0_OPEN_BUILDER_KB_SHORTCUT"
-                                                            id="R0_ROPEN_BUILDER_KB_SHORTCUT_LABEL"
-                                                            class="t-Form-label">Keyboard Shortcut
-                                                            Ctrl+Alt+...</label>
-                                                    </div>
-                                                    <div class="t-Form-inputContainer col col-4">
-                                                        <div class="t-Form-itemWrapper"><input type="text"
-                                                                id="R0_OPEN_BUILDER_KB_SHORTCUT"
-                                                                name="R0_OPEN_BUILDER_KB_SHORTCUT"
-                                                                class="text_field apex-item-text" value="W" size="1"
-                                                                maxlength="1" data-np-checked="1"></div><span
-                                                            id="R0_OPEN_BUILDER_KB_SHORTCUT_inline_help"></span><span
-                                                            id="R0_OPEN_BUILDER_KB_SHORTCUT_error_placeholder"
-                                                            class="a-Form-error" data-template-id=""></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="t-Region-buttons t-Region-buttons--bottom">
-                                    <div class="t-Region-buttons-left"></div>
-                                    <div class="t-Region-buttons-right"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-                <div class="row">
-                    <div class="col col-12 apex-col-auto">
-                        <div id="pretiusDeveloperToolOptionsButtons">
-                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                <tbody>
-                                    <tr>
-                                        <td align="left"><button class="t-Button pdt-option-button" type="button"
-                                                id="R0_CANCEL"><span class="t-Button-label">Cancel</span></button>
-                                        </td>
-                                        <td align="right"><button
-                                                class="t-Button pdt-option-button t-Button--icon t-Button--iconRight t-Button--hot u-pullRight"
-                                                type="button" id="R0_SAVE"><span class="t-Icon t-Icon--left fa fa-save"
-                                                    aria-hidden="true"></span><span
-                                                    class="t-Button-label">Save</span><span
-                                                    class="t-Icon t-Icon--right fa fa-save"
-                                                    aria-hidden="true"></span></button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="row">
+                <div class="col col-12 apex-col-auto">
+                    <div id="pretiusDeveloperToolOptionsButtons">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td align="left"><button class="t-Button pdt-option-button" type="button"
+                                            id="R0_CANCEL"><span class="t-Button-label">Cancel</span></button>
+                                    </td>
+                                    <td align="right"><button
+                                            class="t-Button pdt-option-button t-Button--icon t-Button--iconRight t-Button--hot u-pullRight"
+                                            type="button" id="R0_SAVE"><span class="t-Icon t-Icon--left fa fa-save"
+                                                aria-hidden="true"></span><span class="t-Button-label">Save</span><span
+                                                class="t-Icon t-Icon--right fa fa-save"
+                                                aria-hidden="true"></span></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

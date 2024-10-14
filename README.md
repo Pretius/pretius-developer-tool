@@ -19,6 +19,10 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Release History
 
+24.1.3 : October 2024
+* Added Feature: Old School Debug
+* Added Feature: Home Button is replaced by a Shortcut Menu
+
 24.1.2 : September 2024
 * Added Feature: Auto View Debug
 * Added Feature: Master Detail Debug

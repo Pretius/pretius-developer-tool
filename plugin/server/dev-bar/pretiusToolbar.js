@@ -167,9 +167,22 @@ pdt.pretiusToolbar = (function () {
         }
 
     }
+
+    function  openDevbarSCMenuEntry(pUrl) {
+        var pContext = '&FB_FLOW_ID=' + pdt.opt.env.APP_ID + '&FB_FLOW_PAGE_ID=' + pdt.opt.env.APP_PAGE_ID;
+        window.open(pUrl + pContext, '_blank');
+    }
+    
+    function  openDevbarMenuEntry(pUrl) {
+        window.open(pUrl, '_blank');
+    }
+
     return {
         openBuilder: openBuilder,
         openSharedComponents: openSharedComponents,
-        getBuilderSessionid: getBuilderSessionid
+        getBuilderSessionid: getBuilderSessionid,
+        openBuilderWindow: openBuilderWindow,
+        openDevbarMenuEntry: openDevbarMenuEntry,
+        openDevbarSCMenuEntry: openDevbarSCMenuEntry
     };
 })();

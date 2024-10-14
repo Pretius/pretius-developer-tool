@@ -72,14 +72,6 @@ pdt.pretiusContentRevealer = (function () {
 
     var revealerIgnoreClass = 'pdt-revealer-ignore';
 
-    // https://stackoverflow.com/a/1912522
-    function htmlDecode(input) {
-        var e = document.createElement('textarea');
-        e.innerHTML = input;
-        // handle case of empty input
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-    }
-
     var frameworkArray = ['pContext', 'pFlowId', 'pFlowStepId', 'pInstance', 'pPageSubmissionId', 'pRequest', 'pReloadOnSubmit', 'pSalt', 'pPageItemsRowVersion', 'pPageItemsProtected', 'pdebug', 'apexCBMDummySelection', 'pPageChecksum', 'p_md5_checksum', 'pPageFormRegionChecksums'];
 
     function injectScript(yourCustomJavaScriptCode, persist) {
@@ -150,7 +142,7 @@ pdt.pretiusContentRevealer = (function () {
             a.Page = xpFlowStepId;
             a.Name = pSelector.id;
 
-            var yourCustomJavaScriptCode = htmlDecode(apex.lang.format(
+            var yourCustomJavaScriptCode = pdt.htmlDecode(apex.lang.format(
                 "var revealerItem = %0apex.item('%1'); " +
                 "var revealerValueItem = revealerItem.getValue(); " +
                 "var revealerType = revealerItem.item_type; " +
@@ -370,7 +362,7 @@ pdt.pretiusContentRevealer = (function () {
         var iframeSelectorString = "iframe:not([id=tablockRevealerFrame])";
         $(iframeSelectorString).filter(function () { return $(this).parents('.ui-dialog--apex').length > 0; }).each(function () {
             var injectSelectorString =
-                htmlDecode(apex.lang.format(' $("%0").filter(function() {return $(this).parents(".ui-dialog--apex").length > 0;})[%1].contentWindow.',
+                pdt.htmlDecode(apex.lang.format(' $("%0").filter(function() {return $(this).parents(".ui-dialog--apex").length > 0;})[%1].contentWindow.',
                     iframeSelectorString,
                     iframeCtr));
 
@@ -499,7 +491,7 @@ pdt.pretiusContentRevealer = (function () {
                 var kb = pdt.getSetting('revealer.kb').toLowerCase();
                 var dkb = pdt.getSetting('revealer.dkb').toLowerCase();
                 $('#apexDevToolbarQuickEdit').parent().before(
-                    htmlDecode(apex.lang.formatNoEscape(
+                    pdt.htmlDecode(apex.lang.formatNoEscape(
                         '<li><button id="apexDevToolbarRevealer" type="button" class="a-Button a-Button--devToolbar" title="View Page Information [ctrl+alt+%0]" aria-label="Vars" data-link=""> ' +
                         '%1 <span class="a-DevToolbar-buttonLabel">Revealer</span> ' +
                         '</button></li>',
@@ -516,9 +508,9 @@ pdt.pretiusContentRevealer = (function () {
                     }, true);
                 }
 
-                pdt.fixToolbarWidth();
+                // pdt.fixToolbarWidth();
                 // Custom APEX 5.0 width fix
-                $('#apexDevToolbar').width($('.a-DevToolbar-list').width() + 'px');
+                // $('#apexDevToolbar').width($('.a-DevToolbar-list').width() + 'px');
 
 
                 function assignRevealerShortcuts(keyboard, defaultTab) {
