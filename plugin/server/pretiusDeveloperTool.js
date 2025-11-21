@@ -20,6 +20,7 @@ var pdt = (function () {
     var opt;
     var JSONsettings;
     var pageDebugLevel;
+    var capturedErrors = [];
 
     function nvl(value1, value2) {
         if (value1 == null || value1 == "")
@@ -141,7 +142,8 @@ var pdt = (function () {
                                 "openbuildercache": apex.item("R0_OPEN_BUILDER_CACHE").getValue(),
                                 "openbuilderapplimit": apex.item("R0_OPEN_BUILDER_APP_LIMIT").getValue(),
                                 "openbuilderkb": apex.item("R0_OPEN_BUILDER_KB_SHORTCUT").getValue(),
-                                "homereplacelink": apex.item("R0_HOME_REPLACE_LINK").getValue()
+                                "homereplacelink": apex.item("R0_HOME_REPLACE_LINK").getValue(),
+                                "showconsoleerrors": apex.item("R0_SHOW_CONSOLE_ERRORS").getValue()
                             }
                         }
                     };
@@ -168,9 +170,9 @@ var pdt = (function () {
                     apex.item('R0_OPEN_BUILDER_ENABLE').setValue('Y');
                     apex.item('R0_GLOW_DEBUG_ICON').setValue('Y');
                     apex.item('R0_OLD_SCHOOL_DEBUG').setValue('Y');
-                    apex.item('R0_AUTO_VIEW_DEBUG').setValue('Y');
                     apex.item('R0_MASTER_DETAIL_DEBUG').setValue('Y');
                     apex.item('R0_HOME_REPLACE_LINK').setValue('Y');
+                    apex.item('R0_SHOW_CONSOLE_ERRORS').setValue('Y');
                 });
 
                 $("#pretiusRevealerInline").on("click", "#R0_SAVE", function () {
@@ -251,6 +253,7 @@ var pdt = (function () {
         apex.widget.yesNo("R0_OPEN_BUILDER_CACHE", "SWITCH_CB");
         apex.widget.yesNo("R0_OPEN_BUILDER_APP_LIMIT", "SWITCH_CB");
         apex.widget.yesNo("R0_HOME_REPLACE_LINK", "SWITCH_CB");
+        apex.widget.yesNo("R0_SHOW_CONSOLE_ERRORS", "SWITCH_CB");
 
         $('.pretiusRevealerInlineToTheTop .t-ButtonRegion-col--right .t-ButtonRegion-buttons').empty();
         $('.pretiusRevealerInlineToTheTop .t-ButtonRegion-col--left .t-ButtonRegion-buttons').empty();
@@ -284,6 +287,7 @@ var pdt = (function () {
             apex.item("R0_AUTO_VIEW_DEBUG").setValue(pdt.getSetting('devbar.autoviewdebugenable'));
             apex.item("R0_MASTER_DETAIL_DEBUG").setValue(pdt.getSetting('devbar.masterdetaildebugenable'));
             apex.item("R0_HOME_REPLACE_LINK").setValue(pdt.getSetting('devbar.homereplacelink'));
+            apex.item("R0_SHOW_CONSOLE_ERRORS").setValue(pdt.getSetting('devbar.showconsoleerrors'));
 
         }
 
@@ -296,6 +300,7 @@ var pdt = (function () {
         $("#pretiusRevealerInline #R0_AUTO_VIEW_DEBUG").trigger("change");
         $("#pretiusRevealerInline #R0_MASTER_DETAIL_DEBUG").trigger("change");
         $("#pretiusRevealerInline #R0_HOME_REPLACE_LINK").trigger("change");
+        $("#pretiusRevealerInline #R0_SHOW_CONSOLE_ERRORS").trigger("change");
 
         if (pdt.opt.configurationTest == "false") {
             $('#pretiusDeveloperToolWarning').show();
@@ -534,6 +539,12 @@ var pdt = (function () {
                     pdt.pretiusContentDevBar.activateAutoViewDebug();
                 }
 
+                // Console Errors
+                if (getSetting('devbar.showconsoleerrors') == 'Y') {
+                    pdt.pretiusContentDevBar.activateConsoleErrors();
+                }
+                 
+
             }
         }
 
@@ -603,6 +614,7 @@ var pdt = (function () {
         render: render,
         da: da,
         opt: opt,
+        capturedErrors: capturedErrors,
         JSONsettings: JSONsettings,
         nvl: nvl,
         fixToolbarWidth: fixToolbarWidth,

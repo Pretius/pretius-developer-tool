@@ -1,6 +1,92 @@
 pdt.pretiusContentDevBar = (function () {
     "use strict";
 
+    function activateConsoleErrors() {
+        if (!isDeveloper()) return;
+        console.log('Pretius Developer Tool - Content Dev Bar Activated');
+
+        // Capture console errors
+        window.addEventListener('error', function (event) {
+            const message = event.message || 'Unknown error';
+            const stack = event.error && event.error.stack ? event.error.stack : null;
+            pdt.capturedErrors.push({ message, stack });
+        });
+
+        // Attach click handler to Dev Toolbar Errors button
+        (function () {
+            function attachHandler() {
+                var $btn = $('#apexDevToolbarErrors');
+                if ($btn.length) {
+                    // remove existing jQuery click handlers and add our own
+                    $btn.off('click');
+                    $btn.on('click', function (e) {
+                        e.preventDefault();
+                        showConsoleErrors();
+                    });
+                    return true;
+                }
+                return false;
+            }
+
+            // Try immediately
+            if (attachHandler()) return;
+
+            // Observe DOM for the button being added later
+            var observer = new MutationObserver(function () {
+                if (attachHandler()) {
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(document.body, { childList: true, subtree: true });
+
+        })();
+    }
+
+    function showConsoleErrors() {
+        if (!isDeveloper()) return; 
+        apex.theme.openRegion($('#pretiusRevealerInline'));
+        $('#pretiusRevealerInline #pretiusContent').empty();
+        $("#pretiusRevealerInline .t-DialogRegion-body").empty();
+        (function () {
+            var $body = $("#pretiusRevealerInline .t-DialogRegion-body");
+
+            function esc(s) {
+                return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            }
+
+            function linkifyEscaped(s) {
+                return s.replace(/(https?:\/\/[^\s"'<>]+)/g, function (url) {
+                    return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+                });
+            }
+
+            var errors = (window.pdt && Array.isArray(pdt.capturedErrors)) ? pdt.capturedErrors : [];
+
+            if (!errors.length) {
+                $body.append('<div class="pdt-no-errors" style="color:var(--ut-component-text-default-color);background:var(--ut-component-background-color);border:var(--ut-component-border-width) solid var(--ut-component-border-color);padding:10px;border-radius:4px;">No console errors captured.</div>');
+                return;
+            }
+
+            var html = '<div class="pdt-captured-errors">';
+            errors.forEach(function (err, idx) {
+                var message = err && err.message ? linkifyEscaped(esc(err.message)) : '<i>No message</i>';
+                html += '<div class="pdt-error" style="margin-bottom:12px;padding:10px;border:var(--ut-component-border-width) solid var(--ut-component-border-color);border-radius:4px;background:var(--ut-component-background-color);color:var(--ut-component-text-default-color);font-size: larger;">'; // Increased font size
+                html += '<div style="font-weight:600;margin-bottom:6px;color:var(--ut-component-text-default-color);">Error ' + (idx + 1) + '</div>';
+                html += '<div style="margin-bottom:8px;color:var(--ut-component-text-default-color);">' + message + '</div>';
+                if (err && err.stack) {
+                    html += '<pre style="white-space:pre-wrap;word-break:break-word;background:var(--ut-component-background-color);padding:8px;border-radius:3px;color:var(--ut-component-text-default-color);border:var(--ut-component-border-width) solid var(--ut-component-border-color);">' + linkifyEscaped(esc(err.stack)) + '</pre>';
+                }
+                html += '</div>';
+            });
+            html += '</div>';
+
+            $body.append(html);
+        })();
+        $('.pretiusRevealerInlineToTheTop .ui-dialog-title').text(' Pretius Developer Tool: Console Errors');
+        // sendModalMessage();
+    }
+
     function spotlightOptions(pEventName) {
         // Start Spotlight Harness
         var pdtSpotOpt = {
@@ -419,8 +505,8 @@ pdt.pretiusContentDevBar = (function () {
                                 { type: "action", label: "Plug-ins", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/plug-ins?clear=RP&session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
                                 { type: "action", label: "Component Settings", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/component-settings?clear=RP&session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
                                 { type: "action", label: "Shortcuts", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/shortcuts?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
-                                { type: "action", label: "Map Backgrounds", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/map-backgrounds?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
-                                { type: "action", label: "Component Groups", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/component-groups?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } }
+                                { type: "action", label: "Component Groups", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/component-groups?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
+                                { type: "action", label: "Data Load Definitions", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/data-load-definitions?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } }
                             ]
                         }
                     },
@@ -444,7 +530,8 @@ pdt.pretiusContentDevBar = (function () {
                                 { type: "action", label: "Progressive Web App", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/edit-progressive-web-app?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
                                 { type: "action", label: "Themes", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/themes?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
                                 { type: "action", label: "Templates", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/templates?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
-                                { type: "action", label: "Email Templates", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/email-templates?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } }
+                                { type: "action", label: "Email Templates", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/email-templates?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
+                                { type: "action", label: "Map Backgrounds", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/map-backgrounds?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } }
                             ]
                         }
                     },
@@ -463,9 +550,9 @@ pdt.pretiusContentDevBar = (function () {
                         type: "subMenu", icon: 'fa fa-database', label: 'Data Sources',
                         menu: {
                             items: [
-                                { type: "action", label: "Data Load Definitions", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/data-load-definitions?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
-                                { type: "action", label: "REST Enabled SQL", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/rest-enabled-sql?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
                                 { type: "action", label: "REST Data Sources", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/rest-data-sources?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
+                                { type: "action", label: "JSON Sources", action: function () { pdt.pretiusToolbar.openDevbarMenuEntry('r/apex/app-builder/document-sources?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
+                                { type: "action", label: "REST Enabled SQL", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/rest-enabled-sql?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },                                
                                 { type: "action", label: "REST Synchronization", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/rest-synchronizations?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } }
                             ]
                         }
@@ -487,6 +574,16 @@ pdt.pretiusContentDevBar = (function () {
                                 { type: "action", label: "Globalization Attributes", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/edit-globalization-attributes?fb_flow_id=' + pdt.opt.env.APP_ID + '&clear=506&session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
                                 { type: "action", label: "Text Messages", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/text-messages?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
                                 { type: "action", label: "Application Translations", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/translate-application?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } }
+                            ]
+                        }
+                    },
+                    {
+                        type: "subMenu", icon: 'fa fa-ai', label: 'Generative AI',
+                        menu: {
+                            items: [
+                                { type: "action", label: "AI Attributes", action: function () { pdt.pretiusToolbar.openDevbarSCMenuEntry('r/apex/app-builder/edit-ai?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
+                                { type: "action", label: "AI Configurations", action: function () { pdt.pretiusToolbar.openDevbarMenuEntry('r/apex/app-builder/gen-ai-configurations?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } },
+                                { type: "action", label: "AI Services", action: function () { pdt.pretiusToolbar.openDevbarMenuEntry('r/apex/app-builder/generative-ai-services?session=' + pdt.pretiusToolbar.getBuilderSessionid()) } }
                             ]
                         }
                     }
@@ -566,7 +663,7 @@ pdt.pretiusContentDevBar = (function () {
                                 { type: "action", label: "YouTube", action: function () { window.open('https://apex.oracle.com/youtube') } }
                             ]
                         }
-                    }, 
+                    },
                     { type: "separator" },
                     {
                         type: "subMenu",
@@ -599,9 +696,9 @@ pdt.pretiusContentDevBar = (function () {
 
         if (pdt.getSetting('devbar.oldschooldebugenable') == 'Y') {
             itemsArray.push(debugMenu);
-        }  
+        }
 
-       itemsArray.push(sharedComponents);
+        itemsArray.push(sharedComponents);
 
         $('#pdtStartMenu').menu({
             items: itemsArray
@@ -616,7 +713,8 @@ pdt.pretiusContentDevBar = (function () {
         activateHomeReplace: activateHomeReplace,
         activateAutoViewDebug: activateAutoViewDebug,
         openAutoViewDebug: openAutoViewDebug,
-        isDebugMode: isDebugMode
+        isDebugMode: isDebugMode,
+        activateConsoleErrors: activateConsoleErrors
     }
 
 })();

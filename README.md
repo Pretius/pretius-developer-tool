@@ -19,6 +19,10 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Release History
 
+24.2.1 : November 2025
+* Added Feature: Red Triangle shows Console Errors inside PDT
+* Compatibility changes for APEX 24.2
+
 24.1.3 : October 2024
 * Added Feature: Old School Debug
 * Added Feature: Home Button is replaced by a Shortcut Menu
@@ -66,13 +70,13 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Plugin Installation Quick-Start
 
-Minimum Version of APEX Required: **23.2.0**
+Minimum Version of APEX Required: **24.2**
 
 Note: Debug features are disabled on apex.oracle.com due to performance issues.
 
 Import the plugin into your application from this location:
 
-`plugin\dynamic_action_plugin_com_pretius_apex_devtool.24.1.2.sql`
+`plugin\dynamic_action_plugin_com_pretius_apex_devtool.24.2.1.sql`
 
 After installation, follow these steps:
 1. Create a Page Load Dynamic Action on Page **0** Called **Pretius Developer Tool**

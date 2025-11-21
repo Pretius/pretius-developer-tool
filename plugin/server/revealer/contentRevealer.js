@@ -451,9 +451,9 @@ pdt.pretiusContentRevealer = (function () {
         //Focus
         $('#pretiusRevealerInline #rSearchBox').focus();
 
-        if ( window.location.host == 'apex.oracle.com' ){ 
+        if ( window.location.host == 'apex.oracle.com' || window.location.host == 'oracleapex.com' ){ 
             $('#pretiusRevealerInline label[for="DebugPage"]').addClass('apex_disabled');
-            $('#pretiusRevealerInline #DebugPage').parent().attr('title','Disabled on apex.oracle.com due to ORA-00040');
+            $('#pretiusRevealerInline #DebugPage').parent().attr('title','Disabled on oracleapex.com due to ORA-00040');
         }
 
         if (window.parent.revealerTabID ) {
@@ -535,7 +535,8 @@ pdt.pretiusContentRevealer = (function () {
                 }
                 
                 if (pdt.getSetting('revealer.dkb') !== '' && 
-                    window.location.host != 'apex.oracle.com' ) {
+                    window.location.host != 'apex.oracle.com' && 
+                    window.location.host != 'oracleapex.com') {
                     assignRevealerShortcuts(dkb, 'DebugPage');
                 }
                 
