@@ -2,7 +2,7 @@ create or replace PACKAGE BODY pkg_com_pretius_apex_devtool
 IS  
    /*  
     * Plugin:   Pretius Developer Tool  
-    * Version:  24.1.3  
+    * Version:  24.2.2 
     *  
     * License:  MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K.  
     * Homepage:   
@@ -42,10 +42,10 @@ IS
      WHERE application_id = c_app_id  
        AND name = c_plugin_name;  
   
-      SELECT application_group, friendly_url  
-        INTO l_application_group, l_friendly_url
-        FROM apex_applications  
-       WHERE application_id = c_app_id;  
+    SELECT application_group, friendly_url  
+      INTO l_application_group, l_friendly_url
+      FROM apex_applications  
+      WHERE application_id = c_app_id;  
   
     SELECT count(*)  
      INTO l_configuration_test  
@@ -76,7 +76,7 @@ IS
         and a.action_code = 'PLUGIN_' || c_plugin_name  
         and a.build_option_id = b.build_option_id  
         and b.status_on_export = 'Exclude';  
-    END IF;  
+    END IF;
   
     v_result.javascript_function :=   
     apex_string.format(  
@@ -139,6 +139,7 @@ IS
              apex_application_build_options b  
        WHERE i.application_id = apex_application.g_flow_id  
          AND i.page_id IN ( apex_application.g_flow_step_id, 0 )  
+         AND b.application_id = apex_application.g_flow_id 
          AND LTRIM(i.BUILD_OPTION_ID,'-') = b.build_option_id ),  
     REGIONS AS    
  (     SELECT NVL( i.static_id, 'R' || region_id ) item_name,    
@@ -149,6 +150,7 @@ IS
              apex_application_build_options b  
        WHERE i.application_id = apex_application.g_flow_id  
          AND i.page_id IN ( apex_application.g_flow_step_id, 0 )  
+         AND b.application_id = apex_application.g_flow_id 
          AND LTRIM(i.BUILD_OPTION_ID,'-') = b.build_option_id ),  
     IG_COLS AS  
     (  
@@ -160,6 +162,7 @@ IS
              apex_application_build_options b  
        WHERE i.application_id = apex_application.g_flow_id  
          AND i.page_id IN ( apex_application.g_flow_step_id, 0 )  
+         AND b.application_id = apex_application.g_flow_id
          AND LTRIM(i.BUILD_OPTION_ID,'-') = b.build_option_id ),  
     IR_COLS AS  
  (     SELECT NVL( i.static_id, 'C' || column_id ) item_name,    
@@ -170,6 +173,7 @@ IS
              apex_application_build_options b  
        WHERE i.application_id = apex_application.g_flow_id  
          AND i.page_id IN ( apex_application.g_flow_step_id, 0 )  
+         AND b.application_id = apex_application.g_flow_id
          AND LTRIM(i.BUILD_OPTION_ID,'-') = b.build_option_id ),  
     BUTTONS AS    
  (     SELECT NVL( button_static_id, 'B' || button_id )  item_name,    
@@ -180,6 +184,7 @@ IS
              apex_application_build_options b  
        WHERE i.application_id = apex_application.g_flow_id  
          AND i.page_id IN ( apex_application.g_flow_step_id, 0 )  
+         AND b.application_id = apex_application.g_flow_id
          AND  i.build_option  IN ( '{Not ' || b.build_option_name || '}',  b.build_option_name  )  
           )  
     SELECT item_name ITN,  
@@ -770,6 +775,9 @@ IS
     ELSIF l_ajax_type = 'GET_DATA'   
     THEN  
        ajax_spotlight_get_data;  
+    ELSIF l_ajax_type = 'BUILD_OPTION_DATA'   
+    THEN  
+       ajax_build_option_excluded;  
     ELSIF l_ajax_type = 'GET_URL'   
     THEN  
        apex_json.open_object;  
@@ -779,5 +787,24 @@ IS
     END IF;  
     RETURN l_result;  
   END ajax;  
+
+  PROCEDURE pdt_ajax
+  IS
+      l_dynamic_action    apex_plugin.t_dynamic_action;
+      l_plugin            apex_plugin.t_plugin;  
+      l_return            apex_plugin.t_dynamic_action_ajax_result;
+      l_clob  CLOB;
+  BEGIN 
+      l_return := pkg_com_pretius_apex_devtool.ajax
+         ( p_dynamic_action => l_dynamic_action,  
+           p_plugin         => l_plugin);
+  EXCEPTION
+    WHEN OTHERS 
+    THEN
+      apex_json.open_object;
+      apex_json.write('success', false);
+      apex_json.write('message', sqlerrm);
+      apex_json.close_object;
+  END pdt_ajax;
 END pkg_com_pretius_apex_devtool;
 /

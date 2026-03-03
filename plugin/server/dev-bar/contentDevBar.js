@@ -3,7 +3,6 @@ pdt.pretiusContentDevBar = (function () {
 
     function activateConsoleErrors() {
         if (!isDeveloper()) return;
-        console.log('Pretius Developer Tool - Content Dev Bar Activated');
 
         // Capture console errors
         window.addEventListener('error', function (event) {

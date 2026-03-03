@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+
+# Temporary build files
+.tmp/
+
+# Backup files
+*copy*.js
+*.bak
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS files
+.DS_Store
+Thumbs.db

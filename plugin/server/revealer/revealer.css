@@ -202,7 +202,7 @@
 
 #pretiusRevealerInline th.t-Report-colHead {
   border-style: solid;
-  /* border-color: #1F90CB; */
+  border-color: var(--ut-component-background-color);
   border-radius: 6px;
   border-width: 2px;
 }

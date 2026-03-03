@@ -1,6 +1,6 @@
 /*
-* Plugin:   Pretius Reload Frame
-* Version:  1.0.0
+* Plugin:   Pretius Developer Tool
+* Version:  24.2.2
 *
 * License:  MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K.
 * Homepage: 
@@ -21,6 +21,8 @@ var pdt = (function () {
     var JSONsettings;
     var pageDebugLevel;
     var capturedErrors = [];
+
+    var version = "24.2.2";
 
     function nvl(value1, value2) {
         if (value1 == null || value1 == "")
@@ -137,7 +139,13 @@ var pdt = (function () {
                                 "glowdebugenable": apex.item("R0_GLOW_DEBUG_ICON").getValue(),
                                 "oldschooldebugenable": apex.item("R0_OLD_SCHOOL_DEBUG").getValue(),
                                 "autoviewdebugenable": apex.item("R0_AUTO_VIEW_DEBUG").getValue(),
+                                /*#conditional*/
+
+                                //#if !LITE_BUILD
+                                // Master Detail Debug
                                 "masterdetaildebugenable": apex.item("R0_MASTER_DETAIL_DEBUG").getValue(),
+                                //#endif
+                                /*#endconditional*/
                                 "openbuilderenable": apex.item("R0_OPEN_BUILDER_ENABLE").getValue(),
                                 "openbuildercache": apex.item("R0_OPEN_BUILDER_CACHE").getValue(),
                                 "openbuilderapplimit": apex.item("R0_OPEN_BUILDER_APP_LIMIT").getValue(),
@@ -170,7 +178,13 @@ var pdt = (function () {
                     apex.item('R0_OPEN_BUILDER_ENABLE').setValue('Y');
                     apex.item('R0_GLOW_DEBUG_ICON').setValue('Y');
                     apex.item('R0_OLD_SCHOOL_DEBUG').setValue('Y');
+                    /*#conditional*/
+
+                    //#if !LITE_BUILD
+                    // Master Detail Debug
                     apex.item('R0_MASTER_DETAIL_DEBUG').setValue('Y');
+                    //#endif
+                    /*#endconditional*/
                     apex.item('R0_HOME_REPLACE_LINK').setValue('Y');
                     apex.item('R0_SHOW_CONSOLE_ERRORS').setValue('Y');
                 });
@@ -249,7 +263,13 @@ var pdt = (function () {
         apex.widget.yesNo("R0_GLOW_DEBUG_ICON", "SWITCH_CB");
         apex.widget.yesNo("R0_OLD_SCHOOL_DEBUG", "SWITCH_CB");
         apex.widget.yesNo("R0_AUTO_VIEW_DEBUG", "SWITCH_CB");
+        /*#conditional*/
+
+        //#if !LITE_BUILD
+        // Master Detail Debug
         apex.widget.yesNo("R0_MASTER_DETAIL_DEBUG", "SWITCH_CB");
+        //#endif
+        /*#endconditional*/
         apex.widget.yesNo("R0_OPEN_BUILDER_CACHE", "SWITCH_CB");
         apex.widget.yesNo("R0_OPEN_BUILDER_APP_LIMIT", "SWITCH_CB");
         apex.widget.yesNo("R0_HOME_REPLACE_LINK", "SWITCH_CB");
@@ -285,7 +305,13 @@ var pdt = (function () {
             apex.item("R0_GLOW_DEBUG_ICON").setValue(pdt.getSetting('devbar.glowdebugenable'));
             apex.item("R0_OLD_SCHOOL_DEBUG").setValue(pdt.getSetting('devbar.oldschooldebugenable'));
             apex.item("R0_AUTO_VIEW_DEBUG").setValue(pdt.getSetting('devbar.autoviewdebugenable'));
+            /*#conditional*/
+
+            //#if !LITE_BUILD
+            // Master Detail Debug
             apex.item("R0_MASTER_DETAIL_DEBUG").setValue(pdt.getSetting('devbar.masterdetaildebugenable'));
+            //#endif
+            /*#endconditional*/
             apex.item("R0_HOME_REPLACE_LINK").setValue(pdt.getSetting('devbar.homereplacelink'));
             apex.item("R0_SHOW_CONSOLE_ERRORS").setValue(pdt.getSetting('devbar.showconsoleerrors'));
 
@@ -298,7 +324,13 @@ var pdt = (function () {
         $("#pretiusRevealerInline #R0_GLOW_DEBUG_ICON").trigger("change");
         $("#pretiusRevealerInline #R0_OLD_SCHOOL_DEBUG").trigger("change");
         $("#pretiusRevealerInline #R0_AUTO_VIEW_DEBUG").trigger("change");
+        /*#conditional*/
+
+        //#if !LITE_BUILD
+        // Master Detail Debug
         $("#pretiusRevealerInline #R0_MASTER_DETAIL_DEBUG").trigger("change");
+        //#endif
+        /*#endconditional*/
         $("#pretiusRevealerInline #R0_HOME_REPLACE_LINK").trigger("change");
         $("#pretiusRevealerInline #R0_SHOW_CONSOLE_ERRORS").trigger("change");
 
@@ -334,8 +366,8 @@ var pdt = (function () {
         var pretiusRevealerFooter =
             '<div class="pretiusRevealerFooter">' +
             '<a class="pretiusRevealerLink pretiusFooterOptions" href="https://pretius.com/main/" target="_blank">Pretius</a>' +
-            '<a class="pretiusRevealerLink" href="https://twitter.com/Matt_Mulvaney" target="_blank">@Matt_Mulvaney </a>' +
-            '<a class="pretiusRevealerLink" href="https://twitter.com/PretiusSoftware" target="_blank">@PretiusSoftware</a>' +
+            '<a class="pretiusRevealerLink" href="https://www.linkedin.com/in/matt-mulvaney-541a659/" target="_blank">@Matt_Mulvaney </a>' +
+            '<a class="pretiusRevealerLink" href="https://www.linkedin.com/company/pretius" target="_blank">@PretiusSoftware</a>' +
             '<div class="pretiusTablockVersion"></div>' +
             '</div>';
 
@@ -529,10 +561,15 @@ var pdt = (function () {
                     pdt.pretiusContentDevBar.activateHomeReplace();
                 }
 
+                /*#conditional*/
+
+                //#if !LITE_BUILD
                 // Master Detail Debug
                 if (getSetting('devbar.masterdetaildebugenable') == 'Y') {
                     pdt.debugControl.activateDebugControl();
                 }
+                //#endif
+                /*#endconditional*/
 
                 // Auto View Debug
                 if (getSetting('devbar.autoviewdebugenable') == 'Y') {
@@ -543,7 +580,7 @@ var pdt = (function () {
                 if (getSetting('devbar.showconsoleerrors') == 'Y') {
                     pdt.pretiusContentDevBar.activateConsoleErrors();
                 }
-                 
+
 
             }
         }
@@ -551,6 +588,48 @@ var pdt = (function () {
         pdt.fixToolbarWidth();
 
     };
+
+    var renderBundle = function renderBundle() {
+
+        pdt.render({
+            da: this,
+            opt: {
+                filePrefix: apex.env.APP_FILES,
+                debugPluginFiles: apex.env.APP_FILES,
+                ajaxIdentifier: "PDT_AJAX",
+                version: version,
+                debugPrefix: "PDT: ",
+                friendlyUrl: isFriendlyUrl(),
+                configurationTest: "true",
+                dynamicActionId: "",
+                applicationGroupName: "- Unassigned -",
+                env: {
+                    APP_ID: apex.env.APP_ID,
+                    APP_PAGE_ID: apex.env.APP_PAGE_ID
+                },
+                buildOption: { "items": [] }
+            }
+        });
+
+        // Build Option Highlight
+        if (pdt.getSetting('buildoptionhightlight.enable') == 'Y') {
+            apex.server.process("PDT_AJAX", {
+                x01: 'BUILD_OPTION_DATA'
+            }, {
+                dataType: "json",
+                success: function (data) {
+                    // pdt.opt.buildOption.items = [...pdt.opt.buildOption.items.items];
+                    pdt.opt.buildOption.items = [...data.items];
+                    pdt.contentBuildOptionHighlight.activate();
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // handle error
+                    pdt.ajaxErrorHandler(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
+    }
 
     var cloakDebugLevel = function cloakDebugLevel() {
 
@@ -597,7 +676,7 @@ var pdt = (function () {
         return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
     }
 
-    var getApexPath = function getApexPath(){
+    var getApexPath = function getApexPath() {
         var lPath;
 
         if (pdt.opt.friendlyUrl === 'Yes') {
@@ -609,9 +688,15 @@ var pdt = (function () {
         return lPath;
     }
 
+    var isFriendlyUrl = function isFriendlyUrl() {
+        const url = new URL(window.location.href);
+        const disabled = !(url.pathname.endsWith("/f") && url.searchParams.has("p"));
+        return disabled ? "Yes" : "No";
+    };
 
     return {
         render: render,
+        renderBundle: renderBundle,
         da: da,
         opt: opt,
         capturedErrors: capturedErrors,

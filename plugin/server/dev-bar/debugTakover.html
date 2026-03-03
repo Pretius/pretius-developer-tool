@@ -40,12 +40,13 @@
             // Decoding the URL parameter (if necessary)
             const decodedLocation = decodeURIComponent(pLocation);
 
-            // Function to dynamically load a script
+            // Function to dynamically load a script and return the script element
             const loadScript = (src) => {
                 const script = document.createElement('script');
                 script.type = 'text/javascript';
                 script.src = src;
                 document.head.appendChild(script);
+                return script;
             };
 
             // Function to dynamically load a stylesheet
@@ -66,7 +67,12 @@
             }
                 
             const baseFilePath = prefix + `${vMinDir}debugTakeover${vMin}`;
-            loadScript(`${baseFilePath}.js`);
+            const _dtScript = loadScript(`${baseFilePath}.js`);
+            if (_dtScript) {
+                _dtScript.addEventListener('load', function () {
+                    try { if (typeof init === 'function') init(); } catch (e) { console.error(e); }
+                });
+            }
             loadStylesheet(`${baseFilePath}.css`);
 
 });

@@ -19,6 +19,15 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Release History
 
+24.2.2 : February 2026
+* Added Feature: PDT now runs not as a Plugin
+* Improved performance of Visual Build Options feature
+* Updated Social Links
+
+
+<details>
+<summary>Previous Releases</summary>
+
 24.2.1 : November 2025
 * Added Feature: Red Triangle shows Console Errors inside PDT
 * Compatibility changes for APEX 24.2
@@ -68,15 +77,19 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 21.2.5 : January 2022
 * Initial Version
 
-# Plugin Installation Quick-Start
+</details>
+
+
+# Installation Quick-Start
 
 Minimum Version of APEX Required: **24.2**
 
 Note: Debug features are disabled on apex.oracle.com due to performance issues.
 
+## Method 1: Install as a Plugin
 Import the plugin into your application from this location:
 
-`plugin\dynamic_action_plugin_com_pretius_apex_devtool.24.2.1.sql`
+`plugin\dynamic_action_plugin_com_pretius_apex_devtool.xx.x.x.sql`
 
 After installation, follow these steps:
 1. Create a Page Load Dynamic Action on Page **0** Called **Pretius Developer Tool**
@@ -86,6 +99,11 @@ After installation, follow these steps:
 <img src="https://raw.githubusercontent.com/Pretius/pretius-developer-tool/master/img/install.gif" width="700px">
 
 <br/>
+
+## Method 2: Install not as a Plugin
+This method is useful for when Plugins are restricted or need a review process
+1. Follow [this guide](docs/not-as-a-plugin-install/README.md)
+
 
 # Features
 * Revealer
@@ -182,3 +200,18 @@ With Debug Enabled, this automatically opens View Debug on the following events:
    * Value: <code>pkg_com_pretius_apex_devtool.</code>
 
    *Don't forget the final dot (.) on the end of the value*
+
+## Develop PDT
+
+### Build Scripts
+
+1. Install Node from https://nodejs.org/en (install chocolatey 🍫 too)
+2. Install dependencies with `npm install`
+
+### Build Bundles
+*  Build with `npm run build`
+
+The build script will create a minified bundle with source maps in `/server-dist` and also generate a zip file of the dev-bar files.
+
+###  Minify
+*  Minify JS/CSS to minified folders with `npm run minify` from project root

@@ -157,7 +157,7 @@ var pretiusRevealer = (function () {
 
         // deactivate debug when revealer getting data
         $('#pretiusRevealerInline #rSearchBox').val('');
-        pdt.cloakDebugLevel(); 
+        pdt.cloakDebugLevel();
 
         var debugrows = pdt.nvl(pdt.getSetting('revealer.debugrows'), 10);
 
@@ -199,22 +199,22 @@ var pretiusRevealer = (function () {
                 addClassToColumns(["Seconds", "Entries"], "u-pullRight");
                 addClassToColumns(["Component"], "w20p");
 
-                addClassToColumns(["Path Info"], "u-danger-text", 
+                addClassToColumns(["Path Info"], "u-danger-text",
                     function(cellValue) {
                         // Filter condition: Check if cell value starts with '[PDT-BUG]'
                         return cellValue.startsWith('[PDT-BUG]');
                     },
-                        // Function to remove text
+                    // Function to remove text
                         function($cellElement, cellValue) {
-                            cellValue = cellValue.replace('[PDT-BUG]', '');
-                            return $cellElement.replaceWith(
+                        cellValue = cellValue.replace('[PDT-BUG]', '');
+                        return $cellElement.replaceWith(
                             '<td class="tdTablockVars">'
-                            + '<span class="t-Badge u-danger pdt-revealer-badge" role="status" aria-label="Status ' 
-                            + cellValue + '"> <span class="t-Badge-value">' 
+                            + '<span class="t-Badge u-danger pdt-revealer-badge" role="status" aria-label="Status '
+                            + cellValue + '"> <span class="t-Badge-value">'
                             + cellValue + '</span></span>'
                             + '</td>');
-                        }
-                    );            
+                    }
+                );
 
                 setdebugborders();
 
@@ -233,13 +233,13 @@ var pretiusRevealer = (function () {
             // APEX Viewer
             var url = $('#apexDevToolbarPage').attr('data-link');
             const sessionId = pdt.pretiusToolbar.getBuilderSessionid();
-    
+
             // Replace everything after '/page-designer' in the URL
             // and append the session ID to the modified URL
-            url = url.replace(/\/page-designer[\s\S]*/, '/debug-message-data2') + `?session=${sessionId}` + 
-                 '&p939_page_view_id=' + pViewIdentifier +
-                 '&clear=RP,939';
-    
+            url = url.replace(/\/page-designer[\s\S]*/, '/debug-message-data2') + `?session=${sessionId}` +
+                '&p939_page_view_id=' + pViewIdentifier +
+                '&clear=RP,939';
+
             apex.navigation.openInNewWindow(url);
 
         } else {
@@ -255,7 +255,7 @@ var pretiusRevealer = (function () {
                     pdt.unCloakDebugLevel();
                     $('#pretiusRevealerInline #pretiusDebugContent').empty();
                     $('#pretiusRevealerInline #pretiusDebugContent').append(pretiusRevealer.buildHtmlTable(data.items));
-                    rowStrokes(); 
+                    rowStrokes();
                     addClassToColumns(["Message"], "w95p");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -270,9 +270,9 @@ var pretiusRevealer = (function () {
     function rowStrokes() {
         // Add Alternate Row strokes
         $('#pretiusRevealerInline .alternate-rows-tl').removeClass('alternate-rows-tl');
-        $('#pretiusRevealerInline .tableTablockVars tr').filter(function () {
-            return $(this).css('visibility') == 'visible';
-        }).filter(':odd').addClass('alternate-rows-tl');
+        $('#pretiusRevealerInline .tableTablockVars tr:visible')
+            .filter(':odd')
+            .addClass('alternate-rows-tl');
     }
 
     function performFilter() {
@@ -302,7 +302,6 @@ var pretiusRevealer = (function () {
             $('#pretiusRevealerInline #pretiusDebugContent').hide();
         }
 
-
         if (chkPage == 'All') {
             PageSelectedAbove.addClass('switch-display-none');
             if (chkCate == 'PX') {
@@ -321,7 +320,10 @@ var pretiusRevealer = (function () {
             $('#pretiusRevealerInline table.tableTablockVars tr td:nth-child(5)').hide();
         }
 
-        $(jqPrefex + " tr.dataRow:not(:first)").css("visibility", "collapse");
+        // ESSENTIAL CHANGE:
+        // Stop using visibility:collapse (can keep layout/scroll height) and use hide()/show() instead. [web:22]
+        $(jqPrefex + " tr.dataRow:not(:first)").hide();
+
         $(jqPrefex + " tr.dataRow").each(function () {
 
             var $this = $(this);
@@ -339,10 +341,8 @@ var pretiusRevealer = (function () {
             }).get().join(' ').toUpperCase();
 
             if (chkCate == 'DebugPage') {
-                if (
-                    (chkSBox == '' || tdNameValues.indexOf(chkSBox) !== -1)
-                ) {
-                    $this.css("visibility", "visible");
+                if ((chkSBox == '' || tdNameValues.indexOf(chkSBox) !== -1)) {
+                    $this.show();  // ESSENTIAL CHANGE
                 }
             } else {
                 if (([chkPage, '*'].indexOf(tdPage) > -1 || chkPage == 'All') &&
@@ -351,7 +351,7 @@ var pretiusRevealer = (function () {
                         chkCate == 'All') &&
                     (tdNameValues.indexOf(chkSBox) !== -1)
                 ) {
-                    $this.css("visibility", "visible");
+                    $this.show();  // ESSENTIAL CHANGE
                 }
             }
 
@@ -367,13 +367,13 @@ var pretiusRevealer = (function () {
         const scriptTags = document.querySelectorAll('script[type="text/javascript"]');
         const data = [];
         const page = apex.env.APP_PAGE_ID;
-    
+
         // Jet Charts
         const jetChartRegex = /apex\.widget\.jetChart\.init\s*\(\s*["']([^"']+)["'].*["']([^"']+)["']\s*\)/g;
-    
+
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-    
+
             let match;
             while ((match = jetChartRegex.exec(scriptContent)) !== null) {
                 const id = match[1];
@@ -381,13 +381,13 @@ var pretiusRevealer = (function () {
                 data.push({ page , id, name });
             }
         });
-    
+
         // Interactive Reports
         const interactiveReportRegex = /apex\.jQuery\('#([^']+)'\)\.interactiveReport\s*\(\s*({(?:.|\n)*?})\s*\)/g;
-    
+
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-    
+
             let match;
             while ((match = interactiveReportRegex.exec(scriptContent)) !== null) {
                 const id = match[1].split('_')[0]; // Extracting ID part before underscore
@@ -396,13 +396,13 @@ var pretiusRevealer = (function () {
                 data.push({ page , id, name });
             }
         });
-    
+
         // Classic Reports
         const reportInitRegex = /apex\.widget\.report\.init\s*\(\s*['"]([^'"]+)['"](?:[^'"]*['"]([^'"]+)['"])?/g;
-    
+
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-    
+
             let match;
             while ((match = reportInitRegex.exec(scriptContent)) !== null) {
                 const id = match[1];
@@ -412,42 +412,40 @@ var pretiusRevealer = (function () {
         });
 
 
-       // Facets
+        // Facets
         const facetsregex = /apex\.jQuery\('#([^']+)'\)\.facets\((.*?)\)/g;
 
         scriptTags.forEach(scriptTag => {
-          const scriptContent = scriptTag.textContent || scriptTag.innerText;
-        
-          let match;
-          while ((match = facetsregex.exec(scriptContent)) !== null) {
-            //const id = match[1]; // Directly capture the ID without splitting
-            const attributes = JSON.parse(match[2]);
-            const id = attributes.regionStaticId;
-            const name = attributes.ajaxIdentifier; // No changes needed here
-        
-            data.push({ page, id, name });
-          }
+            const scriptContent = scriptTag.textContent || scriptTag.innerText;
+
+            let match;
+            while ((match = facetsregex.exec(scriptContent)) !== null) {
+                const attributes = JSON.parse(match[2]);
+                const id = attributes.regionStaticId;
+                const name = attributes.ajaxIdentifier;
+                data.push({ page, id, name });
+            }
         });
 
         // Serach Region
         const searchRegex = /apex\.jQuery\('#([^']+)_search'\),.*?"regionStaticId":"([^"]+)",.*?"ajaxIdentifier":"([^"]+)"/g;
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-            
+
             let match;
             while ((match = searchRegex.exec(scriptContent)) !== null) {
                 const id = match[2];
                 const name = JSON.parse('{"value": "' + match[3] + '"}').value;
                 data.push({ page, id, name });
             }
-        });    
-        
+        });
+
         // Tree Region
         const regex = /apex\.widget\.tree\.init\s*\(\s*'R([^']+)_tree',.*?"regionStaticId":"([^"]+)",.*?"ajaxIdentifier":"([^"]+)"/g;
-        
+
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-            
+
             let match;
             while ((match = regex.exec(scriptContent)) !== null) {
                 const id = match[2];
@@ -458,10 +456,10 @@ var pretiusRevealer = (function () {
 
         // Calendar
         const calendarRegex = /apex\.widget\.fullCalendar\s*\(\s*{"regionId":"([^"]+)",.*?"ajaxIdentifier":"([^"]+)"/g;
-        
+
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-            
+
             let match;
             while ((match = calendarRegex.exec(scriptContent)) !== null) {
                 const id = match[1];
@@ -472,10 +470,10 @@ var pretiusRevealer = (function () {
 
         // Maps
         const mapRegex = /apex\.jQuery\('#([^']+)_map_region'\)\.spatialMap\s*\(\s*{"regionStaticId":"([^"]+)",.*?"ajaxIdentifier":"([^"]+)"/g;
-        
+
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-        
+
             let match;
             while ((match = mapRegex.exec(scriptContent)) !== null) {
                 const id = match[2];
@@ -486,25 +484,24 @@ var pretiusRevealer = (function () {
 
         // Region Display Selector
         const rdsRegex = /apex\.widget\.regionDisplaySelector\s*\(\s*"([^"]+)",\s*{[^}]*"ajaxIdentifier":"([^"]+)"}/g;
-    
+
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-          
+
             let match;
             while ((match = rdsRegex.exec(scriptContent)) !== null) {
-    
+
                 var closestRegionElement = apex.region.findClosest($('#' + match[1] + '_RDS'));
                 if (closestRegionElement) {
-                    const id= closestRegionElement.element.attr("id"); 
+                    const id = closestRegionElement.element.attr("id");
                     const name = JSON.parse('{"value": "' + match[2] + '"}').value;
                     data.push({ page, id, name });
-                }    
+                }
             }
         });
 
         // Support data-apex-ajax-identifier attribute
-        // Supports: Column Toggle Report
-        $('[data-apex-ajax-identifier]').each(function() {
+        $('[data-apex-ajax-identifier]').each(function () {
             var ajaxIdentifier = $(this).data("apex-ajax-identifier");
             var closestRegionElement = apex.region.findClosest($(this)).element;
             if (closestRegionElement) {
@@ -514,8 +511,7 @@ var pretiusRevealer = (function () {
         });
 
         // Support ajax-identifier identifier attribute
-        // Supports: Combobox
-        $('[ajax-identifier]').each(function() {
+        $('[ajax-identifier]').each(function () {
             var ajaxIdentifier = $(this).attr("ajax-identifier");
             var closestRegionElement = $(this);
             if (closestRegionElement) {
@@ -529,7 +525,7 @@ var pretiusRevealer = (function () {
 
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-            
+
             let match;
             while ((match = checkboxAndRadioRegex.exec(scriptContent)) !== null) {
                 const id = match[1];
@@ -539,9 +535,11 @@ var pretiusRevealer = (function () {
         });
 
         // Add Pretius Developer tool
-        data.push({ id: pdt.opt.debugPrefix.split(":")[0].trim(), 
-                    name: pdt.opt.ajaxIdentifier });
-                
+        data.push({
+            id: pdt.opt.debugPrefix.split(":")[0].trim(),
+            name: pdt.opt.ajaxIdentifier
+        });
+
         // Dynamic Actions
         for (const event of apex.da.gEventList) {
             const actions = event.actionList;
@@ -550,31 +548,25 @@ var pretiusRevealer = (function () {
                     const name = action.ajaxIdentifier;
                     const parentName = event.name;
                     const actionName = action.action === 'NATIVE_EXECUTE_PLSQL_CODE' ? 'PL/SQL' : action.action;
-                    const id = `${parentName ? `${parentName}>` : ""}${action.name || actionName}`; // Prepend "DA > " and handle missing names
+                    const id = `${parentName ? `${parentName}>` : ""}${action.name || actionName}`;
                     data.push({ id, name });
                 }
             }
         }
-          
+
         // Catch-all try to scrape any ajaxIdentifiers that havent been scraped
-        // This is intended to catch Region Plugins, since there is no standard method of wrtiting the render function
-        // This simply assumes the first parameter is the ID
-        //
-        // Confirmed Supported : Select List Refresh
         const catchAllregex = /\(\s*["']([^"']+)["']\s*,\s*({[^}]*"ajaxIdentifier":"([^"]+)"[^}]*})\s*\)/g;
-        
+
         scriptTags.forEach(scriptTag => {
             const scriptContent = scriptTag.textContent || scriptTag.innerText;
-            
+
             let match;
             while ((match = catchAllregex.exec(scriptContent)) !== null) {
                 const id = match[1];
                 const name = JSON.parse('{"value": "' + match[3] + '"}').value;
-                
-                // Check if an entry with the same name already exists in the data array
+
                 const existingEntry = data.find(entry => entry.name === name);
-                
-                // Push a new entry only if no entry with the same name exists
+
                 if (!existingEntry) {
                     data.push({ page, id, name });
                 }
@@ -589,28 +581,28 @@ var pretiusRevealer = (function () {
         // Find all header elements matching the given labels
         var headerElements = $('#pretiusRevealerInline #pretiusDebugContent')
             .find(".tableTablockVars th.t-Report-colHead")
-            .filter(function() {
+            .filter(function () {
                 return headerLabels.includes($(this).text().trim());
             });
-    
+
         // Iterate over each header element
-        headerElements.each(function() {
+        headerElements.each(function () {
             var columnIndex = $(this).index() + 1; // Get the column index (1-based)
-    
+
             // Find all td elements in the corresponding column (excluding header row)
-            $(".tableTablockVars tr.dataRow td:nth-child(" + columnIndex + ")").each(function() {
+            $(".tableTablockVars tr.dataRow td:nth-child(" + columnIndex + ")").each(function () {
                 var $cell = $(this);
                 var cellValue = $cell.text().trim();
-    
+
                 // Apply filter function if provided
                 var filterPassed = !filterFunction || filterFunction(cellValue);
-    
+
                 // Apply pre-selector if provided and filter passed
                 var newValue = cellValue;
                 if (preSelector && filterPassed) {
                     newValue = preSelector($cell, cellValue);
                 }
-    
+
                 // Add class and update cell value if filter passed
                 if (filterPassed) {
                     $cell.text(newValue); // Update cell value if necessary
@@ -619,24 +611,24 @@ var pretiusRevealer = (function () {
             });
         });
     }
-    
+
     function setdebugborders() {
         var rows = $('#pretiusRevealerInline .tableTablockVars tr.dataRow:visible'); // Select only visible data rows
         var row, pathInfoCell, pathInfo;
-    
-        rows.each(function(index, row) {
+
+        rows.each(function (index, row) {
             row = $(this);
             // Extract Path Info
             pathInfoCell = row.children('td:nth-child(5)');
             pathInfo = $.trim(pathInfoCell.text());
-    
+
             // Add class based on Path Info
             if (pathInfo.toLowerCase() === "show") {
                 row.addClass('tbrvd-bottom');
             }
         });
     }
-    
+
     return {
         performFilter: performFilter,
         distinctGroups: distinctGroups,

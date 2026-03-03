@@ -1,0 +1,29 @@
+{
+  "name": "pretius-developer-tool",
+  "version": "24.2.2",
+  "description": "PDT",
+  "keywords": [
+    "orclapex",
+    "pretius"
+  ],
+  "homepage": "https://github.com/Pretius/pretius-developer-tool#readme",
+  "bugs": {
+    "url": "https://github.com/Pretius/pretius-developer-tool/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pretius/pretius-developer-tool.git"
+  },
+  "license": "MIT",
+  "author": "Matt Mulvaney",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "minify": "node minify.js"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1",
+    "esbuild": "^0.25.12"
+  }
+}

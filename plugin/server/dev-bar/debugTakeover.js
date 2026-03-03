@@ -84,5 +84,3 @@ function init() {
         console.error('Footer container not found');
     }
 }
-
-init();

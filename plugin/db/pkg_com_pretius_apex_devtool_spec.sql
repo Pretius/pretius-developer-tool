@@ -2,7 +2,7 @@ create or replace PACKAGE pkg_com_pretius_apex_devtool
 IS 
    /* 
     * Plugin:   Pretius Developer Tool 
-    * Version:  24.1.3
+    * Version:  24.2.2
     * 
     * License:  MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K. 
     * Homepage:  
@@ -21,5 +21,6 @@ IS
   FUNCTION ajax( p_dynamic_action in apex_plugin.t_dynamic_action, 
                  p_plugin         in apex_plugin.t_plugin)  
   RETURN apex_plugin.t_dynamic_action_ajax_result; 
+  PROCEDURE pdt_ajax;
 END pkg_com_pretius_apex_devtool;
 /
