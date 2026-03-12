@@ -32,12 +32,15 @@ pdt.debugControl = (function () {
  
     function activateDebugControl() {        
         
-        var menuItems = parent.$("#apexDevToolbarDebugMenu").menu("instance").options.items;
-            
+        var menuInstance = parent.$("#apexDevToolbarDebugMenu")?.menu("instance");
+        var menuItems = menuInstance?.options?.items || [];
+
         // Find the first item with the label 'View Debug'
-        var viewDebugItem = menuItems.find(function(item) {
-            return item.label === 'View Debug';
-        });
+        var viewDebugItem = Array.isArray(menuItems)
+            ? menuItems.find(function (item) {
+                  return item && item.label === 'View Debug';
+              })
+            : undefined;
 
         var url = pdt.opt.debugPluginFiles +
                   'dev-bar/debugTakover.html?' + 
@@ -46,15 +49,24 @@ pdt.debugControl = (function () {
                   'pDebugMode=' + pdt.pretiusContentDevBar.isDebugMode()
                   ;
         
-        viewDebugItem.action = 
-            function() {
+        if (viewDebugItem && typeof viewDebugItem === 'object') {
+            viewDebugItem.action = function () {
                 apex.navigation.popup({
-                    url:    url,
-                    name:   "view_debug", // allows to reuse same popup
-                    width:  1024,
+                    url: url,
+                    name: "view_debug",
+                    width: 1024,
                     height: 768
                 });
             };
+        } else {
+            // Defensive: in some environments the Debug menu structure differs
+            // Avoid throwing when the expected item is not present.
+            try {
+                console.warn("PDT: 'View Debug' menu item not found; skipping attach.");
+            } catch (e) {
+                // swallow in case console is unavailable
+            }
+        }
     }
 
     function activateOldSchoolDebug() {

@@ -2,7 +2,7 @@ create or replace PACKAGE pkg_com_pretius_apex_devtool
 IS 
    /* 
     * Plugin:   Pretius Developer Tool 
-    * Version:  24.2.2
+    * Version:  24.2.3
     * 
     * License:  MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K. 
     * Homepage:  

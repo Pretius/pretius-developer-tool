@@ -2,7 +2,7 @@ create or replace PACKAGE BODY pkg_com_pretius_apex_devtool
 IS  
    /*  
     * Plugin:   Pretius Developer Tool  
-    * Version:  24.2.2 
+    * Version:  24.2.3 
     *  
     * License:  MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K.  
     * Homepage:   
@@ -795,7 +795,7 @@ IS
       l_return            apex_plugin.t_dynamic_action_ajax_result;
       l_clob  CLOB;
   BEGIN 
-      l_return := pkg_com_pretius_apex_devtool.ajax
+      l_return := ajax
          ( p_dynamic_action => l_dynamic_action,  
            p_plugin         => l_plugin);
   EXCEPTION

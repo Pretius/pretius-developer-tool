@@ -19,14 +19,17 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Release History
 
-24.2.2 : February 2026
-* Added Feature: PDT now runs not as a Plugin
-* Improved performance of Visual Build Options feature
-* Updated Social Links
+24.2.3 : March 2026
+* Bug Fix: ORA-06550: Line 765, Column 13
 
 
 <details>
 <summary>Previous Releases</summary>
+
+24.2.2 : February 2026
+* Added Feature: PDT now runs not as a Plugin
+* Improved performance of Visual Build Options feature
+* Updated Social Links
 
 24.2.1 : November 2025
 * Added Feature: Red Triangle shows Console Errors inside PDT

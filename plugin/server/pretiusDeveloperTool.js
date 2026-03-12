@@ -1,6 +1,6 @@
 /*
 * Plugin:   Pretius Developer Tool
-* Version:  24.2.2
+* Version:  24.2.3
 *
 * License:  MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K.
 * Homepage: 
@@ -22,7 +22,7 @@ var pdt = (function () {
     var pageDebugLevel;
     var capturedErrors = [];
 
-    var version = "24.2.2";
+    var version = "24.2.3";
 
     function nvl(value1, value2) {
         if (value1 == null || value1 == "")
