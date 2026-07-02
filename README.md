@@ -19,12 +19,15 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Release History
 
-24.2.3 : March 2026
-* Bug Fix: ORA-06550: Line 765, Column 13
+26.1.1 : July 2026
+* Added Feature: Support for 32767 byte Page Items
 
 
 <details>
 <summary>Previous Releases</summary>
+
+24.2.3 : March 2026
+* Bug Fix: ORA-06550: Line 765, Column 13
 
 24.2.2 : February 2026
 * Added Feature: PDT now runs not as a Plugin
@@ -85,7 +88,7 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Installation Quick-Start
 
-Minimum Version of APEX Required: **24.2**
+Minimum Version of APEX Required: **26.1**
 
 Note: Debug features are disabled on apex.oracle.com due to performance issues.
 
@@ -120,7 +123,7 @@ This method is useful for when Plugins are restricted or need a review process
    * Master Detail Debug
    * Shared Components Button
 
- Supports Firefox, Internet Explorer, Edge & Chrome
+ Supports Firefox, Safari, Edge & Chrome
 
 # Settings
 * Use the Settings (Filter icon) in the toolbar to enable/disable features
