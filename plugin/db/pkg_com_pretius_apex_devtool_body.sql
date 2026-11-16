@@ -2,7 +2,7 @@ create or replace PACKAGE BODY pkg_com_pretius_apex_devtool
 IS  
 /*
 * Plugin: Pretius Developer Tool
-* Version: 26.1.1
+* Version: 26.2.1
 *
 * License: MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K.
 * Homepage:
@@ -60,7 +60,7 @@ and p.page_function = 'Global Page'
 and a.action_code = 'PLUGIN_' || c_plugin_name
 and d.dynamic_action_id = a.dynamic_action_id
 and d.build_option_id = b.build_option_id
-and b.status_on_export = 'Exclude';
+and upper(b.status_on_export) = 'EXCLUDE';
 
 IF NVL( l_configuration_test, 0 ) = 0
 THEN
@@ -75,7 +75,7 @@ and a.application_id = p.application_id
 and p.page_function = 'Global Page'
 and a.action_code = 'PLUGIN_' || c_plugin_name
 and a.build_option_id = b.build_option_id
-and b.status_on_export = 'Exclude';
+and upper(b.status_on_export) = 'EXCLUDE';
 END IF;
 
 v_result.javascript_function :=

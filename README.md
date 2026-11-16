@@ -19,12 +19,16 @@ Pretius Developer Tool is built all modular so you can expect more features to c
 
 # Release History
 
-26.1.1 : July 2026
-* Added Feature: Support for 32767 byte Page Items
+26.2.1 : November 2026
 
+* Fixed PDT configuration detection for uppercase build option export statuses in APEX 26.2
 
 <details>
 <summary>Previous Releases</summary>
+
+26.1.1 : July 2026
+* Added Feature: Support for 32767 byte Page Items
+
 
 24.2.3 : March 2026
 * Bug Fix: ORA-06550: Line 765, Column 13

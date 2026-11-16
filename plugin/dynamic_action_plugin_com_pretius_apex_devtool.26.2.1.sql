@@ -82,7 +82,7 @@ wwv_flow_imp_shared.create_plugin(
 ,p_plsql_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '/*',
 '* Plugin: Pretius Developer Tool',
-'* Version: 26.1.1',
+'* Version: 26.2.1',
 '*',
 '* License: MIT License Copyright 2022 Pretius Sp. z o.o. Sp. K.',
 '* Homepage:',
@@ -140,7 +140,7 @@ wwv_flow_imp_shared.create_plugin(
 'and a.action_code = ''PLUGIN_'' || c_plugin_name',
 'and d.dynamic_action_id = a.dynamic_action_id',
 'and d.build_option_id = b.build_option_id',
-'and b.status_on_export = ''Exclude'';',
+'and upper(b.status_on_export) = ''EXCLUDE'';',
 '',
 'IF NVL( l_configuration_test, 0 ) = 0',
 'THEN',
@@ -155,7 +155,7 @@ wwv_flow_imp_shared.create_plugin(
 'and p.page_function = ''Global Page''',
 'and a.action_code = ''PLUGIN_'' || c_plugin_name',
 'and a.build_option_id = b.build_option_id',
-'and b.status_on_export = ''Exclude'';',
+'and upper(b.status_on_export) = ''EXCLUDE'';',
 'END IF;',
 '',
 'v_result.javascript_function :=',
@@ -900,7 +900,7 @@ wwv_flow_imp_shared.create_plugin(
 '   <li>Build Option Highlight: Visually see which items have a build option assigned</li>',
 '   <li>Developer Toolbar Enhancements: (1) Quick Page Builder Access (2) Debug Enhancements (3) Developer Bar Enhancements/li>',
 '</ul>'))
-,p_version_identifier=>'26.1.1'
+,p_version_identifier=>'26.2.1'
 ,p_about_url=>'https://github.com/Pretius/pretius-developer-tool/'
 ,p_files_version=>2461224121130
 );
